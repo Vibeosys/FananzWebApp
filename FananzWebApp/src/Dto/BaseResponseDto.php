@@ -45,11 +45,13 @@ class BaseResponseDto {
 
     
     protected $errorDictionary = [
-        201 => 'Sorry, no portfolio available, please send special request to reach to you'
+        201 => 'Sorry, no portfolio available, please send special request to reach to you',
+        202 => 'No categories yet added, do you want to suggest something'
        ];
     
     protected $successDictionary = [       
-        101 => 'List of available portfolios'
+        101 => 'List of available portfolios',
+        102 => 'List of categories/subcategories'
        ];
     
 }

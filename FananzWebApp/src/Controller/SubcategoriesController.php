@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,14 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\SubcategoriesTable $Subcategories
  */
-class SubcategoriesController extends AppController
-{
+class SubcategoriesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
+    public function index() {
         $subcategories = $this->paginate($this->Subcategories);
 
         $this->set(compact('subcategories'));
@@ -31,8 +30,7 @@ class SubcategoriesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $subcategory = $this->Subcategories->get($id, [
             'contain' => []
         ]);
@@ -46,8 +44,7 @@ class SubcategoriesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $subcategory = $this->Subcategories->newEntity();
         if ($this->request->is('post')) {
             $subcategory = $this->Subcategories->patchEntity($subcategory, $this->request->data);
@@ -70,8 +67,7 @@ class SubcategoriesController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $subcategory = $this->Subcategories->get($id, [
             'contain' => []
         ]);
@@ -96,8 +92,7 @@ class SubcategoriesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $subcategory = $this->Subcategories->get($id);
         if ($this->Subcategories->delete($subcategory)) {
@@ -108,4 +103,5 @@ class SubcategoriesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

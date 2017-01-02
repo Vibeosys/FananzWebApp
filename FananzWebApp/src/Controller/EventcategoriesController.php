@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,20 +9,29 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\EventcategoriesTable $Eventcategories
  */
-class EventcategoriesController extends AppController
-{
+class EventcategoriesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
+    public function index() {
         $eventcategories = $this->paginate($this->Eventcategories);
 
         $this->set(compact('eventcategories'));
         $this->set('_serialize', ['eventcategories']);
+    }
+
+    public function getList() {
+        $this->autoRender = FALSE;
+        $this->response->type('json');
+        $catSubCatList = $this->Eventcategories->getMasterInfo();
+        if ($catSubCatList) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(102, $catSubCatList));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(202));
+        }
     }
 
     /**
@@ -31,8 +41,7 @@ class EventcategoriesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $eventcategory = $this->Eventcategories->get($id, [
             'contain' => []
         ]);
@@ -46,8 +55,7 @@ class EventcategoriesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $eventcategory = $this->Eventcategories->newEntity();
         if ($this->request->is('post')) {
             $eventcategory = $this->Eventcategories->patchEntity($eventcategory, $this->request->data);
@@ -70,8 +78,7 @@ class EventcategoriesController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $eventcategory = $this->Eventcategories->get($id, [
             'contain' => []
         ]);
@@ -96,8 +103,7 @@ class EventcategoriesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $eventcategory = $this->Eventcategories->get($id);
         if ($this->Eventcategories->delete($eventcategory)) {
@@ -108,4 +114,5 @@ class EventcategoriesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }
