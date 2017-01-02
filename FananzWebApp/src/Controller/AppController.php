@@ -27,7 +27,13 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
+    protected $postedJson;
+    protected $postedRequest;
+    protected $postedData;
+    protected $postedUserInfo;
+    protected $userAuthenticated;
+    //protected $empInfo;
+    
     /**
      * Initialization hook method.
      *
@@ -65,5 +71,15 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+    }
+    
+    protected function apiInitialize(){
+        $this->autoRender = FALSE;
+        $this->postedJson = $this->request->input();
+        //Log::debug("posted json " . $this->postedJson);
+        $this->postedRequest = \App\Dto\BaseRequestDto::Deserialize($this->postedJson);
+        $this->postedData = $this->postedRequest->data;
+        $this->postedUserInfo = $this->postedRequest->user;
+        $this->response->type('json');
     }
 }

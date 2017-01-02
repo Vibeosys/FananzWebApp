@@ -80,6 +80,35 @@ class PortfolioTable extends Table {
         return $validator;
     }
 
+    /**
+     * Adds new portfolio for subscriber
+     * @param \App\Dto\PortfolioAdditionDto $portfolioAddition
+     * @param int $subscriberId
+     */
+    public function addPortfolio($portfolioAddition, $subscriberId) {
+        $portfolioNew = $this->newEntity();
+        $portfolioNew->SubscriberId = $subscriberId;
+        $portfolioNew->CategoryId = $portfolioAddition->categoryId;
+        $portfolioNew->SubcategoryId = $portfolioAddition->subCategoryId;
+        $portfolioNew->FacebookLink = $portfolioAddition->fbLink;
+        $portfolioNew->YoutubeLink = $portfolioAddition->youtubeLink;
+        $portfolioNew->MinPrice = $portfolioAddition->minPrice;
+        $portfolioNew->MaxPrice = $portfolioAddition->maxPrice;
+        $portfolioNew->AboutPortfolio = $portfolioAddition->aboutUs;
+        $portfolioNew->IsActive = 1;
+        $portfolioNew->CreatedDate = new \Cake\I18n\Time();
+
+        if ($this->save($portfolioNew)) {
+            return $portfolioNew->PortfolioId;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Gets all the portfolio from Fananz
+     * @return \App\Dto\PortfolioListResponseDto[] $portfolioList
+     */
     public function getPortfolioList() {
         $this->addRelations();
         $portfolioList = null;
@@ -121,7 +150,7 @@ class PortfolioTable extends Table {
                 $portfolioRecord->subscriberName = $recordKey->subscriber->SubscriberName;
             }
             $portfolioRecord->coverImageUrl = $recordKey->portfolio_photo->PhotoUrl;
-            
+
             $portfolioList[$recordCounter++] = $portfolioRecord;
         } //end of for
 

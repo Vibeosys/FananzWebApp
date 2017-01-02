@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,14 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\SubscribersTable $Subscribers
  */
-class SubscribersController extends AppController
-{
+class SubscribersController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
+    public function index() {
         $subscribers = $this->paginate($this->Subscribers);
 
         $this->set(compact('subscribers'));
@@ -31,8 +30,7 @@ class SubscribersController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $subscriber = $this->Subscribers->get($id, [
             'contain' => []
         ]);
@@ -41,13 +39,37 @@ class SubscribersController extends AppController
         $this->set('_serialize', ['subscriber']);
     }
 
+    public function signin() {
+        $this->apiInitialize();
+        $subscriberLoginDetails = \App\Dto\SubscriberUserDto::Deserialize($this->postedData);
+        $subscriberDetails = $this->Subscribers->signIn($subscriberLoginDetails);
+        if ($subscriberDetails) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(104, $subscriberDetails));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(204));
+        }
+    }
+
+    public function register() {
+        $this->apiInitialize();
+        $subscriberDetails = \App\Dto\SubscriberRegistrationDto::Deserialize($this->postedData);
+        //in case of corporate the subscr type is 1 or in case of freelance it is 2
+        $subscriberDetails->subScrType = strtolower($subscriberDetails->subType) == 'c' ?
+                CORPORATE_SUB_TYPE : FREELANCE_SUB_TYPE;
+        $registerSuccess = $this->Subscribers->registerSubscriber($subscriberDetails);
+        if ($registerSuccess) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(103));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(203));
+        }
+    }
+
     /**
      * Add method
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $subscriber = $this->Subscribers->newEntity();
         if ($this->request->is('post')) {
             $subscriber = $this->Subscribers->patchEntity($subscriber, $this->request->data);
@@ -70,8 +92,7 @@ class SubscribersController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $subscriber = $this->Subscribers->get($id, [
             'contain' => []
         ]);
@@ -96,8 +117,7 @@ class SubscribersController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $subscriber = $this->Subscribers->get($id);
         if ($this->Subscribers->delete($subscriber)) {
@@ -108,4 +128,5 @@ class SubscribersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

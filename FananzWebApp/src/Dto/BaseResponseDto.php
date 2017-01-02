@@ -46,12 +46,16 @@ class BaseResponseDto {
     
     protected $errorDictionary = [
         201 => 'Sorry, no portfolio available, please send special request to reach to you',
-        202 => 'No categories yet added, do you want to suggest something'
+        202 => 'No categories yet added, do you want to suggest something',
+        203 => 'Sorry, your registration was unsuccessful',
+        204 => 'Login failed for subscriber, please check email or password'
        ];
     
     protected $successDictionary = [       
         101 => 'List of available portfolios',
-        102 => 'List of categories/subcategories'
+        102 => 'List of categories/subcategories',
+        103 => 'Registration was successful',
+        104 => 'Subscriber login was successful'
        ];
     
 }

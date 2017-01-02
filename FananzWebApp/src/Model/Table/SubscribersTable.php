@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -17,8 +18,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Subscriber[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Subscriber findOrCreate($search, callable $callback = null)
  */
-class SubscribersTable extends Table
-{
+class SubscribersTable extends Table {
 
     /**
      * Initialize method
@@ -26,13 +26,16 @@ class SubscribersTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('subscribers');
         $this->displayField('SubscriberId');
         $this->primaryKey('SubscriberId');
+    }
+
+    private function getTable() {
+        return \Cake\ORM\TableRegistry::get('subscribers');
     }
 
     /**
@@ -41,67 +44,125 @@ class SubscribersTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('SubscriberId')
-            ->allowEmpty('SubscriberId', 'create');
+                ->integer('SubscriberId')
+                ->allowEmpty('SubscriberId', 'create');
 
         $validator
-            ->requirePresence('SubscriberName', 'create')
-            ->notEmpty('SubscriberName');
+                ->requirePresence('SubscriberName', 'create')
+                ->notEmpty('SubscriberName');
 
         $validator
-            ->allowEmpty('BusinessContactPerson');
+                ->allowEmpty('BusinessContactPerson');
 
         $validator
-            ->requirePresence('EmailId', 'create')
-            ->notEmpty('EmailId');
+                ->requirePresence('EmailId', 'create')
+                ->notEmpty('EmailId');
 
         $validator
-            ->integer('Stype')
-            ->allowEmpty('Stype');
+                ->integer('Stype')
+                ->allowEmpty('Stype');
 
         $validator
-            ->integer('TelephoneNo')
-            ->allowEmpty('TelephoneNo');
+                ->integer('TelephoneNo')
+                ->allowEmpty('TelephoneNo');
 
         $validator
-            ->integer('MobileNo')
-            ->allowEmpty('MobileNo');
+                ->integer('MobileNo')
+                ->allowEmpty('MobileNo');
 
         $validator
-            ->allowEmpty('WebsiteUrl');
+                ->allowEmpty('WebsiteUrl');
 
         $validator
-            ->allowEmpty('CountryOfResidence');
+                ->allowEmpty('CountryOfResidence');
 
         $validator
-            ->allowEmpty('AboutUs');
+                ->allowEmpty('AboutUs');
 
         $validator
-            ->allowEmpty('TradeCertificateUrl');
+                ->allowEmpty('TradeCertificateUrl');
 
         $validator
-            ->integer('IsSubscribed')
-            ->requirePresence('IsSubscribed', 'create')
-            ->notEmpty('IsSubscribed');
+                ->integer('IsSubscribed')
+                ->requirePresence('IsSubscribed', 'create')
+                ->notEmpty('IsSubscribed');
 
         $validator
-            ->dateTime('SubscriptionDate')
-            ->allowEmpty('SubscriptionDate');
+                ->dateTime('SubscriptionDate')
+                ->allowEmpty('SubscriptionDate');
 
         $validator
-            ->integer('IsActive')
-            ->allowEmpty('IsActive');
+                ->integer('IsActive')
+                ->allowEmpty('IsActive');
 
         $validator
-            ->requirePresence('Password', 'create')
-            ->notEmpty('Password');
+                ->requirePresence('Password', 'create')
+                ->notEmpty('Password');
 
         $validator
-            ->allowEmpty('Nickname');
+                ->allowEmpty('Nickname');
 
         return $validator;
     }
+
+    /**
+     * Registers subscriber with database
+     * @param \App\Dto\SubscriberRegistrationDto $subscriber
+     */
+    public function registerSubscriber($subscriber) {
+        $newSubscriber = $this->newEntity();
+        $newSubscriber->EmailId = $subscriber->emailId;
+        $newSubscriber->Password = $subscriber->password;
+        $newSubscriber->SubscriberName = $subscriber->name;
+        $newSubscriber->Stype = $subscriber->subScrType;
+        $newSubscriber->BusinessContactPerson = $subscriber->contactPerson;
+        $newSubscriber->MobileNo = $subscriber->mobileNo;
+        $newSubscriber->TelephoneNo = $subscriber->telNo;
+        $newSubscriber->WebsiteUrl = $subscriber->websiteUrl;
+        $newSubscriber->Nickname = $subscriber->nickName;
+        $newSubscriber->CountryOfResidence = $subscriber->country;
+        $newSubscriber->IsActive = 1;
+        if ($this->save($newSubscriber)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Sign in for subscriber
+     * @param \App\Dto\SubscriberUserDto $subscriberLoginDetails
+     * @return \App\Controller\SubscriberPostSigninDetailsDto $subscriberDetails
+     */
+    public function signIn($subscriberLoginDetails) {
+        $subscriberDetails = NULL;
+        $result = $this->find()
+                ->where(['EmailId' => $subscriberLoginDetails->emailId,
+                    'Password' => $subscriberLoginDetails->password, 'IsActive' => 1])
+                ->select(['SubscriberId', 'SubscriberName', 'IsSubscribed', 'SubscriptionDate', 'Stype', 'NickName'])
+                ->first();
+
+        if ($result) {
+            $subscriberDetails = new \App\Controller\SubscriberPostSigninDetailsDto();
+            $subscriberDetails->name = $result->SubscriberName;
+            $subscriberDetails->nickName = $result->NickName;
+            $subscriberDetails->sType = $result->Stype == CORPORATE_SUB_TYPE ? 'c' : 'f';
+            $subscriberDetails->isSubscribed = $result->IsSubscribed ? true : false;
+            $subscriberDetails->subscriberId = $result->SubscriberId;
+        }
+        return $subscriberDetails;
+    }
+
+    /**
+     * Validates subscriber against login details
+     * @param \App\Dto\SubscriberUserDto $subscriberUserDetails
+     */
+    public function validateSubscriber($subscriberUserDetails) {
+        $validated = $this->getTable()->exists(['SubscriberId' => $subscriberUserDetails->subscriberId,
+            'EmailId' => $subscriberUserDetails->emailId, 'Password' => $subscriberUserDetails->password]);
+        
+        return $validated;
+    }
+
 }

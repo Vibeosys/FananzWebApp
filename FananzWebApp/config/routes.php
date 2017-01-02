@@ -52,6 +52,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('portfoliolist', ['controller' => 'Portfolio', 'action' => 'getList']);
     $routes->connect('categorylist', ['controller' => 'Eventcategories', 'action' => 'getList']);
+    $routes->connect('registersub', ['controller' => 'Subscribers', 'action' => 'register']);    
+    $routes->connect('signinsub', ['controller' => 'Subscribers', 'action' => 'signin']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

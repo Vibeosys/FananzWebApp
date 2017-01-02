@@ -23,6 +23,27 @@ class PortfolioController extends AppController {
         $this->set('_serialize', ['portfolio']);
     }
 
+    public function addPortfolio() {
+        $this->apiInitialize();
+        $subscriberUserInfo = \App\Dto\SubscriberUserDto::Deserialize($this->postedUserInfo);
+        $subscriberTable = new \App\Model\Table\SubscribersTable();
+        $isAuthorized = $subscriberTable->validateSubscriber($subscriberUserInfo);
+        //If the subscriber is not authorized then return from here
+        if (!$isAuthorized) {
+            //TODO: add code for error
+        }
+
+        $portfolioAddition = \App\Dto\PortfolioAdditionDto::Deserialize($this->postedData);
+        $portfolioId = $this->Portfolio->addPortfolio($portfolioAddition);
+        if ($portfolioId != 0) {
+            $portfolioInfo = new \App\Dto\PortfolioAddResponseDto();
+            $portfolioInfo->portfolioId = $portfolioId;
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(105, $portfolioInfo));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(205));
+        }
+    }
+
     /**
      * Gets the list of all portfolios
      */
@@ -31,7 +52,7 @@ class PortfolioController extends AppController {
         $portfolioList = $this->Portfolio->getPortfolioList();
         $this->response->type('json');
         if ($portfolioList) {
-            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(101,$portfolioList));
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(101, $portfolioList));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(201));
         }
