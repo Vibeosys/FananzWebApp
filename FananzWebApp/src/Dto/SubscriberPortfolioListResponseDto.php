@@ -9,14 +9,16 @@
 namespace App\Dto;
 
 /**
- * Description of SubCategoryDto
+ * Description of SubscriberPortfolioListResponseDto
  *
  * @author anand
  */
-class SubCategoryDto {
-
+class SubscriberPortfolioListResponseDto {
     //put your code here
-    public $subCategoryId;
+    public $portfolioId;
+    public $coverImageUrl;
+    public $category;
     public $subCategory;
-
+    public $minPrice;
+    public $maxPrice;
 }

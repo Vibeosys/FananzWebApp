@@ -32,6 +32,7 @@ class AppController extends Controller
     protected $postedData;
     protected $postedUserInfo;
     protected $userAuthenticated;
+    protected $postedSubscriberData;
     //protected $empInfo;
     
     /**
@@ -81,5 +82,12 @@ class AppController extends Controller
         $this->postedData = $this->postedRequest->data;
         $this->postedUserInfo = $this->postedRequest->user;
         $this->response->type('json');
+    }
+    
+    protected function isSubscriberAuthorised(){
+        $this->postedSubscriberData = \App\Dto\SubscriberUserDto::Deserialize($this->postedUserInfo);
+        $subscriberTable = new \App\Model\Table\SubscribersTable();
+        $isAuthorized = $subscriberTable->validateSubscriber($this->postedSubscriberData);
+        return $isAuthorized;
     }
 }

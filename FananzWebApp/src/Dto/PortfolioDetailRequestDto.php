@@ -9,14 +9,11 @@
 namespace App\Dto;
 
 /**
- * Description of SubCategoryDto
+ * Description of PortfolioDetailRequestDto
  *
  * @author anand
  */
-class SubCategoryDto {
-
+class PortfolioDetailRequestDto extends JsonDeserializer {
     //put your code here
-    public $subCategoryId;
-    public $subCategory;
-
+    public $portfolioId;
 }

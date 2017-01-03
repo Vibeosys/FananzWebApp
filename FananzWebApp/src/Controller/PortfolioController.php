@@ -23,24 +23,53 @@ class PortfolioController extends AppController {
         $this->set('_serialize', ['portfolio']);
     }
 
+    public function getPortfolioDetails() {
+        $this->apiInitialize();
+        $portfolioDetaiRequest = \App\Dto\PortfolioDetailRequestDto::Deserialize($this->postedData);
+        $portfolioDetails = $this->Portfolio->getPortfolioDetails($portfolioDetaiRequest);
+        if ($portfolioDetails) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(107, $portfolioDetails));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(208));
+        }
+    }
+
     public function addPortfolio() {
         $this->apiInitialize();
-        $subscriberUserInfo = \App\Dto\SubscriberUserDto::Deserialize($this->postedUserInfo);
-        $subscriberTable = new \App\Model\Table\SubscribersTable();
-        $isAuthorized = $subscriberTable->validateSubscriber($subscriberUserInfo);
+        $isAuthorized = $this->isSubscriberAuthorised();
         //If the subscriber is not authorized then return from here
         if (!$isAuthorized) {
             //TODO: add code for error
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(206));
+            return;
         }
 
         $portfolioAddition = \App\Dto\PortfolioAdditionDto::Deserialize($this->postedData);
-        $portfolioId = $this->Portfolio->addPortfolio($portfolioAddition);
+        $portfolioId = $this->Portfolio->addPortfolio($portfolioAddition, $subscriberUserInfo->subscriberId);
         if ($portfolioId != 0) {
             $portfolioInfo = new \App\Dto\PortfolioAddResponseDto();
             $portfolioInfo->portfolioId = $portfolioId;
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(105, $portfolioInfo));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(205));
+        }
+    }
+
+    public function subscriberPortfolioList() {
+        $this->apiInitialize();
+        $isAuthorized = $this->isSubscriberAuthorised();
+        //If the subscriber is not authorized then return from here
+        if (!$isAuthorized) {
+            //TODO: add code for error
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(206));
+            return;
+        }
+
+        $portfolioList = $this->Portfolio->getPortfoliosBySubscriber($this->postedSubscriberData->subscriberId);
+        if ($portfolioList) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(106, $portfolioList));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(207));
         }
     }
 

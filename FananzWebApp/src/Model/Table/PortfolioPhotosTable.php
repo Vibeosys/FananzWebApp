@@ -33,6 +33,9 @@ class PortfolioPhotosTable extends Table
         $this->table('portfolio_photos');
         $this->displayField('PhotoId');
         $this->primaryKey('PhotoId');
+        $this->belongsTo('portfolio', [
+            'foreignKey' => 'PortfolioId'
+        ]);
     }
 
     /**
