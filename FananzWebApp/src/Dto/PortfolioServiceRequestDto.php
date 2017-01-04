@@ -9,12 +9,14 @@
 namespace App\Dto;
 
 /**
- * Description of UserDto
+ * Description of PortfolioServiceRequestDto
  *
  * @author anand
  */
-class UserDto extends JsonDeserializer {
+class PortfolioServiceRequestDto extends JsonDeserializer {
+
     //put your code here
-    public $userId;
-    public $emailId;
+    public $message;
+    public $portfolioId;
+
 }

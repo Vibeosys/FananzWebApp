@@ -90,4 +90,5 @@ class AppController extends Controller
         $isAuthorized = $subscriberTable->validateSubscriber($this->postedSubscriberData);
         return $isAuthorized;
     }
+    
 }

@@ -34,6 +34,10 @@ class PortfolioTable extends Table {
         $this->primaryKey('PortfolioId');
     }
 
+    private function getTable() {
+        return \Cake\ORM\TableRegistry::get('portfolio');
+    }
+
     /**
      * Default validation rules.
      *
@@ -81,8 +85,67 @@ class PortfolioTable extends Table {
     }
 
     /**
-     * 
+     * Gets portfolio details by id
+     * @param int $portfolioId
+     * @return \App\Dto\PortfolioEmailDetailsDto $requestedPortfolioDetails
+     */
+    public function getPortfolioDetailsById($portfolioId) {
+        $thisTable = $this->getTable();
+        $this->addTableRelations();
+        //$this->getTable()->addRelationsForPortfolio();
+        $requestedPortfolioDetails = NULL;
+        $results = $thisTable->find()
+                ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])
+                ->where(['portfolio.IsActive' => 1,
+                    'subscribers.IsSubscribed' => 1,
+                    'portfolio.PortfolioId' => $portfolioId])
+                ->select([
+                    'subscribers.EmailId',
+                    'subscribers.MobileNo',
+                    'subscribers.SubscriberName',
+                    'subscribers.Nickname',
+                    'subscribers.Stype',
+                    'subscribers.BusinessContactPerson',
+                    'portfolio.SubscriberId',
+                    'eventcategories.CatName',
+                    'subcategories.SubCatName',
+                    'MinPrice',
+                    'MaxPrice',
+                    'portfolio_photos.PhotoUrl'])
+                ->all();
+        $resultsArray = $results->toArray();
+        foreach ($resultsArray as $resultRecord) {
+            $requestedPortfolioDetails = new \App\Dto\PortfolioEmailDetailsDto();
+            $requestedPortfolioDetails->category = $resultRecord->eventcategory->CatName;
+            $requestedPortfolioDetails->subcategory = $resultRecord->subcategory->SubCatName;
+            $requestedPortfolioDetails->minPrice = $resultRecord->MinPrice;
+            $requestedPortfolioDetails->maxPrice = $resultRecord->MaxPrice;
+            $requestedPortfolioDetails->subscriberId = $resultRecord->SubscriberId;
+            $requestedPortfolioDetails->subscriberPhone = $resultRecord->subscriber->MobileNo;
+            $requestedPortfolioDetails->subscriberEmail = $resultRecord->subscriber->EmailId;
+            $requestedPortfolioDetails->contactPerson = $resultRecord->subscriber->BusinessContactPerson;
+            $requestedPortfolioDetails->coverImageUrl = $resultRecord->portfolio_photo->PhotoUrl;
+            
+            //set local variables
+            $nickName = $resultRecord->subscriber->Nickname;
+            $subscriberType = $resultRecord->subscriber->Stype;
+
+            if ($subscriberType == FREELANCE_SUB_TYPE) {
+                $requestedPortfolioDetails->subscriberType = "Freelancer";
+                $requestedPortfolioDetails->subscriberName = $nickName;
+            } else {
+                $requestedPortfolioDetails->subscriberType = "Corporate";
+                $requestedPortfolioDetails->subscriberName = $resultRecord->subscriber->SubscriberName;
+            }
+        }
+
+        return $requestedPortfolioDetails;
+    }
+
+    /**
+     * Gets portfolio details for given portfolio data
      * @param \App\Dto\PortfolioDetailRequestDto $portfolioData
+     * @return \App\Dto\PortfolioDetailsResponseDto $portfolioDetailsResponse
      */
     public function getPortfolioDetails($portfolioData) {
         $this->addRelationsForPortfolio();
@@ -132,17 +195,16 @@ class PortfolioTable extends Table {
             }
             $photoRecordCounter = 0;
             //Add phototos to array
-            foreach ($resultRecord->portfolio_photos as $photoRecord){
-                if($photoRecord->IsCoverImage == 1){
+            foreach ($resultRecord->portfolio_photos as $photoRecord) {
+                if ($photoRecord->IsCoverImage == 1) {
                     $portfolioDetailsResponse->coverImageUrl = $photoRecord->PhotoUrl;
-                }
-                else{
-                    $portfolioDetailsResponse->photos[$photoRecordCounter++] = $photoRecord->PhotoUrl;;
+                } else {
+                    $portfolioDetailsResponse->photos[$photoRecordCounter++] = $photoRecord->PhotoUrl;
+                    ;
                 }
             } // End of for photos
-            
         }
-        
+
         return $portfolioDetailsResponse;
     }
 
@@ -155,7 +217,10 @@ class PortfolioTable extends Table {
         $portfolioNew = $this->newEntity();
         $portfolioNew->SubscriberId = $subscriberId;
         $portfolioNew->CategoryId = $portfolioAddition->categoryId;
-        $portfolioNew->SubcategoryId = $portfolioAddition->subCategoryId;
+        //In case of subcategory is 0 instead of NULL then take care
+        if ($portfolioAddition->subCategoryId != 0) {
+            $portfolioNew->SubcategoryId = $portfolioAddition->subCategoryId;
+        }
         $portfolioNew->FacebookLink = $portfolioAddition->fbLink;
         $portfolioNew->YoutubeLink = $portfolioAddition->youtubeLink;
         $portfolioNew->MinPrice = $portfolioAddition->minPrice;
@@ -280,6 +345,30 @@ class PortfolioTable extends Table {
         ]);
 
         $this->hasOne('portfolio_photos', [
+            'foreignKey' => 'PortfolioId',
+            'conditions' => ['portfolio_photos.IsCoverImage' => 1]
+        ]);
+    }
+
+    private function addTableRelations() {
+        $this->getTable()->belongsTo('subscribers', [
+            'foreignKey' => 'SubscriberId',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->getTable()->belongsTo('eventcategories', [
+            'bindingKey' => 'CatId',
+            'foreignKey' => 'CategoryId',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->getTable()->belongsTo('subcategories', [
+            'bindingKey' => 'SubCatId',
+            'foreignKey' => 'SubcategoryId',
+            'joinType' => 'LEFT'
+        ]);
+
+        $this->getTable()->hasOne('portfolio_photos', [
             'foreignKey' => 'PortfolioId',
             'conditions' => ['portfolio_photos.IsCoverImage' => 1]
         ]);

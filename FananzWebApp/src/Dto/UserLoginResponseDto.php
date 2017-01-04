@@ -9,12 +9,13 @@
 namespace App\Dto;
 
 /**
- * Description of UserDto
+ * Description of UserLoginResponseDto
  *
  * @author anand
  */
-class UserDto extends JsonDeserializer {
+class UserLoginResponseDto {
     //put your code here
     public $userId;
-    public $emailId;
+    public $firstName;
+    public $lastName;
 }

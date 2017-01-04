@@ -45,7 +45,7 @@ class PortfolioController extends AppController {
         }
 
         $portfolioAddition = \App\Dto\PortfolioAdditionDto::Deserialize($this->postedData);
-        $portfolioId = $this->Portfolio->addPortfolio($portfolioAddition, $subscriberUserInfo->subscriberId);
+        $portfolioId = $this->Portfolio->addPortfolio($portfolioAddition, $this->postedSubscriberData->subscriberId);
         if ($portfolioId != 0) {
             $portfolioInfo = new \App\Dto\PortfolioAddResponseDto();
             $portfolioInfo->portfolioId = $portfolioId;

@@ -52,7 +52,10 @@ class BaseResponseDto {
         205 => 'No portfolio added for the subscriber, please try again',
         206 => 'Subscriber is not authorized for the action',
         207 => 'No portfolios found for the subscriber',
-        208 => 'No information pertaining to requested portfolio'
+        208 => 'No information pertaining to requested portfolio',
+        209 => 'This email id is already registered with us, please try forgot password or another email id',
+        210 => 'User registration failed, please try again later',
+        211 => 'Sorry, the credentials did not match, please try again'
        ];
     
     protected $successDictionary = [       
@@ -62,7 +65,10 @@ class BaseResponseDto {
         104 => 'Subscriber login was successful',
         105 => 'Portfolio successfully added for the subscriber',
         106 => 'List of portfolios for subscribers',
-        107 => 'Portfolio details success'
+        107 => 'Portfolio details success',
+        108 => 'User registration is successful',
+        109 => 'User has logged in successfully',
+        110 => 'Portfolio email message response'
        ];
     
 }

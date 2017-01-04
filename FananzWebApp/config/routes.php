@@ -55,8 +55,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('registersub', ['controller' => 'Subscribers', 'action' => 'register']);
     $routes->connect('signinsub', ['controller' => 'Subscribers', 'action' => 'signin']);
     $routes->connect('addportfolio', ['controller' => 'Portfolio', 'action' => 'addPortfolio']);
-    $routes->connect('subportfolios', ['controller' => 'Portfolio', 'action' => 'subscriberPortfolioList']);    
+    $routes->connect('subportfolios', ['controller' => 'Portfolio', 'action' => 'subscriberPortfolioList']);
     $routes->connect('portfoliodetails', ['controller' => 'Portfolio', 'action' => 'getPortfolioDetails']);
+    $routes->connect('usersignup', ['controller' => 'Users', 'action' => 'signup']);
+    $routes->connect('userlogin', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('portfoliorequest', ['controller' => 'Users', 'action' => 'portfolioRequest']);
 
 
     /**

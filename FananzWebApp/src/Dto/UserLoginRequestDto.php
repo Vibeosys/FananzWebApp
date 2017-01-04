@@ -9,12 +9,13 @@
 namespace App\Dto;
 
 /**
- * Description of UserDto
+ * Description of UserLoginRequestDto
  *
  * @author anand
  */
-class UserDto extends JsonDeserializer {
+class UserLoginRequestDto extends JsonDeserializer{
     //put your code here
-    public $userId;
     public $emailId;
+    public $password;
+    public $isFacebookLogin;
 }
