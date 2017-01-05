@@ -9,12 +9,12 @@
 namespace App\Dto;
 
 /**
- * Description of RequestedUserInfoDto
+ * Description of PhotoUpdateResponseDto
  *
  * @author anand
  */
-class RequestedUserInfoDto extends UserLoginResponseDto{
+class PhotoUpdateResponseDto {
     //put your code here
-    public $phoneNo;
-    public $emailId;
+    public $photoUrl;
+    public $photoId;
 }

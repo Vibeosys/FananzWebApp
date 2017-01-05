@@ -20,6 +20,7 @@ class PortfolioEmailDetailsDto {
     public $subscriberPhone;
     public $subscriberEmail;
     public $subscriberType;
+    public $contactPerson;
     public $category;
     public $subcategory;
     public $minPrice;

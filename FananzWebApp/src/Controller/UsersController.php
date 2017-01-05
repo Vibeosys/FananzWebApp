@@ -11,6 +11,12 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController {
 
+    protected $_toEmailAddresses = [
+        'anand@vibeosys.com',
+        //'kaladdin@gmail.com',
+        //'Kaladdin@gc-dubai.com'
+    ];
+
     /**
      * Index method
      *
@@ -118,11 +124,39 @@ class UsersController extends AppController {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(213));
             return;
         }
-        
+
+        //Is email sending program a success
+        $emailSuccess = false;
+
+        try {
+            $this->sendPortfolioRequestOnEmail(
+                    $portfolioInfo, $userInfoReceived, $portfolioRequest->message);
+            $emailSuccess = true;
+        } catch (\Exception $ex) {
+            \Cake\Log\Log::error('Error while sending email ' . $ex->getTraceAsString());
+        }
+
         //TODO send email with the information available
         $portfolioServiceReqRes = new \App\Dto\PortfolioServiceReqResponseDto();
-        $portfolioServiceReqRes->emailSuccess = false;
+        $portfolioServiceReqRes->emailSuccess = $emailSuccess;
         $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(110, $portfolioServiceReqRes));
+    }
+
+    /**
+     * Sends email to admin about the service request
+     * @param \App\Dto\PortfolioEmailDetailsDto $portfolioInfo
+     * @param \App\Dto\RequestedUserInfoDto $userInfo
+     * @param string $message Message from customer
+     */
+    private function sendPortfolioRequestOnEmail($portfolioInfo, $userInfo, $message) {
+        $email = new \Cake\Mailer\Email('gcDubaiProfile');
+        $email->emailFormat('html')->template('ServiceRequestEmail')
+                ->viewVars(['portfolio' => $portfolioInfo, 'customer' => $userInfo, 'message' => $message])
+                ->from('info@gc-dubai.com', 'Fananz Support Team')
+                ->addTo($this->_toEmailAddresses)
+                ->subject('Fananz service request');
+        $emailSendSuccess = $email->send();
+        return $emailSendSuccess;
     }
 
     /**

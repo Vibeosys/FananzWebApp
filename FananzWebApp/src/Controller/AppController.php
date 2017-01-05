@@ -86,9 +86,18 @@ class AppController extends Controller
     
     protected function isSubscriberAuthorised(){
         $this->postedSubscriberData = \App\Dto\SubscriberUserDto::Deserialize($this->postedUserInfo);
-        $subscriberTable = new \App\Model\Table\SubscribersTable();
-        $isAuthorized = $subscriberTable->validateSubscriber($this->postedSubscriberData);
+        $isAuthorized = $this->validateSubscriber($this->postedSubscriberData);
         return $isAuthorized;
+    }
+    
+    /**
+     * Validates subscriber
+     * @param \App\Dto\SubscriberUserDto $subscriberUserData
+     * @return bool
+     */
+    protected function validateSubscriber($subscriberUserData){
+        $subscriberTable = new \App\Model\Table\SubscribersTable();
+        return $subscriberTable->validateSubscriber($subscriberUserData);
     }
     
 }

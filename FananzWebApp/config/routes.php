@@ -60,8 +60,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('usersignup', ['controller' => 'Users', 'action' => 'signup']);
     $routes->connect('userlogin', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('portfoliorequest', ['controller' => 'Users', 'action' => 'portfolioRequest']);
-
-
+    $routes->connect('addportfoliophotos', ['controller' => 'PortfolioPhotos', 'action' => 'addPhotos']);
+    $routes->connect('subscriberphotos', ['controller' => 'PortfolioPhotos', 'action' => 'getPhotos']);
+    $routes->connect('updatesubphoto', ['controller' => 'PortfolioPhotos', 'action' => 'updatePhoto']);
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */

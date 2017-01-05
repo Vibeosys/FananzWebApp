@@ -55,7 +55,10 @@ class BaseResponseDto {
         208 => 'No information pertaining to requested portfolio',
         209 => 'This email id is already registered with us, please try forgot password or another email id',
         210 => 'User registration failed, please try again later',
-        211 => 'Sorry, the credentials did not match, please try again'
+        211 => 'Sorry, the credentials did not match, please try again',
+        212 => 'Image could not be uploaded, please try again',
+        213 => 'No images found for given portfolio',
+        214 => 'Image could not be updated for given portfolio'
        ];
     
     protected $successDictionary = [       
@@ -68,7 +71,10 @@ class BaseResponseDto {
         107 => 'Portfolio details success',
         108 => 'User registration is successful',
         109 => 'User has logged in successfully',
-        110 => 'Portfolio email message response'
+        110 => 'Portfolio email message response',
+        111 => 'Image upload success',
+        112 => 'Images for given portfolio',
+        113 => 'Image was successfully updated for the portfolio'
        ];
     
 }

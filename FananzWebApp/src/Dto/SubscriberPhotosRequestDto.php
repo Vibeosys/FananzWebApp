@@ -9,12 +9,11 @@
 namespace App\Dto;
 
 /**
- * Description of RequestedUserInfoDto
+ * Description of SubscriberPhotosRequestDto
  *
  * @author anand
  */
-class RequestedUserInfoDto extends UserLoginResponseDto{
+class SubscriberPhotosRequestDto extends JsonDeserializer{
     //put your code here
-    public $phoneNo;
-    public $emailId;
+    public $portfolioId;
 }

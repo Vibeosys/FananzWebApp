@@ -14,3 +14,7 @@ define('FREELANCE_SUB_TYPE', 2);
  * Corporate sub type is 1
  */
 define('CORPORATE_SUB_TYPE', 1);
+/**
+ * Subscriber image path
+ */
+define('SUBSCRIBER_IMAGE_PATH', 'subscriber_images');
