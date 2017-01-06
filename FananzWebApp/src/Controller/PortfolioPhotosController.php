@@ -88,8 +88,7 @@ class PortfolioPhotosController extends AppController {
             $uploadedFilePath = \App\Utils\ImageFileUploader::uploadMultipartImage($webrootDir, $fileContents);
             //If uploaded then only go ahead
             if ($uploadedFilePath) {
-                $resultPhotoId = $this->PortfolioPhotos->addSubscriberPhoto($photoUploadRequest->portfolioId, 
-                        $uploadedFilePath, $photoUploadRequest->isCoverImageUpload);
+                $resultPhotoId = $this->PortfolioPhotos->addSubscriberPhoto($photoUploadRequest->portfolioId, $uploadedFilePath, $photoUploadRequest->isCoverImageUpload);
             }
             //If the resultant photo id is received then go ahead.
             if ($resultPhotoId != 0) {
@@ -164,6 +163,25 @@ class PortfolioPhotosController extends AppController {
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(113, $photoUpdateResponse));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(214));
+        }
+    }
+
+    public function deletePhoto() {
+        $this->apiInitialize();
+        $photoDeleteRequest = \App\Dto\PhotoDeleteRequestDto::Deserialize($this->postedData);
+
+        //Check if subscriber is authorised to upload photos
+        $isSubscriberAuthenticated = $this->isSubscriberAuthorised();
+        if (!$isSubscriberAuthenticated) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(206));
+            return;
+        }
+
+        $deleteSuccess = $this->PortfolioPhotos->deletePhoto($photoDeleteRequest->photoId);
+        if ($deleteSuccess) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(114));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(215));
         }
     }
 

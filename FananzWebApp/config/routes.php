@@ -63,6 +63,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('addportfoliophotos', ['controller' => 'PortfolioPhotos', 'action' => 'addPhotos']);
     $routes->connect('subscriberphotos', ['controller' => 'PortfolioPhotos', 'action' => 'getPhotos']);
     $routes->connect('updatesubphoto', ['controller' => 'PortfolioPhotos', 'action' => 'updatePhoto']);
+    $routes->connect('deletesubphoto', ['controller' => 'PortfolioPhotos', 'action' => 'deletePhoto']);
+    $routes->connect('updateportfoliodetails', ['controller' => 'Portfolio', 'action' => 'updatePortfolio']);
+    $routes->connect('updatesubprofile', ['controller' => 'Subscribers', 'action' => 'updateSubscriber']);
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */

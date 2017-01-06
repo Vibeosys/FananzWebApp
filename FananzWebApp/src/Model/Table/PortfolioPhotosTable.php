@@ -124,4 +124,21 @@ class PortfolioPhotosTable extends Table {
         return FALSE;
     }
 
+    /**
+     * Deletes requested photo
+     * @param int $photoId
+     * @return boolean
+     */
+    public function deletePhoto($photoId) {
+        $dbPhoto = $this->find()
+                ->where(['PhotoId' => $photoId, 'IsCoverImage' => 0])
+                ->first();
+        if ($dbPhoto) {
+            if ($this->delete($dbPhoto)) {
+                return true;
+            }
+        }
+        return FALSE;
+    }
+
 }

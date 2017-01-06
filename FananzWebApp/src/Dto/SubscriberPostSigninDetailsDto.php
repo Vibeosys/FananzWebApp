@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace App\Controller;
+namespace App\Dto;
 
 /**
  * Description of SubscriberPostSigninDetailsDto

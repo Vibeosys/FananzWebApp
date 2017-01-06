@@ -133,7 +133,7 @@ class SubscribersTable extends Table {
     /**
      * Sign in for subscriber
      * @param \App\Dto\SubscriberUserDto $subscriberLoginDetails
-     * @return \App\Controller\SubscriberPostSigninDetailsDto $subscriberDetails
+     * @return \App\Dto\SubscriberPostSigninDetailsDto $subscriberDetails
      */
     public function signIn($subscriberLoginDetails) {
         $subscriberDetails = NULL;
@@ -144,7 +144,7 @@ class SubscribersTable extends Table {
                 ->first();
 
         if ($result) {
-            $subscriberDetails = new \App\Controller\SubscriberPostSigninDetailsDto();
+            $subscriberDetails = new \App\Dto\SubscriberPostSigninDetailsDto();
             $subscriberDetails->name = $result->SubscriberName;
             $subscriberDetails->nickName = $result->NickName;
             $subscriberDetails->sType = $result->Stype == CORPORATE_SUB_TYPE ? 'c' : 'f';
@@ -152,6 +152,40 @@ class SubscribersTable extends Table {
             $subscriberDetails->subscriberId = $result->SubscriberId;
         }
         return $subscriberDetails;
+    }
+    
+    /**
+     * Updates subscriber profile
+     * @param \App\Dto\SubscriberProfileUpdateRequestDto $subscriberProfileUpdateRequest
+     * @param int $subscriberId 
+     * @return boolean true if success or else false
+     */
+    public function updateSubscriberProfile($subscriberProfileUpdateRequest, $subscriberId){
+        $dbSubscriber = $this->find()
+                ->where(['SubscriberId' => $subscriberId])
+                ->first();
+        
+        if($dbSubscriber){
+            $dbSubscriber->SubscriberName = $subscriberProfileUpdateRequest->name;
+            $dbSubscriber->EmailId = $subscriberProfileUpdateRequest->emailId;
+            $dbSubscriber->Password = $subscriberProfileUpdateRequest->password;
+            $dbSubscriber->TelephoneNo = $subscriberProfileUpdateRequest->telNo;
+            $dbSubscriber->MobileNo = $subscriberProfileUpdateRequest->mobileNo;
+            $dbSubscriber->WebsiteUrl = $subscriberProfileUpdateRequest->websiteUrl;
+            $dbSubscriber->CountryOfResidence = $subscriberProfileUpdateRequest->country;
+            if($dbSubscriber->Stype === CORPORATE_SUB_TYPE){
+                $dbSubscriber->BusinessContactPerson = $subscriberProfileUpdateRequest->contactPerson;
+            }
+            if($dbSubscriber->Stype === FREELANCE_SUB_TYPE){
+                $dbSubscriber->Nickname = $subscriberProfileUpdateRequest->nickName;
+            }
+                    
+            if($this->save($dbSubscriber)){
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     /**

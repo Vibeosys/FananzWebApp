@@ -85,6 +85,33 @@ class PortfolioTable extends Table {
     }
 
     /**
+     * Update portfolio with given parameters
+     * @param \App\Dto\PortfolioUpdateRequestDto $portfolioUpdateRequest
+     * @return boolean
+     */
+    public function updatePortfolio($portfolioUpdateRequest) {
+        $dbPortfolio = $this->find()
+                ->where(['PortfolioId' => $portfolioUpdateRequest->portfolioId])
+                ->first();
+        //If the portfolio is found and gets updated then return true else false
+        if ($dbPortfolio) {
+            $dbPortfolio->CategoryId = $portfolioUpdateRequest->categoryId;
+            $dbPortfolio->SubcategoryId = $portfolioUpdateRequest->subCategoryId;
+            $dbPortfolio->FacebookLink = $portfolioUpdateRequest->fbLink;
+            $dbPortfolio->YoutubeLink = $portfolioUpdateRequest->youtubeLink;
+            $dbPortfolio->AboutPortfolio = $portfolioUpdateRequest->aboutUs;
+            $dbPortfolio->MinPrice = $portfolioUpdateRequest->minPrice;
+            $dbPortfolio->MaxPrice = $portfolioUpdateRequest->maxPrice;
+            $dbPortfolio->IsActive = $portfolioUpdateRequest->isActive;
+            if ($this->save($dbPortfolio)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Gets portfolio details by id
      * @param int $portfolioId
      * @return \App\Dto\PortfolioEmailDetailsDto $requestedPortfolioDetails
@@ -125,7 +152,7 @@ class PortfolioTable extends Table {
             $requestedPortfolioDetails->subscriberEmail = $resultRecord->subscriber->EmailId;
             $requestedPortfolioDetails->contactPerson = $resultRecord->subscriber->BusinessContactPerson;
             $requestedPortfolioDetails->coverImageUrl = $resultRecord->portfolio_photo->PhotoUrl;
-            
+
             //set local variables
             $nickName = $resultRecord->subscriber->Nickname;
             $subscriberType = $resultRecord->subscriber->Stype;

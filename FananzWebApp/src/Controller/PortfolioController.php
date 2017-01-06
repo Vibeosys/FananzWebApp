@@ -87,6 +87,24 @@ class PortfolioController extends AppController {
         }
     }
 
+    public function updatePortfolio() {
+        $this->apiInitialize();
+        $isAuthorized = $this->isSubscriberAuthorised();
+        //If the subscriber is not authorized then return from here
+        if (!$isAuthorized) {
+            //TODO: add code for error
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(206));
+            return;
+        }
+        $portfolioUpdateRequest = \App\Dto\PortfolioUpdateRequestDto::Deserialize($this->postedData);
+        $updateSuccess = $this->Portfolio->updatePortfolio($portfolioUpdateRequest);
+        if ($updateSuccess) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(115));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(216));
+        }
+    }
+
     /**
      * View method
      *
