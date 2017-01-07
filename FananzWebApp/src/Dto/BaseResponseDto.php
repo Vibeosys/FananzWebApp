@@ -61,7 +61,9 @@ class BaseResponseDto {
         214 => 'Image could not be updated for given portfolio',
         215 => 'Image could not be deleted, please try again',
         216 => 'Portfolio could not be updated, please try again',
-        217 => 'Subscriber profile could not be updated, please try again'
+        217 => 'Subscriber profile could not be updated, please try again',
+        218 => 'Could not initiate payment with Paypal',
+        219 => 'Portfolio could not be inactivated'
        ];
     
     protected $successDictionary = [       
@@ -80,7 +82,9 @@ class BaseResponseDto {
         113 => 'Image was successfully updated for the portfolio',
         114 => 'Image successfully deleted, you can now add a new one',
         115 => 'Portfolio updated successfully',
-        116 => 'Subscriber profile updated successfully'
+        116 => 'Subscriber profile updated successfully',
+        117 => 'Payment initiation',
+        118 => 'Portfolio inactivated successfully'
        ];
     
 }

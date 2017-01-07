@@ -96,18 +96,42 @@ class PortfolioTable extends Table {
         //If the portfolio is found and gets updated then return true else false
         if ($dbPortfolio) {
             $dbPortfolio->CategoryId = $portfolioUpdateRequest->categoryId;
-            $dbPortfolio->SubcategoryId = $portfolioUpdateRequest->subCategoryId;
+            if ($portfolioUpdateRequest->subCategoryId !== 0) {
+                $dbPortfolio->SubcategoryId = $portfolioUpdateRequest->subCategoryId;
+            }
             $dbPortfolio->FacebookLink = $portfolioUpdateRequest->fbLink;
             $dbPortfolio->YoutubeLink = $portfolioUpdateRequest->youtubeLink;
             $dbPortfolio->AboutPortfolio = $portfolioUpdateRequest->aboutUs;
             $dbPortfolio->MinPrice = $portfolioUpdateRequest->minPrice;
             $dbPortfolio->MaxPrice = $portfolioUpdateRequest->maxPrice;
-            $dbPortfolio->IsActive = $portfolioUpdateRequest->isActive;
+            if (isset($portfolioUpdateRequest->isActive)) {
+                $dbPortfolio->IsActive = $portfolioUpdateRequest->isActive;
+            }
             if ($this->save($dbPortfolio)) {
                 return true;
             }
         }
 
+        return false;
+    }
+
+    /**
+     * Set active or inactive for the portfolio
+     * @param int $portfolioId
+     * @param int $isActive
+     * @return boolean
+     */
+    public function inactivatePortfolio($portfolioId, $isActive) {
+        $dbPortfolio = $this->find()
+                ->where(['PortfolioId' => $portfolioId])
+                ->select(['IsActive', 'PortfolioId'])
+                ->first();
+        if ($dbPortfolio) {
+            $dbPortfolio->IsActive = $isActive;
+            if ($this->save($dbPortfolio)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -273,8 +297,7 @@ class PortfolioTable extends Table {
         $portfolioList = null;
         $results = $this->find()
                 ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])
-                ->where(['Portfolio.IsActive' => 1,
-                    'subscribers.IsSubscribed' => 1,
+                ->where(['subscribers.IsSubscribed' => 1,
                     'Portfolio.SubscriberId' => $subscriberId])
                 ->select(['PortfolioId',
                     'eventcategories.CatName',

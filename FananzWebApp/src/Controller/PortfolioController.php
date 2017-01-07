@@ -105,6 +105,25 @@ class PortfolioController extends AppController {
         }
     }
 
+    public function inactivatePortfolio() {
+        $this->apiInitialize();
+        $isAuthorized = $this->isSubscriberAuthorised();
+        //If the subscriber is not authorized then return from here
+        if (!$isAuthorized) {
+            //TODO: add code for error
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(206));
+            return;
+        }
+        $portfolioInactivateRequest = \App\Dto\InactivatePortfolioRequestDto::Deserialize($this->postedData);
+        $inactivateSuccess = $this->Portfolio->inactivatePortfolio
+                ($portfolioInactivateRequest->portfolioId, $portfolioInactivateRequest->isActive);
+        if ($inactivateSuccess) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(118));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(219));
+        }
+    }
+
     /**
      * View method
      *

@@ -153,19 +153,19 @@ class SubscribersTable extends Table {
         }
         return $subscriberDetails;
     }
-    
+
     /**
      * Updates subscriber profile
      * @param \App\Dto\SubscriberProfileUpdateRequestDto $subscriberProfileUpdateRequest
      * @param int $subscriberId 
      * @return boolean true if success or else false
      */
-    public function updateSubscriberProfile($subscriberProfileUpdateRequest, $subscriberId){
+    public function updateSubscriberProfile($subscriberProfileUpdateRequest, $subscriberId) {
         $dbSubscriber = $this->find()
                 ->where(['SubscriberId' => $subscriberId])
                 ->first();
-        
-        if($dbSubscriber){
+
+        if ($dbSubscriber) {
             $dbSubscriber->SubscriberName = $subscriberProfileUpdateRequest->name;
             $dbSubscriber->EmailId = $subscriberProfileUpdateRequest->emailId;
             $dbSubscriber->Password = $subscriberProfileUpdateRequest->password;
@@ -173,18 +173,18 @@ class SubscribersTable extends Table {
             $dbSubscriber->MobileNo = $subscriberProfileUpdateRequest->mobileNo;
             $dbSubscriber->WebsiteUrl = $subscriberProfileUpdateRequest->websiteUrl;
             $dbSubscriber->CountryOfResidence = $subscriberProfileUpdateRequest->country;
-            if($dbSubscriber->Stype === CORPORATE_SUB_TYPE){
+            if ($dbSubscriber->Stype === CORPORATE_SUB_TYPE) {
                 $dbSubscriber->BusinessContactPerson = $subscriberProfileUpdateRequest->contactPerson;
             }
-            if($dbSubscriber->Stype === FREELANCE_SUB_TYPE){
+            if ($dbSubscriber->Stype === FREELANCE_SUB_TYPE) {
                 $dbSubscriber->Nickname = $subscriberProfileUpdateRequest->nickName;
             }
-                    
-            if($this->save($dbSubscriber)){
+
+            if ($this->save($dbSubscriber)) {
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -195,8 +195,22 @@ class SubscribersTable extends Table {
     public function validateSubscriber($subscriberUserDetails) {
         $validated = $this->getTable()->exists(['SubscriberId' => $subscriberUserDetails->subscriberId,
             'EmailId' => $subscriberUserDetails->emailId, 'Password' => $subscriberUserDetails->password]);
-        
+
         return $validated;
+    }
+
+    /**
+     * Gets subscriber type from databse
+     * @param int $subscriberId
+     * @return int
+     */
+    public function getSubscriberType($subscriberId) {
+        $result = $this->getTable()->find()
+                ->where(['SubscriberId' => $subscriberId])
+                ->select(['Stype']) 
+                ->first();
+        
+        return $result->Stype;
     }
 
 }

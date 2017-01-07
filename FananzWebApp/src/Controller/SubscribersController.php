@@ -74,13 +74,14 @@ class SubscribersController extends AppController {
 
         $subscriberProfileUpdateRequest = \App\Dto\SubscriberProfileUpdateRequestDto::Deserialize($this->postedData);
         $updateSuccess = $this->Subscribers->updateSubscriberProfile(
-                $subscriberProfileUpdateRequest,  $this->postedSubscriberData->subscriberId);
+                $subscriberProfileUpdateRequest, $this->postedSubscriberData->subscriberId);
         if ($updateSuccess) {
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(116));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(217));
         }
     }
+
 
     /**
      * Add method
