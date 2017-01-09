@@ -25,7 +25,7 @@ define('PP_SCR', 'EJ_N8rhkjhAB2HbWVLDb0KhwmC77-hb-npOSryOffpTmwBHYgk5PHF7QAKT54N
  */
 define('PYMT_STATUS_INITIATED', 0);
 define('PYMT_STATUS_APPROVED', 1);
-define('PYMT_STATUS_COMPLETED', 2);
+define('PYMT_STATUS_REJECTED', 2);
 /**
  * Payments to be given for freelance and Corporates
  */

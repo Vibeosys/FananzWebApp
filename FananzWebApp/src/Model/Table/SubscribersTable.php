@@ -207,10 +207,32 @@ class SubscribersTable extends Table {
     public function getSubscriberType($subscriberId) {
         $result = $this->getTable()->find()
                 ->where(['SubscriberId' => $subscriberId])
-                ->select(['Stype']) 
+                ->select(['Stype'])
+                ->first();
+
+        return $result->Stype;
+    }
+
+    /**
+     * Update subscriber subscription information
+     * @param int $subscriberId
+     * @return boolean
+     */
+    public function updateSubscriptionInfo($subscriberId) {
+        $dbSubcriberRecord = $this->getTable()->find()
+                ->where(['SubscriberId' => $subscriberId])
+                ->select(['IsSubscribed', 'SubscriptionDate', 'SubscriberId'])
                 ->first();
         
-        return $result->Stype;
+        if ($dbSubcriberRecord) {
+            $dbSubcriberRecord->IsSubscribed = 1;
+            $tm = new \Cake\I18n\Time();
+            $dbSubcriberRecord->SubscriptionDate = $tm->now();
+            if($this->getTable()->save($dbSubcriberRecord)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

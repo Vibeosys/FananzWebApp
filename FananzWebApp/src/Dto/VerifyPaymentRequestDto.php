@@ -9,16 +9,14 @@
 namespace App\Dto;
 
 /**
- * Description of PpTransactionInitiationResponseDto
+ * Description of VerifyPaymentRequestDto
  *
  * @author anand
  */
-class PpTransactionInitiationResponseDto {
+class VerifyPaymentRequestDto extends JsonDeserializer {
+
     //put your code here
-    //public $paymentJson;
-    public $clientId;
-    public $invoiceNumber;
-    public $amount;
-    public $currency;
-    public $amountDesc;
+    public $paypalId;
+    public $invoiceNo;
+
 }

@@ -29,66 +29,129 @@ class PptransactionsController extends AppController {
             $amountToCollect = CORPORATE_PAYMENT;
         }
 
-        $clientId = PP_CL_ID;
-        $clientSecret = PP_SCR;
-        $credentials = new \PayPal\Auth\OAuthTokenCredential($clientId, $clientSecret);
-        $accessToken = $credentials->getAccessToken();
+        /* $clientId = PP_CL_ID;
+          $clientSecret = PP_SCR;
+          $credentials = new \PayPal\Auth\OAuthTokenCredential($clientId, $clientSecret);
+          $accessToken = $credentials->getAccessToken(); */
         $dt = new \Cake\I18n\Time();
         $dtm = $dt->getTimestamp();
-        $invoiceNumber = 'FNZ-' . $dtm . '-' . $this->postedSubscriberData->subscriberId;
+        $invoiceNumber = 'FNZ-' . $this->postedSubscriberData->subscriberId . '-' . $dtm;
 
-        $paymentJson = $this->buildPaymentJson($credentials, $invoiceNumber);
+        //$paymentJson = $this->buildPaymentJson($credentials, $invoiceNumber);
 
         $initiateSuccess = $this->Pptransactions->initiateNewTransaction
-                ($invoiceNumber, $accessToken, $amountToCollect, $this->postedSubscriberData->subscriberId);
+                ($invoiceNumber, $amountToCollect, $this->postedSubscriberData->subscriberId);
         if ($initiateSuccess) {
             $ppTransactionResponse = new \App\Dto\PpTransactionInitiationResponseDto();
-            $ppTransactionResponse->subscriberId = $this->postedSubscriberData->subscriberId;
-            $ppTransactionResponse->paymentJson = $paymentJson;
-            $ppTransactionResponse->accessToken = $accessToken;
+            $ppTransactionResponse->amountDesc = 'One time subscription charges';
+            $ppTransactionResponse->amount = $amountToCollect;
+            $ppTransactionResponse->currency = PAYMENT_CURRENCY;
+            $ppTransactionResponse->clientId = PP_CL_ID;
             $ppTransactionResponse->invoiceNumber = $invoiceNumber;
-            $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(118, $ppTransactionResponse));
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(120, $ppTransactionResponse));
         } else {
-            $this->response->body(\App\Dto\BaseResponseDto::prepareError(217));
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(221));
         }
     }
 
-    private function buildPaymentJson($credentials, $invoiceNumber) {
+    public function verifyPayment() {
+        $this->apiInitialize();
+
+        $isAuthorized = $this->isSubscriberAuthorised();
+        if (!$isAuthorized) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(206));
+            return;
+        }
+
+        $verifyPaymentRequest = \App\Dto\VerifyPaymentRequestDto::Deserialize($this->postedData);
+        $clientId = PP_CL_ID;
+        $clientSecret = PP_SCR;
+        $credentials = new \PayPal\Auth\OAuthTokenCredential($clientId, $clientSecret);
         $apiContext = new \PayPal\Rest\ApiContext($credentials);
         $paypalPayment = new \PayPal\Api\Payment();
-        $redirectUrls = new \PayPal\Api\RedirectUrls();
-        $redirectUrls->setReturnUrl('http://192.168.1.21/paypal/returnurl');
-        $redirectUrls->setCancelUrl('http://192.168.1.21/paypal/cancelurl');
-        $paypalPayment->setRedirectUrls($redirectUrls);
-        $payer = new \PayPal\Api\Payer();
-        $payer->setPaymentMethod('paypal');
-        $paypalPayment->setPayer($payer);
-        $transaction = new \PayPal\Api\Transaction();
-        $transactions[0] = $transaction;
-        $invoice = new \PayPal\Api\InvoiceNumber();
-        $invoice->setNumber($invoiceNumber);
-        //$invoice = new \PayPal\Api\InvoiceNumber($invoiceNumber);
-        $amount = new \PayPal\Api\Amount();
-        $amount->setCurrency(PAYMENT_CURRENCY);
-        //$amount->setDetails('Subscription charges');
-        $amount->setTotal(2000);
-        $transaction->setAmount($amount);
-        //$transaction->setInvoiceNumber($invoice);
-        $itemList = new \PayPal\Api\ItemList();
-        $item = new \PayPal\Api\Item();
-        $item->setName('Subscription Fees');
-        //$item->setDescription('Payment from paypal');
-        $item->setPrice(2000);
-        $item->setQuantity(1);
-        $item->setCurrency(PAYMENT_CURRENCY);
-        $itemList->addItem($item);
-        $transaction->setItemList($itemList);
-        $paypalPayment->setTransactions($transactions);
-        $paypalPayment->setIntent('authorize');
-        $paymentJson = $paypalPayment->create($apiContext);
+        $paymentStatus = '';
+        //$paymentInfo = $paypalPayment->get($verifyPaymentRequest->paypalId, $apiContext);
+        $paymentInfo = $paypalPayment->get($verifyPaymentRequest->paypalId, $apiContext);
+        $paymentState = $paymentInfo->getState();
 
-        return $paymentJson->toJSON();
+        $payer = $paymentInfo->getPayer();
+        $paymentMethod = $payer->getPaymentMethod();
+        $transactions = $paymentInfo->getTransactions();
+        $invNo = '';
+        foreach ($transactions as $paypalTransaction) {
+            //$desc = $paypalTransaction->getDescription(); 
+            $invNo = $paypalTransaction->getInvoiceNumber();
+        }
+        if ($paymentState == 'approved') {
+            $paymentStatus = PYMT_STATUS_APPROVED;
+        } else {
+            $paymentStatus = PYMT_STATUS_REJECTED;
+        }
+
+        $updateSuccess = $this->Pptransactions->updateTransactionDetails($invNo, $this->postedSubscriberData->subscriberId, 
+                $verifyPaymentRequest->paypalId, $paymentStatus, $paymentMethod);
+        if (!$updateSuccess) {
+            \Cake\Log\Log::error('Payment table could not be updated for ' . $verifyPaymentRequest->invoiceNo);
+        }
+
+        if ($paymentStatus != PYMT_STATUS_APPROVED) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(220));
+
+            //TODO: return with rejected
+            \Cake\Log\Log::error('payment info received from Paypal - ' . $paymentInfo->toJSON());
+            return;
+        }
+
+        $subscribersTable = new \App\Model\Table\SubscribersTable();
+        $subscriptionUpdateSuccess = $subscribersTable->updateSubscriptionInfo($this->postedSubscriberData->subscriberId);
+        $verifyPaymentResponse = new \App\Dto\VerifyPaymentResponseDto();
+        $verifyPaymentResponse->paymentSuccess = true;
+
+        if ($subscriptionUpdateSuccess) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(119, $verifyPaymentResponse));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(220));
+        }
+
+        //print_r($paymentInfo);
     }
+
+    /*   private function buildPaymentJson($credentials, $invoiceNumber) {
+      $apiContext = new \PayPal\Rest\ApiContext($credentials);
+      $paypalPayment = new \PayPal\Api\Payment();
+      $redirectUrls = new \PayPal\Api\RedirectUrls();
+      $redirectUrls->setReturnUrl('http://192.168.1.21/paypal/returnurl');
+      $redirectUrls->setCancelUrl('http://192.168.1.21/paypal/cancelurl');
+      $paypalPayment->setRedirectUrls($redirectUrls);
+      $payer = new \PayPal\Api\Payer();
+      $payer->setPaymentMethod('paypal');
+      $paypalPayment->setPayer($payer);
+      $transaction = new \PayPal\Api\Transaction();
+      $transactions[0] = $transaction;
+      $invoice = new \PayPal\Api\InvoiceNumber();
+      $invoice->setNumber($invoiceNumber);
+      //$invoice = new \PayPal\Api\InvoiceNumber($invoiceNumber);
+      $amount = new \PayPal\Api\Amount();
+      $amount->setCurrency(PAYMENT_CURRENCY);
+      //$amount->setDetails('Subscription charges');
+      $amount->setTotal(2000);
+      $transaction->setAmount($amount);
+      //$transaction->setInvoiceNumber($invoice);
+      $itemList = new \PayPal\Api\ItemList();
+      $item = new \PayPal\Api\Item();
+      $item->setName('Subscription Fees');
+      //$item->setDescription('Payment from paypal');
+      $item->setPrice(2000);
+      $item->setQuantity(1);
+      $item->setCurrency(PAYMENT_CURRENCY);
+      $itemList->addItem($item);
+      $transaction->setItemList($itemList);
+      $paypalPayment->setTransactions($transactions);
+      $paypalPayment->setIntent('authorize');
+      $paymentJson = $paypalPayment->create($apiContext);
+
+      return $paymentJson->toJSON();
+      } */
 
     /**
      * Index method

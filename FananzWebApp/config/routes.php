@@ -68,6 +68,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('updatesubprofile', ['controller' => 'Subscribers', 'action' => 'updateSubscriber']);
     $routes->connect('initiatepay', ['controller' => 'Pptransactions', 'action' => 'initiatePayment']);
     $routes->connect('inactivateportfolio', ['controller' => 'Portfolio', 'action' => 'inactivatePortfolio']);
+    $routes->connect('verifypayment', ['controller' => 'Pptransactions', 'action' => 'verifyPayment']);
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */

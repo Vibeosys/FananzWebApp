@@ -9,16 +9,13 @@
 namespace App\Dto;
 
 /**
- * Description of PpTransactionInitiationResponseDto
+ * Description of VerifyPaymentResponseDto
  *
  * @author anand
  */
-class PpTransactionInitiationResponseDto {
+class VerifyPaymentResponseDto {
+
     //put your code here
-    //public $paymentJson;
-    public $clientId;
-    public $invoiceNumber;
-    public $amount;
-    public $currency;
-    public $amountDesc;
+    public $paymentSuccess;
+
 }

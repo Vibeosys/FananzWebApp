@@ -76,16 +76,34 @@ class PptransactionsTable extends Table {
         return $validator;
     }
 
-    public function initiateNewTransaction($transId, $accessToken, $amount, $subscriberId) {
+    public function initiateNewTransaction($transId, $amount, $subscriberId) {
         $dbTransaction = $this->newEntity();
-        $dbTransaction->AccessToken = $accessToken;
+        //$dbTransaction->AccessToken = $accessToken;
         $dbTransaction->TransId = $transId;
         $dbTransaction->Amount = $amount;
         $dbTransaction->SubscriberId = $subscriberId;
         $dbTransaction->Currency = PAYMENT_CURRENCY;
         $dbTransaction->PaymentStatus = PYMT_STATUS_INITIATED;
-        if ($this->save($dbTransaction))
+        if ($this->save($dbTransaction)) {
             return true;
+        }
+        return false;
+    }
+
+    public function updateTransactionDetails($invoiceNo, $subscriberId, $paypalId,
+            $paymentStatus, $paymentMethod) {
+        $dbPayment = $this->find()
+                ->where(['TransId' => $invoiceNo, 'SubscriberId' => $subscriberId])
+                ->first();
+        if ($dbPayment) {
+            $dbPayment->PaymentMethod = $paymentMethod;
+            $dbPayment->CompletionDate = new \Cake\I18n\Time();
+            $dbPayment->PaypalTransId = $paypalId;
+            $dbPayment->PaymentStatus = $paymentStatus;
+            if ($this->save($dbPayment)) {
+                return true;
+            }
+        }
         return false;
     }
 

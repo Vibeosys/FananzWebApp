@@ -96,8 +96,8 @@ class PortfolioTable extends Table {
         //If the portfolio is found and gets updated then return true else false
         if ($dbPortfolio) {
             $dbPortfolio->CategoryId = $portfolioUpdateRequest->categoryId;
-            if ($portfolioUpdateRequest->subCategoryId !== 0) {
-                $dbPortfolio->SubcategoryId = $portfolioUpdateRequest->subCategoryId;
+            if ($portfolioUpdateRequest->subCategoryId == 0) {
+                $dbPortfolio->SubcategoryId = NULL;
             }
             $dbPortfolio->FacebookLink = $portfolioUpdateRequest->fbLink;
             $dbPortfolio->YoutubeLink = $portfolioUpdateRequest->youtubeLink;

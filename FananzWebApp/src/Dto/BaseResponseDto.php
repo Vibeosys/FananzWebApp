@@ -63,7 +63,9 @@ class BaseResponseDto {
         216 => 'Portfolio could not be updated, please try again',
         217 => 'Subscriber profile could not be updated, please try again',
         218 => 'Could not initiate payment with Paypal',
-        219 => 'Portfolio could not be inactivated'
+        219 => 'Portfolio could not be inactivated',
+        220 => 'Payment did not go through, please try again later',
+        221 => 'Payment could not be initiated'
        ];
     
     protected $successDictionary = [       
@@ -84,7 +86,9 @@ class BaseResponseDto {
         115 => 'Portfolio updated successfully',
         116 => 'Subscriber profile updated successfully',
         117 => 'Payment initiation',
-        118 => 'Portfolio inactivated successfully'
+        118 => 'Portfolio inactivated successfully',
+        119 => 'Payment was successful, please login and add portfolio',
+        120 => 'Payment initiated successfully'
        ];
     
 }
