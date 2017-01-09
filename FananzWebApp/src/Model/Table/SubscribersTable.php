@@ -110,6 +110,7 @@ class SubscribersTable extends Table {
     /**
      * Registers subscriber with database
      * @param \App\Dto\SubscriberRegistrationDto $subscriber
+     * @return int subscriber id or zero
      */
     public function registerSubscriber($subscriber) {
         $newSubscriber = $this->newEntity();
@@ -125,9 +126,9 @@ class SubscribersTable extends Table {
         $newSubscriber->CountryOfResidence = $subscriber->country;
         $newSubscriber->IsActive = 1;
         if ($this->save($newSubscriber)) {
-            return true;
+            return $newSubscriber->SubscriberId;
         }
-        return false;
+        return 0;
     }
 
     /**

@@ -56,9 +56,11 @@ class SubscribersController extends AppController {
         //in case of corporate the subscr type is 1 or in case of freelance it is 2
         $subscriberDetails->subScrType = strtolower($subscriberDetails->subType) == 'c' ?
                 CORPORATE_SUB_TYPE : FREELANCE_SUB_TYPE;
-        $registerSuccess = $this->Subscribers->registerSubscriber($subscriberDetails);
-        if ($registerSuccess) {
-            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(103));
+        $subscriberId = $this->Subscribers->registerSubscriber($subscriberDetails);
+        if ($subscriberId) {
+            $subscriberRegistrationResponse = new \App\Dto\SubscriberRegistrationResponseDto();
+            $subscriberRegistrationResponse->subscriberId = $subscriberId;
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(103, $subscriberRegistrationResponse));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(203));
         }
