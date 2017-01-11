@@ -29,9 +29,13 @@ define('PYMT_STATUS_REJECTED', 2);
 /**
  * Payments to be given for freelance and Corporates
  */
-define('FREELANCE_PAYMENT', 2000);
-define('CORPORATE_PAYMENT', 100);
+define('FREELANCE_PAYMENT', 160);
+define('CORPORATE_PAYMENT', 320);
 /**
  * Payment currency AED
  */
-define('PAYMENT_CURRENCY', 'AED');
+define('PAYMENT_CURRENCY', 'USD');
+/**
+ * PP environment for mobile
+ */
+define('PP_ENV', 'sandbox');

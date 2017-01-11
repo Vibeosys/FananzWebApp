@@ -203,8 +203,7 @@ class PortfolioTable extends Table {
         $portfolioDetailsResponse = NULL;
         $results = $this->find()
                 ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])
-                ->where(['Portfolio.IsActive' => 1,
-                    'subscribers.IsSubscribed' => 1,
+                ->where([ 'subscribers.IsSubscribed' => 1,
                     'Portfolio.PortfolioId' => $portfolioData->portfolioId])
                 ->select(['PortfolioId',
                     'subscribers.SubscriberName',

@@ -48,6 +48,7 @@ class PptransactionsController extends AppController {
             $ppTransactionResponse->currency = PAYMENT_CURRENCY;
             $ppTransactionResponse->clientId = PP_CL_ID;
             $ppTransactionResponse->invoiceNumber = $invoiceNumber;
+            $ppTransactionResponse->environment = PP_ENV;
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(120, $ppTransactionResponse));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(221));

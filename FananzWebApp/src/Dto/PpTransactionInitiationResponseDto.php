@@ -21,4 +21,5 @@ class PpTransactionInitiationResponseDto {
     public $amount;
     public $currency;
     public $amountDesc;
+    public $environment;
 }
