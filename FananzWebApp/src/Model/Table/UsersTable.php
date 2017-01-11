@@ -115,6 +115,26 @@ class UsersTable extends Table {
         return $userInfo;
     }
     
+        /**
+     * Gets user id for email id
+     * @param string $emailId
+     * @return \App\Dto\EmailPasswordDto $userInfo
+     */
+    public function getUserPasswordInfo($emailId) {
+        $userInfo = NULL;
+        $result = $this->find()
+                ->where(['EmailId' => $emailId])
+                ->select(['UserId', 'FirstName', 'LastName', 'Password'])
+                ->first();
+        //IF user id is received then return the same
+        if ($result) {
+            $userInfo = new \App\Dto\EmailPasswordDto();
+            $userInfo->name = $result->FirstName . " ".$result->LastName;
+            $userInfo->password = $result->Password;
+        }
+        return $userInfo;
+    }
+    
     /**
      * Gets information about the user
      * @param int $userId

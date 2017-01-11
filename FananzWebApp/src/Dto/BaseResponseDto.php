@@ -65,7 +65,9 @@ class BaseResponseDto {
         218 => 'Could not initiate payment with Paypal',
         219 => 'Portfolio could not be inactivated',
         220 => 'Payment did not go through, please try again later',
-        221 => 'Payment could not be initiated'
+        221 => 'Payment could not be initiated',
+        222 => 'This email id already exists, please choose another one or try forgot password',
+        223 => 'Sorry, email addresses supplied, is not available with us'
        ];
     
     protected $successDictionary = [       
@@ -88,7 +90,8 @@ class BaseResponseDto {
         117 => 'Payment initiation',
         118 => 'Portfolio inactivated successfully',
         119 => 'Payment was successful, please login and add portfolio',
-        120 => 'Payment initiated successfully'
+        120 => 'Payment initiated successfully',
+        121 => 'Forgot password email is sent successfully'
        ];
     
 }

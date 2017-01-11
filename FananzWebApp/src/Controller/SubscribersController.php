@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+//use App\Utils\ForgotPasswordEmail;
 
 /**
  * Subscribers Controller
@@ -10,6 +11,8 @@ use App\Controller\AppController;
  * @property \App\Model\Table\SubscribersTable $Subscribers
  */
 class SubscribersController extends AppController {
+
+    use \App\Utils\ForgotPasswordTrait;
 
     /**
      * Index method
@@ -56,6 +59,14 @@ class SubscribersController extends AppController {
         //in case of corporate the subscr type is 1 or in case of freelance it is 2
         $subscriberDetails->subScrType = strtolower($subscriberDetails->subType) == 'c' ?
                 CORPORATE_SUB_TYPE : FREELANCE_SUB_TYPE;
+        //Check if subscriber with same EMAIL already exists
+        $isDuplicateSubcriber = $this->Subscribers->isSubscriberExists($subscriberDetails->emailId);
+        if ($isDuplicateSubcriber) {
+            //Throw error
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(222));
+            return;
+        }
+        //ELSE register subscriber
         $subscriberId = $this->Subscribers->registerSubscriber($subscriberDetails);
         if ($subscriberId) {
             $subscriberRegistrationResponse = new \App\Dto\SubscriberRegistrationResponseDto();
@@ -84,6 +95,24 @@ class SubscribersController extends AppController {
         }
     }
 
+    public function forgotPassword() {
+        $this->apiInitialize();
+        $forgotPasswordRequest = \App\Dto\ForgotPasswordRequestDto::Deserialize($this->postedData);
+
+        $emailPasswordDto = $this->Subscribers->getSubscriberInfo($forgotPasswordRequest->emailId);
+        if ($emailPasswordDto) {
+            //$emailSuccess = false;
+            try {
+                $emailSuccess = $this->sendForgotPasswordEmail($forgotPasswordRequest->emailId, 
+                        $emailPasswordDto->name, $emailPasswordDto->password);
+            } catch (\Exception $exc) {
+                \Cake\Log\Log::error('Could not send forgot password email ' . $exc->getTraceAsString());
+            }
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(121));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(223));
+        }
+    }
 
     /**
      * Add method

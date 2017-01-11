@@ -22,5 +22,8 @@ class SubscriberPostSigninDetailsDto {
     public $sType;
     public $isSubscribed;
     public $subscriptionDate;
-
+    public $telNo;
+    public $mobileNo;
+    public $websiteUrl;
+    public $country;
 }

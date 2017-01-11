@@ -11,6 +11,8 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController {
 
+    use \App\Utils\ForgotPasswordTrait;
+    
     protected $_toEmailAddresses = [
         'anand@vibeosys.com',
         //'kaladdin@gmail.com',
@@ -86,6 +88,25 @@ class UsersController extends AppController {
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(108, $userSignupResponse));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(210));
+        }
+    }
+
+    public function forgotPassword(){
+        $this->apiInitialize();
+        $forgotPasswordRequest = \App\Dto\ForgotPasswordRequestDto::Deserialize($this->postedData);
+
+        $emailPasswordDto = $this->Users->getUserPasswordInfo($forgotPasswordRequest->emailId);
+        if ($emailPasswordDto) {
+            //$emailSuccess = false;
+            try {
+                $emailSuccess = $this->sendForgotPasswordEmail($forgotPasswordRequest->emailId, 
+                        $emailPasswordDto->name, $emailPasswordDto->password);
+            } catch (\Exception $exc) {
+                \Cake\Log\Log::error('Could not send forgot password email ' . $exc->getTraceAsString());
+            }
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(121));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(223));
         }
     }
 

@@ -141,16 +141,30 @@ class SubscribersTable extends Table {
         $result = $this->find()
                 ->where(['EmailId' => $subscriberLoginDetails->emailId,
                     'Password' => $subscriberLoginDetails->password, 'IsActive' => 1])
-                ->select(['SubscriberId', 'SubscriberName', 'IsSubscribed', 'SubscriptionDate', 'Stype', 'NickName'])
+                ->select(['SubscriberId',
+                    'SubscriberName',
+                    'IsSubscribed',
+                    'SubscriptionDate',
+                    'Stype',
+                    'Nickname',
+                    'TelephoneNo',
+                    'MobileNo',
+                    'WebsiteUrl',
+                    'CountryOfResidence'])
                 ->first();
 
         if ($result) {
             $subscriberDetails = new \App\Dto\SubscriberPostSigninDetailsDto();
             $subscriberDetails->name = $result->SubscriberName;
-            $subscriberDetails->nickName = $result->NickName;
+            $subscriberDetails->nickName = $result->Nickname == NULL ? "" : $result->Nickname;
             $subscriberDetails->sType = $result->Stype == CORPORATE_SUB_TYPE ? 'c' : 'f';
             $subscriberDetails->isSubscribed = $result->IsSubscribed ? true : false;
             $subscriberDetails->subscriberId = $result->SubscriberId;
+            $subscriberDetails->telNo = $result->TelephoneNo;
+            $subscriberDetails->mobileNo = $result->MobileNo;
+            $subscriberDetails->websiteUrl = $result->WebsiteUrl;
+            $subscriberDetails->country = $result->CountryOfResidence;
+            $subscriberDetails->subscriptionDate = $result->SubscriptionDate;
         }
         return $subscriberDetails;
     }
@@ -190,6 +204,26 @@ class SubscribersTable extends Table {
     }
 
     /**
+     * Gets subscriber info for the requested email id
+     * @param string $emailId
+     * @return \App\Dto\EmailPasswordDto
+     */
+    public function getSubscriberInfo($emailId) {
+        $emailPassword = null;
+        $dbSubscriber = $this->find()
+                ->where(['EmailId' => $emailId])
+                ->select(['SubscriberName', 'Password'])
+                ->first();
+
+        if ($dbSubscriber) {
+            $emailPassword = new \App\Dto\EmailPasswordDto();
+            $emailPassword->name = $dbSubscriber->SubscriberName;
+            $emailPassword->password = $dbSubscriber->Password;
+        }
+        return $emailPassword;
+    }
+
+    /**
      * Validates subscriber against login details
      * @param \App\Dto\SubscriberUserDto $subscriberUserDetails
      */
@@ -198,6 +232,17 @@ class SubscribersTable extends Table {
             'EmailId' => $subscriberUserDetails->emailId, 'Password' => $subscriberUserDetails->password]);
 
         return $validated;
+    }
+
+    /**
+     * Check if subscriber email id already exist
+     * @param string $emailId
+     * @return bool
+     */
+    public function isSubscriberExists($emailId) {
+        $subscriberExists = $this->getTable()->exists(['EmailId' => $emailId]);
+
+        return $subscriberExists;
     }
 
     /**
@@ -224,12 +269,12 @@ class SubscribersTable extends Table {
                 ->where(['SubscriberId' => $subscriberId])
                 ->select(['IsSubscribed', 'SubscriptionDate', 'SubscriberId'])
                 ->first();
-        
+
         if ($dbSubcriberRecord) {
             $dbSubcriberRecord->IsSubscribed = 1;
             $tm = new \Cake\I18n\Time();
             $dbSubcriberRecord->SubscriptionDate = $tm->now();
-            if($this->getTable()->save($dbSubcriberRecord)){
+            if ($this->getTable()->save($dbSubcriberRecord)) {
                 return true;
             }
         }

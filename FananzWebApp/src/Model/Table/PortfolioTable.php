@@ -304,6 +304,7 @@ class PortfolioTable extends Table {
                     'subcategories.SubCatName',
                     'MinPrice',
                     'MaxPrice',
+                    'Portfolio.IsActive',
                     'portfolio_photos.PhotoUrl'])
                 ->orderDesc('Portfolio.CreatedDate')
                 ->all();
@@ -318,6 +319,7 @@ class PortfolioTable extends Table {
             $subscriberPortfolioResponse->minPrice = $resultRecord->MinPrice;
             $subscriberPortfolioResponse->maxPrice = $resultRecord->MaxPrice;
             $subscriberPortfolioResponse->coverImageUrl = $resultRecord->portfolio_photo->PhotoUrl;
+            $subscriberPortfolioResponse->isActive = $resultRecord->IsActive;
             $portfolioList[$recordCounter++] = $subscriberPortfolioResponse;
         }
         return $portfolioList;

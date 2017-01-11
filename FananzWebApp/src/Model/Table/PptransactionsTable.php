@@ -78,7 +78,6 @@ class PptransactionsTable extends Table {
 
     public function initiateNewTransaction($transId, $amount, $subscriberId) {
         $dbTransaction = $this->newEntity();
-        //$dbTransaction->AccessToken = $accessToken;
         $dbTransaction->TransId = $transId;
         $dbTransaction->Amount = $amount;
         $dbTransaction->SubscriberId = $subscriberId;

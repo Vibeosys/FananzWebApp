@@ -9,17 +9,12 @@
 namespace App\Dto;
 
 /**
- * Description of SubscriberPortfolioListResponseDto
+ * Description of EmailPasswordDto
  *
  * @author anand
  */
-class SubscriberPortfolioListResponseDto {
+class EmailPasswordDto {
     //put your code here
-    public $portfolioId;
-    public $coverImageUrl;
-    public $category;
-    public $subCategory;
-    public $minPrice;
-    public $maxPrice;
-    public $isActive;
+    public $name;
+    public $password;
 }
