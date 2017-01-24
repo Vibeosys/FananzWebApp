@@ -99,6 +99,9 @@ class PortfolioTable extends Table {
             if ($portfolioUpdateRequest->subCategoryId == 0) {
                 $dbPortfolio->SubcategoryId = NULL;
             }
+            else{
+                $dbPortfolio->SubcategoryId = $portfolioUpdateRequest->subCategoryId;
+            }
             $dbPortfolio->FacebookLink = $portfolioUpdateRequest->fbLink;
             $dbPortfolio->YoutubeLink = $portfolioUpdateRequest->youtubeLink;
             $dbPortfolio->AboutPortfolio = $portfolioUpdateRequest->aboutUs;

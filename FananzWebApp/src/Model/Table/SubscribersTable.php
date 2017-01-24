@@ -281,4 +281,31 @@ class SubscribersTable extends Table {
         return false;
     }
 
+    /**
+     * Gets subscriber details for a given subscriber id
+     * @param type $subscriberId
+     * @return \App\Dto\SubscriberPayLaterDto
+     */
+    public function getSubscriberDetails($subscriberId){
+        $subscriberDetails = NULL;
+        $result = $this->find()
+                ->where(['SubscriberId' => $subscriberId])
+                ->select(['SubscriberId',
+                    'SubscriberName',
+                    'Stype',
+                    'EmailId',
+                    'MobileNo',
+                    'CountryOfResidence'])
+                ->first();
+
+        if ($result) {
+            $subscriberDetails = new \App\Dto\SubscriberPayLaterDto();
+            $subscriberDetails->name = $result->SubscriberName;
+            $subscriberDetails->sType = $result->Stype == CORPORATE_SUB_TYPE ? 'Corporate' : 'Freelance';
+            $subscriberDetails->mobileNo = $result->MobileNo;
+            $subscriberDetails->country = $result->CountryOfResidence;
+            $subscriberDetails->emailId = $result->EmailId;
+        }
+        return $subscriberDetails;
+    }
 }

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-//use App\Utils\ForgotPasswordEmail;
 
 /**
  * Subscribers Controller
@@ -11,8 +10,6 @@ use App\Controller\AppController;
  * @property \App\Model\Table\SubscribersTable $Subscribers
  */
 class SubscribersController extends AppController {
-
-    use \App\Utils\ForgotPasswordTrait;
 
     /**
      * Index method
@@ -69,6 +66,13 @@ class SubscribersController extends AppController {
         //ELSE register subscriber
         $subscriberId = $this->Subscribers->registerSubscriber($subscriberDetails);
         if ($subscriberId) {
+            //Send welcome email
+            try {
+                $subscriberDetails = $this->Subscribers->getSubscriberDetails($subscriberId);
+                \App\Utils\EmailSenderUtility::sendWelcomeEmail($subscriberDetails);    
+            } catch (\Exception $ex) {
+                \Cake\Log\Log::error('Error while sending welcome email '. $ex->getTraceAsString());
+            }
             $subscriberRegistrationResponse = new \App\Dto\SubscriberRegistrationResponseDto();
             $subscriberRegistrationResponse->subscriberId = $subscriberId;
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(103, $subscriberRegistrationResponse));
@@ -103,14 +107,34 @@ class SubscribersController extends AppController {
         if ($emailPasswordDto) {
             //$emailSuccess = false;
             try {
-                $emailSuccess = $this->sendForgotPasswordEmail($forgotPasswordRequest->emailId, 
-                        $emailPasswordDto->name, $emailPasswordDto->password);
+                \App\Utils\EmailSenderUtility::sendForgotPasswordEmail($forgotPasswordRequest->emailId, $emailPasswordDto->name, $emailPasswordDto->password);
             } catch (\Exception $exc) {
                 \Cake\Log\Log::error('Could not send forgot password email ' . $exc->getTraceAsString());
             }
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(121));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(223));
+        }
+    }
+
+    public function payLaterEmail() {
+        $this->apiInitialize();
+        $paylaterRequest = \App\Dto\SubscriberPayLaterRequest::Deserialize($this->postedData);
+        $subscriberDetails = $this->Subscribers->getSubscriberDetails($paylaterRequest->subscriberId);
+        $emailSendSuccess = false;
+
+        try {
+            if ($subscriberDetails) {
+                \App\Utils\EmailSenderUtility::sendPayLaterEmail($subscriberDetails);
+                $emailSendSuccess = true;
+            }
+        } catch (\Exception $ex) {
+            \Cake\Log\Log::error('Could not send forgot password email ' . $exc->getTraceAsString());
+        }
+        if ($emailSendSuccess) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(123));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(225));
         }
     }
 

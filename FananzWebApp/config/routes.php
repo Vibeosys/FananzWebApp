@@ -71,6 +71,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('verifypayment', ['controller' => 'Pptransactions', 'action' => 'verifyPayment']);
     $routes->connect('subforgotpassword', ['controller' => 'Subscribers', 'action' => 'forgotPassword']);
     $routes->connect('userforgotpassword', ['controller' => 'Users', 'action' => 'forgotPassword']);
+    $routes->connect('contactus', ['controller'=>'Users', 'action' => 'sendContactUsEmail']);
+    $routes->connect('paylateremail', ['controller'=>'Subscribers', 'action' => 'payLaterEmail']);
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */

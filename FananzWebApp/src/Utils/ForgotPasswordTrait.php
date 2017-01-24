@@ -18,14 +18,14 @@ trait ForgotPasswordTrait {
      * @return boolean
      */
     public function sendForgotPasswordEmail($emailId, $name, $password) {
-        $email = new \Cake\Mailer\Email('gcDubaiProfile');
+        /*$email = new \Cake\Mailer\Email('gcDubaiProfile');
         $email->emailFormat('html')->template('ForgotPasswordEmail')
                 ->viewVars(['email' => $emailId, 'name' => $name, 'password' => $password])
                 ->from('info@gc-dubai.com', 'Fananz Support Team')
                 ->to($emailId, $name)
                 ->subject('Fananz forgot password');
         $emailSendSuccess = $email->send();
-        return $emailSendSuccess;
+        return $emailSendSuccess;*/
     }
 
 }

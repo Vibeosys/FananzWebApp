@@ -11,14 +11,6 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController {
 
-    use \App\Utils\ForgotPasswordTrait;
-    
-    protected $_toEmailAddresses = [
-        'anand@vibeosys.com',
-        //'kaladdin@gmail.com',
-        //'Kaladdin@gc-dubai.com'
-    ];
-
     /**
      * Index method
      *
@@ -91,7 +83,7 @@ class UsersController extends AppController {
         }
     }
 
-    public function forgotPassword(){
+    public function forgotPassword() {
         $this->apiInitialize();
         $forgotPasswordRequest = \App\Dto\ForgotPasswordRequestDto::Deserialize($this->postedData);
 
@@ -99,8 +91,9 @@ class UsersController extends AppController {
         if ($emailPasswordDto) {
             //$emailSuccess = false;
             try {
-                $emailSuccess = $this->sendForgotPasswordEmail($forgotPasswordRequest->emailId, 
-                        $emailPasswordDto->name, $emailPasswordDto->password);
+                $emailSuccess = \App\Utils\EmailSenderUtility::sendForgotPasswordEmail(
+                                $forgotPasswordRequest->emailId, $emailPasswordDto->name, $emailPasswordDto->password);
+                //$emailSuccess = $this->sendForgotPasswordEmail();
             } catch (\Exception $exc) {
                 \Cake\Log\Log::error('Could not send forgot password email ' . $exc->getTraceAsString());
             }
@@ -150,7 +143,7 @@ class UsersController extends AppController {
         $emailSuccess = false;
 
         try {
-            $this->sendPortfolioRequestOnEmail(
+            \App\Utils\EmailSenderUtility::sendPortfolioRequestOnEmail(
                     $portfolioInfo, $userInfoReceived, $portfolioRequest->message);
             $emailSuccess = true;
         } catch (\Exception $ex) {
@@ -163,21 +156,26 @@ class UsersController extends AppController {
         $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(110, $portfolioServiceReqRes));
     }
 
-    /**
-     * Sends email to admin about the service request
-     * @param \App\Dto\PortfolioEmailDetailsDto $portfolioInfo
-     * @param \App\Dto\RequestedUserInfoDto $userInfo
-     * @param string $message Message from customer
-     */
-    private function sendPortfolioRequestOnEmail($portfolioInfo, $userInfo, $message) {
-        $email = new \Cake\Mailer\Email('gcDubaiProfile');
-        $email->emailFormat('html')->template('ServiceRequestEmail')
-                ->viewVars(['portfolio' => $portfolioInfo, 'customer' => $userInfo, 'message' => $message])
-                ->from('info@gc-dubai.com', 'Fananz Support Team')
-                ->addTo($this->_toEmailAddresses)
-                ->subject('Fananz service request');
-        $emailSendSuccess = $email->send();
-        return $emailSendSuccess;
+    public function sendContactUsEmail() {
+        $this->apiInitialize();
+        $contactUsRequest = \App\Dto\ContactUsRequestDto::Deserialize($this->postedData);
+        if (!$contactUsRequest) {
+            $this->response->body();
+            return;
+        }
+        $emailSendSuccess = false;
+        try {
+            \App\Utils\EmailSenderUtility::sendContactUsEmail($contactUsRequest);
+            $emailSendSuccess = true;
+        } catch (\Exception $ex) {
+            \Cake\Log\Log::error('Error while sending contact us email - ' . $ex->getTraceAsString());
+        }
+
+        if ($emailSendSuccess) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(122));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(224));
+        }
     }
 
     /**
