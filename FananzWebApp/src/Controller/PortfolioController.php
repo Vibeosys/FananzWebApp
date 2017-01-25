@@ -12,15 +12,64 @@ use App\Controller\AppController;
 class PortfolioController extends AppController {
 
     /**
-     * Index method
-     *
-     * @return \Cake\Network\Response|null
+     * Website method
+     * @param type $categorySubcategoryShortName
      */
-    public function index() {
-        $portfolio = $this->paginate($this->Portfolio);
+    public function view($categorySubcategoryShortName) {
+        $eventCategoriesTable = new \App\Model\Table\EventcategoriesTable();
+        $eventCategoryList = $eventCategoriesTable->getCategoriesAndSubcategories();
 
-        $this->set(compact('portfolio'));
-        $this->set('_serialize', ['portfolio']);
+        $eventSubCategoryTable = New \App\Model\Table\SubcategoriesTable();
+
+        $data = explode("--", $categorySubcategoryShortName);
+        $categoryShortName = $data[0];
+        $subCategoryShortName = $data[1];
+
+        $categoryId = $eventCategoriesTable->getCategoryId($categoryShortName);
+        $subCategoryId = $eventSubCategoryTable->getSubCategoryId($subCategoryShortName);
+
+        $categoryWisePortfolioList = $this->Portfolio->getCategoryWisePortfolioList($categoryId, $subCategoryId);
+
+        // $categoryWisePortfolioData = $this->paginate($categoryWisePortfolioList);
+
+        $this->set(['eventCategoryList' => $eventCategoryList,
+            'categoryId' => $categoryId,
+            'subCategoryId' => $subCategoryId,
+            'portfolioDetails' => $categoryWisePortfolioList
+        ]);
+    }
+
+    /**
+     * Website method
+     */
+    public function resetFilter() {
+        $this->autoRender = false;
+        $categoryId = $this->request->data['categoryId'];
+        $subCategoryId = $this->request->data['subCategoryId'];
+
+        $categoryWisePortfolioList = $this->Portfolio->getCategoryWisePortfolioList($categoryId, $subCategoryId);
+        // $this->set(['portfolioDetails' => $categoryWisePortfolioList]);
+        $this->response->body(json_encode($categoryWisePortfolioList));
+    }
+
+    /**
+     * Website ajax method
+     */
+    public function filteredPortfolios() {
+        $this->autoRender = false;
+
+        $categoryId = $this->request->data['categoryId'];
+        $subCategoryId = $this->request->data['subCategoryId'];
+        $minPrice = $this->request->data['minPrice'];
+        $maxPrice = $this->request->data['maxPrice'];
+        $sortById = $this->request->data['sortById'];
+        // $data = json_encode($id);
+        // $Cat = json_encode($Cat);
+        //echo('ok');
+        $portfolioDetails = $this->Portfolio->getFilteredPortfolioList(
+                $categoryId, $subCategoryId, $minPrice, $maxPrice, $sortById);
+        $this->response->body(json_encode($portfolioDetails));
+        //  $this->set(['portfolioDetails' => json_encode($portfolioDetails)])
     }
 
     public function getPortfolioDetails() {
@@ -122,87 +171,6 @@ class PortfolioController extends AppController {
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(219));
         }
-    }
-
-    /**
-     * View method
-     *
-     * @param string|null $id Portfolio id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null) {
-        $portfolio = $this->Portfolio->get($id, [
-            'contain' => []
-        ]);
-
-        $this->set('portfolio', $portfolio);
-        $this->set('_serialize', ['portfolio']);
-    }
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
-     */
-    public function add() {
-        $portfolio = $this->Portfolio->newEntity();
-        if ($this->request->is('post')) {
-            $portfolio = $this->Portfolio->patchEntity($portfolio, $this->request->data);
-            if ($this->Portfolio->save($portfolio)) {
-                $this->Flash->success(__('The portfolio has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The portfolio could not be saved. Please, try again.'));
-            }
-        }
-        $this->set(compact('portfolio'));
-        $this->set('_serialize', ['portfolio']);
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Portfolio id.
-     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null) {
-        $portfolio = $this->Portfolio->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $portfolio = $this->Portfolio->patchEntity($portfolio, $this->request->data);
-            if ($this->Portfolio->save($portfolio)) {
-                $this->Flash->success(__('The portfolio has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The portfolio could not be saved. Please, try again.'));
-            }
-        }
-        $this->set(compact('portfolio'));
-        $this->set('_serialize', ['portfolio']);
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Portfolio id.
-     * @return \Cake\Network\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null) {
-        $this->request->allowMethod(['post', 'delete']);
-        $portfolio = $this->Portfolio->get($id);
-        if ($this->Portfolio->delete($portfolio)) {
-            $this->Flash->success(__('The portfolio has been deleted.'));
-        } else {
-            $this->Flash->error(__('The portfolio could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
     }
 
 }
