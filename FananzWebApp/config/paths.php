@@ -83,3 +83,7 @@ define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'c
  */
 define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
+/**
+ * Use /VirtualDir to use virtual directory for local use else use blank
+ */
+define('VIRTUAL_DIR_PATH', '/FananzWebApp');

@@ -34,6 +34,10 @@ class EventcategoriesTable extends Table {
         $this->primaryKey('CatId');
     }
 
+    private function connect() {
+        return \Cake\ORM\TableRegistry::get('eventcategories');
+    }
+
     /**
      * Default validation rules.
      *
@@ -107,5 +111,67 @@ class EventcategoriesTable extends Table {
         }
         return $catSubCatList;
     }
+
+    /**
+     * Gets lists of categories and subcategories
+     * @return \App\Dto\FindCategoriesDto
+     */
+    public function getCategoriesAndSubcategories() {
+
+        $this->connect()->hasMany('Subcategories', [
+            'foreignKey' => 'CatId',
+            'className' => 'Subcategories'
+        ]);
+
+        $resultdata = $this->connect()->find('all')
+                ->contain(['Subcategories'])
+                ->where(['IsActive' => 1]);
+
+        //If no results returned then return null
+        if (!$resultdata) {
+            return null;
+        }
+
+        $resultArrayData = $resultdata->toArray();
+        //  $catSubCatList = NULL;
+        $categoriessubcatgories = null;
+        $recordCounter = 0;
+
+        foreach ($resultArrayData as $resultRecordData) {
+            $FindCategoriesRecord = new \App\Dto\FindCategoriesDto();
+            $FindCategoriesRecord->categoryId = $resultRecordData->CatId;
+            $FindCategoriesRecord->category = $resultRecordData->CatName;
+            $FindCategoriesRecord->categoryShortName = $resultRecordData->CatShortName;
+            //Initialize the counters and base objects
+            $subCatRecordCounter = 0;
+            $subCategories = null;
+            foreach ($resultRecordData->subcategories as $subcategoryResult) {
+                $subcategory = new \App\Dto\FindSubcategoryDto();
+                $subcategory->subCategoryId = $subcategoryResult->SubCatId;
+                $subcategory->subCategory = $subcategoryResult->SubCatName;
+                $subcategory->subCategoryShortName = $subcategoryResult->SubCatShortName;
+                $subCategories[$subCatRecordCounter++] = $subcategory;
+            }
+            $FindCategoriesRecord->subCategories = $subCategories;
+            $categoriessubcatgories[$recordCounter++] = $FindCategoriesRecord;
+        }
+        return $categoriessubcatgories;
+    }
+
+    
+    public function getCategoryId($shortName) {
+        $categoryId = 0;
+        $dbCategory = $this->connect()->find()
+                ->where(['catShortName' => $shortName])
+                ->select(['CatId'])
+                ->first();
+
+
+        if ($dbCategory) {
+            $categoryId = $dbCategory->CatId;
+        }
+        return $categoryId;
+    }
+
 
 }

@@ -49,7 +49,6 @@ Router::scope('/', function (RouteBuilder $routes) {
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('portfoliolist', ['controller' => 'Portfolio', 'action' => 'getList']);
     $routes->connect('categorylist', ['controller' => 'Eventcategories', 'action' => 'getList']);
     $routes->connect('registersub', ['controller' => 'Subscribers', 'action' => 'register']);
@@ -71,8 +70,18 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('verifypayment', ['controller' => 'Pptransactions', 'action' => 'verifyPayment']);
     $routes->connect('subforgotpassword', ['controller' => 'Subscribers', 'action' => 'forgotPassword']);
     $routes->connect('userforgotpassword', ['controller' => 'Users', 'action' => 'forgotPassword']);
-    $routes->connect('contactus', ['controller'=>'Users', 'action' => 'sendContactUsEmail']);
-    $routes->connect('paylateremail', ['controller'=>'Subscribers', 'action' => 'payLaterEmail']);
+    $routes->connect('contactus', ['controller' => 'Users', 'action' => 'sendContactUsEmail']);
+    $routes->connect('paylateremail', ['controller' => 'Subscribers', 'action' => 'payLaterEmail']);
+
+    /**
+     * Website endpoints
+     * 
+     */
+    $routes->connect('/', ['controller' => 'HomePage' , 'action' => 'index' ]);
+    Router::connect('/portfolio/*', ['controller' => 'Portfolio', 'action' => 'view']);
+    Router::connect('/portfolio/filteredPortfolios', ['controller' => 'Portfolio', 'action' => 'filteredPortfolios']);
+    Router::connect('/portfolio/resetFilter', ['controller' => 'Portfolio', 'action' => 'resetFiler']);
+
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */

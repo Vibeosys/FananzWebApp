@@ -39,3 +39,9 @@ define('PAYMENT_CURRENCY', 'USD');
  * PP environment for mobile
  */
 define('PP_ENV', 'sandbox');
+/**
+ * Sort by filters for portfolio list
+ */
+define('SORT_BY_POPULAR', 1);
+define('SORT_BY_PRICE_LOW_TO_HIGH', 2);
+define('SORT_BY_PRICE_HIGH_TO_LOW', 3);

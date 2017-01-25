@@ -36,6 +36,29 @@ class SubcategoriesTable extends Table {
             'foreignKey' => 'CatId'
         ]);
     }
+    
+    private function getTable() {
+        return \Cake\ORM\TableRegistry::get('subcategories');
+    }
+    
+    /**
+     * Gets category id for a short name
+     * @param string $subCatShortName
+     * @return int
+     */
+    public function getSubCategoryId($subCatShortName) {
+        $subCategoryId = 0;
+
+        $dbSubcategory = $this->getTable()->find()
+                ->where(['SubCatShortName' => $subCatShortName])
+                ->select(['SubCatId'])
+                ->first();
+
+        if ($dbSubcategory) {
+            $subCategoryId = $dbSubcategory->SubCatId;
+        }
+        return $subCategoryId;
+    }
 
     /**
      * Default validation rules.
