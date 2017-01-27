@@ -11,14 +11,18 @@ use App\Dto\FindSubcategoryDto;
 
 $this->layout = 'false';
 $this->layout = 'home_layout';
+
+echo $this->Html->script('jquery.min.js', ['block' =>'scriptTop']);
+echo $this->Html->script('bootstrap.min.js' , ['block' =>'scriptTop']);
+echo $this->Html->script('custom.js', ['block' =>'scriptTop']);
 ?>
 <header>
     <div class="header-top-w3layouts navbar-fixed-top">
         <div class="container">
             <div class="col-md-6 logo-w3">
-                <a href="index.php">
+                <a href="/">
 
-                    <?= $this->Html->image('logo-medium.png', array('alt' => 'Fananz Logo')); ?>
+<?= $this->Html->image('logo-medium.png', array('alt' => 'Fananz Logo')); ?>
                     <h1 class="no-header">Fananz</h1>
                     <span class="logo-com no-header">.com</span>
                 </a>
@@ -53,32 +57,32 @@ $this->layout = 'home_layout';
                                 <li>
 
 
-                                    <a href="<?= VIRTUAL_DIR_PATH.'/index.php' ?>" class="hyper"  ><span> <?= Home ?></span></a>
+                                    <a href="<?= VIRTUAL_DIR_PATH . '/index.php' ?>" class="hyper"  ><span> <?= Home ?></span></a>
                                 </li>
-                                <?php
-                                foreach ($eventCategoryList as $category) {
-                                    // echo($values->category);
-                                    $isSubcategoryArray = is_array($category->subCategories) && count($category->subCategories) > 0;
-                                    ?>
+<?php
+foreach ($eventCategoryList as $category) {
+    // echo($values->category);
+    $isSubcategoryArray = is_array($category->subCategories) && count($category->subCategories) > 0;
+    ?>
 
 
-                                    <?php
-                                    if ($isSubcategoryArray) {
-                                        ?>
+    <?php
+    if ($isSubcategoryArray) {
+        ?>
 
                                         <li  class="dropdown">
-                                            <?php
-                                        } else {
-                                            ?>
+        <?php
+    } else {
+        ?>
                                         <li>
                                             <?php
                                         }
                                         ?>
 
-                                        <a href="<?= VIRTUAL_DIR_PATH.'/portfolio/' . $category->categoryShortName ?>" class="dropdown-toggle  hyper page-scroll"  ><span><?= $category->category ?>
-                                                <?php
-                                                if ($isSubcategoryArray) {
-                                                    ?>
+                                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName ?>" class="dropdown-toggle  hyper page-scroll"  ><span><?= $category->category ?>
+    <?php
+    if ($isSubcategoryArray) {
+        ?>
                                                     <b class="caret"> </b>
                                                 <?php }
                                                 ?>
@@ -89,28 +93,28 @@ $this->layout = 'home_layout';
                                         <ul class="dropdown-menu multi">
                                             <div class="row">
                                                 <div class="col-sm-4"> 
-                                                    <?php
-                                                    foreach ($category->subCategories as $subCategories) {
-                                                        ?>
+    <?php
+    foreach ($category->subCategories as $subCategories) {
+        ?>
 
 
-                                                        <?php
-                                                        $subCategoryValue = count($subCategories->subCategoryId);
-                                                        if ($subCategories->subCategoryId % 2 != 0) {
-                                                            ?>     
+        <?php
+        $subCategoryValue = count($subCategories->subCategoryId);
+        if ($subCategories->subCategoryId % 2 != 0) {
+            ?>     
 
 
                                                             <ul class="multi-column-dropdown">
-                                                                <li><a href="<?= VIRTUAL_DIR_PATH.'/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" ><?= $subCategories->subCategory ?></a></li>
+                                                                <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" ><?= $subCategories->subCategory ?></a></li>
                                                             </ul>
 
-                                                            <?php
-                                                        } else {
-                                                            ?>
+            <?php
+        } else {
+            ?>
 
 
                                                             <ul class="multi-column-dropdown">
-                                                                <li><a href="<?= VIRTUAL_DIR_PATH.'/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" > <?= $subCategories->subCategory ?></a></li>
+                                                                <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" > <?= $subCategories->subCategory ?></a></li>
                                                             </ul>
 
 

@@ -265,7 +265,7 @@ if (count($portfolioDetails) > 0) {
 <input type="text" id="subCategoryId" value="<?= $subCategoryId ?>" hidden="hidden">
 
 <?php
-echo $this->element('footer');
+//echo $this->element('footer');
 
 echo $this->Html->script('responsiveslides.js');
 echo $this->Html->script('nouislider.js');

@@ -41,9 +41,9 @@ class SubscribersController extends AppController {
             //Send welcome email
             try {
                 $subscriberDetails = $this->Subscribers->getSubscriberDetails($subscriberId);
-                \App\Utils\EmailSenderUtility::sendWelcomeEmail($subscriberDetails);    
+                \App\Utils\EmailSenderUtility::sendWelcomeEmail($subscriberDetails);
             } catch (\Exception $ex) {
-                \Cake\Log\Log::error('Error while sending welcome email '. $ex->getTraceAsString());
+                \Cake\Log\Log::error('Error while sending welcome email ' . $ex->getTraceAsString());
             }
             $subscriberRegistrationResponse = new \App\Dto\SubscriberRegistrationResponseDto();
             $subscriberRegistrationResponse->subscriberId = $subscriberId;
@@ -101,12 +101,36 @@ class SubscribersController extends AppController {
                 $emailSendSuccess = true;
             }
         } catch (\Exception $ex) {
-            \Cake\Log\Log::error('Could not send forgot password email ' . $exc->getTraceAsString());
+            \Cake\Log\Log::error('Could not pay later email ' . $ex->getTraceAsString());
         }
         if ($emailSendSuccess) {
             $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(123));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(225));
+        }
+    }
+
+    public function changeStatus() {
+        $this->apiInitialize();
+        $statusId = $this->request->data['statusId'];
+        $subscriberId = $this->request->data['subscriberId'];
+        $statusChanged = false;
+
+        if ($statusId == SUBSCRIBER_ON_HOLD) {
+            $statusChanged = $this->Subscribers->changeStatus($subscriberId, SUBSCRIPTION_STATUS_INACTIVE);
+        }
+        if ($statusId == SUBSCRIBER_ACTIVATE) {
+            $statusChanged = $this->Subscribers->changeStatus($subscriberId, SUBSCRIPTION_STATUS_ACTIVE);
+        }
+        if($statusId == SUBSCRIBER_BYPASS){
+            $statusChanged = $this->Subscribers->updateSubscriptionInfo($subscriberId);
+        }
+        //If status changed then update the result
+        if($statusChanged){
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(124));
+        }
+        else{
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(226));
         }
     }
 

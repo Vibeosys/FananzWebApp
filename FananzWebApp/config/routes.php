@@ -81,6 +81,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     Router::connect('/portfolio/*', ['controller' => 'Portfolio', 'action' => 'view']);
     Router::connect('/portfolio/filteredPortfolios', ['controller' => 'Portfolio', 'action' => 'filteredPortfolios']);
     Router::connect('/portfolio/resetFilter', ['controller' => 'Portfolio', 'action' => 'resetFiler']);
+    Router::connect('/admin/subscriberList', ['controller' => 'Admin', 'action' => 'subscriberList']);
+    Router::connect('/subscribers/changeStatus', ['controller' => 'Subscribers', 'action' => 'changeStatus']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

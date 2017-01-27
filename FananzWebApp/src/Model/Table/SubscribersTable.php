@@ -286,7 +286,7 @@ class SubscribersTable extends Table {
      * @param type $subscriberId
      * @return \App\Dto\SubscriberPayLaterDto
      */
-    public function getSubscriberDetails($subscriberId){
+    public function getSubscriberDetails($subscriberId) {
         $subscriberDetails = NULL;
         $result = $this->find()
                 ->where(['SubscriberId' => $subscriberId])
@@ -307,5 +307,70 @@ class SubscribersTable extends Table {
             $subscriberDetails->emailId = $result->EmailId;
         }
         return $subscriberDetails;
+    }
+
+    /**
+     * Returns list of records for a requested page size and limit of records
+     * @param int $limit
+     * @param int $pageNo
+     * @return \App\Dto\SubscriberListDto
+     */
+    public function getSubscriberList($limit, $pageNo) {
+        $subscriberList = null;
+        $result = $this->getTable()->find()
+                ->select(['SubscriberId',
+                    'SubscriberName',
+                    'Stype',
+                    'SubscriptionDate',
+                    'IsSubscribed',
+                    'IsActive'])
+                ->page($pageNo, $limit)
+                ->all();
+        
+        $recordCounter = 0;
+        foreach ($result as $subscriberRecord) {
+            $subscriberListRecord = new \App\Dto\SubscriberListDto();
+            $subscriberListRecord->subscriberId = $subscriberRecord->SubscriberId;
+            $subscriberListRecord->subscriberName = $subscriberRecord->SubscriberName;
+            $subscriberListRecord->subscriptionType = $subscriberRecord->Stype == CORPORATE_SUB_TYPE ? 'Corporate' : 'Freelance';
+            if ($subscriberRecord->SubscriptionDate == null) {
+                $subscriberListRecord->subscriptionDate = 'N/A';
+            } else {
+                $tm = new \Cake\I18n\Time($subscriberRecord->SubscriptionDate);
+                $subscriberListRecord->subscriptionDate = $tm->format('d M Y');
+            }
+            $subscriberListRecord->currentStatusId = $subscriberRecord->IsActive;
+            $subscriberListRecord->isSubscribed = $subscriberRecord->IsSubscribed;
+            $subscriberList[$recordCounter++] = $subscriberListRecord;
+        }
+
+        return $subscriberList;
+    }
+
+    public function getTotalRecordCount(){
+        $totalRecords = $this->getTable()->find()->count();
+        return $totalRecords;
+    }
+    
+    /**
+     * Status change from active to inactive or vice versa
+     * @param int $subscriberId
+     * @param int $status
+     * @return boolean
+     */
+    public function changeStatus($subscriberId, $status){
+        $statusChanged = false;
+        $dbSubscriber = $this->find()
+                ->where(['SubscriberId' => $subscriberId])
+                ->select(['SubscriberId', 'IsActive'])
+                ->first();
+        
+        if($dbSubscriber){
+            $dbSubscriber->IsActive = $status;
+            if($this->save($dbSubscriber)){
+                $statusChanged = true;
+            }
+        }
+        return $statusChanged;
     }
 }

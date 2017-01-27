@@ -7,16 +7,12 @@
  * 
  */
 
-
-  
-
-
 ?>
 
 <footer class="footer">
    <div class="container">
       <div class="col-md-3 footer-grids fgd1">
-         <a href="index.html">
+          <a href="<?=VIRTUAL_DIR_PATH?>">
             <h3>Fananz</h3>
          </a>
          <ul> 
@@ -60,16 +56,11 @@
          <ul>
             <li><a href="">Contact Us</a></li>
             <li><a href="login.php">Login</a></li>
-            <li><a href="admin_login.php">Admin Login</a></li>
+            <li><a href="<?=VIRTUAL_DIR_PATH.'/admin/dashboard'?>">Admin Login</a></li>
          </ul>
       </div>
       <div class="clearfix"></div>
       <p class="copy-right">© 2016 Fananz . All rights reserved | Design by <a href="http://vibeosys.com" target="_blank"> Vibeosys</a></p>
    </div>
 </footer>
-<?php
-echo $this->Html->script('jquery.min.js') ;
-echo $this->Html->script('bootstrap.min.js') ;
-echo $this->Html->script('custom.js') ;
-?>
 
