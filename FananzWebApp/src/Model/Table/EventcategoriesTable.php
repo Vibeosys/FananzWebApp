@@ -112,6 +112,20 @@ class EventcategoriesTable extends Table {
         return $catSubCatList;
     }
 
+    public function getCategories() {
+        $categoryList = [0 => 'Select Category'];
+
+        $categoryResult = $this->connect()->find()
+                ->select(['CatId', 'CatName'])
+                ->all();
+
+        foreach ($categoryResult as $catRecord) {
+            $categoryList[$catRecord->CatId] = $catRecord->CatName;
+        }
+
+        return $categoryList;
+    }
+
     /**
      * Gets lists of categories and subcategories
      * @return \App\Dto\FindCategoriesDto
@@ -158,7 +172,6 @@ class EventcategoriesTable extends Table {
         return $categoriessubcatgories;
     }
 
-    
     public function getCategoryId($shortName) {
         $categoryId = 0;
         $dbCategory = $this->connect()->find()
@@ -173,5 +186,30 @@ class EventcategoriesTable extends Table {
         return $categoryId;
     }
 
+    public function categoryExists($categoryNameInLowerCase) {
+        $categoryNameExists = $this->exists(['lower(CatName)' => $categoryNameInLowerCase]);
+        return $categoryNameExists;
+    }
+
+    /**
+     * Category addition
+     * @param string $categoryName
+     * @param string $catShortName
+     * @return boolean
+     */
+    public function addNewCategory($categoryName, $catShortName) {
+        $categoryAdded = false;
+        $dbEntity = $this->newEntity();
+        $dbEntity->CatName = $categoryName;
+        $dbEntity->CatShortName = $catShortName;
+        $dbEntity->IsActive = 1;
+        $dbEntity->HasSubcat = 0;
+        $dbEntity->CreatedDate = new \Cake\I18n\Time();
+
+        if ($this->save($dbEntity)) {
+            $categoryAdded = true;
+        }
+        return $categoryAdded;
+    }
 
 }

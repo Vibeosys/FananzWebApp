@@ -50,5 +50,21 @@ class EventcategoriesController extends AppController {
         $this->set('_serialize', ['eventcategory']);
     }
 
+    public function addNewCategory() {
+        $this->apiInitialize();
+        $categoryName = $this->request->data['categoryName'];
+        $categoryShortName = \App\Utils\StringUtils::hyphenize($categoryName);
+        $categoryExists = $this->Eventcategories->categoryExists(strtolower($categoryName));
+        if ($categoryExists) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(227));
+            return;
+        }
+        $categoryAdded = $this->Eventcategories->addNewCategory($categoryName, $categoryShortName);
+        if ($categoryAdded) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(125));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(228));
+        }
+    }
 
 }

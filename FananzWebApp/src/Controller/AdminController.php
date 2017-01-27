@@ -21,6 +21,11 @@ class AdminController extends AppController {
 
     public function dashboard() {
         $this->layout = 'home_layout';
+
+        $eventCategoryTable = new \App\Model\Table\EventcategoriesTable();
+        $categoryList = $eventCategoryTable->getCategories();
+        
+        $this->set('categoryList', $categoryList);
     }
 
     public function subscriberList() {
@@ -31,7 +36,7 @@ class AdminController extends AppController {
         $dataTableQuery = $this->_parseDataTableQuery();
         $totalRecordCount = $subscriberTable->getTotalRecordCount();
         $subscriberList = $subscriberTable->getSubscriberList($dataTableQuery->pageSize, $dataTableQuery->startIndex);
-        if(is_array($subscriberList)){
+        if (is_array($subscriberList)) {
             $currentRecordCount = count($subscriberList);
         }
         foreach ($subscriberList as $subscriberRecord) {

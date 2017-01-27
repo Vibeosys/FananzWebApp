@@ -40,8 +40,8 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                     </div>
                     <ul class="nav nav-tabs admin-manage-tab">
                         <li class="active"><a id="manage_subscriber_tab" data-toggle="tab" href="#manage_user_tab" class="li-mg-right">Manage Subscribers</a></li>
-                        <li><a data-toggle="tab" href="#categ_add" class="li-mg-right">Manage Category</a></li>
-                        <li><a data-toggle="tab" href="#sub_catg_add" class="li-mg-right">Manage Sub Category</a></li>
+                        <li><a id="category_add_tab" data-toggle="tab" href="#categ_add" class="li-mg-right">Manage Categories</a></li>
+                        <li><a data-toggle="tab" href="#sub_catg_add" class="li-mg-right">Manage Subcategories</a></li>
                         <li><a data-toggle="tab" href="#advt_banner" >Advt Banners</a></li>
 
                     </ul>
@@ -49,7 +49,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                         <div class="tab-content">
                             <div id="categ_add" class="tab-pane fade">
                                 <div class="col-lg-12">
-                                    <div class="add-catg">
+                                    <div class="add-catg">                                        
                                         <p>Add Category</p>
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -62,7 +62,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="button-set">
-                                                    <button type="submit" title="Submit" class="button black_sm">Add</button>
+                                                    <button id="btn-cat-add" type="button" class="button black_sm">Add</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -74,15 +74,9 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="activity">Category
-                                                    <select id="category" class="form-control" >
-                                                        <option value="Select Activity">Select Category</option>
-                                                        <option value="Artists"><span>Artists</span></option>
-                                                        <option value="Media"><span>Media</span></option>
-                                                        <option value="Event Ficilities">Event Facilities</option>
-                                                        <option value="Model">Model</option>
-                                                        <option value="Birthday">Birthday</option>
-                                                        <option value="Night Life">Night Life</option>
-                                                    </select>
+                                                    <?php
+                                                    echo $this->Form->select('category', $categoryList, ['class' => 'form-control']);
+                                                    ?>                                                    
                                                 </label>
                                             </div>
                                         </div>
@@ -116,15 +110,9 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="activity">Category
-                                                    <select id="category" class="form-control" >
-                                                        <option value="Select Activity">Select Category</option>
-                                                        <option value="Artists"><span>Artists</span></option>
-                                                        <option value="Media"><span>Media</span></option>
-                                                        <option value="Event Ficilities">Event Facilities</option>
-                                                        <option value="Model">Model</option>
-                                                        <option value="Birthday">Birthday</option>
-                                                        <option value="Night Life">Night Life</option>
-                                                    </select>
+                                                    <?php
+                                                    echo $this->Form->select('category-sub', $categoryList, ['class' => 'form-control']);
+                                                    ?>
                                                 </label>
                                             </div>
                                         </div>
@@ -156,15 +144,9 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="activity">Category
-                                                    <select id="category" class="form-control" >
-                                                        <option value="Select Activity">Select Category</option>
-                                                        <option value="Artists"><span>Artists</span></option>
-                                                        <option value="Media"><span>Media</span></option>
-                                                        <option value="Event Ficilities">Event Facilities</option>
-                                                        <option value="Model">Model</option>
-                                                        <option value="Birthday">Birthday</option>
-                                                        <option value="Night Life">Night Life</option>
-                                                    </select>
+                                                    <?php
+                                                    echo $this->Form->select('category-sub-view', $categoryList, ['class' => 'form-control']);
+                                                    ?>
                                                 </label>
                                             </div>
                                         </div>
@@ -404,10 +386,15 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
 
     });//end of on click
 
+    /**
+     * When the status button gets clicked, then this event gets fired
+     * @param int statusId
+     * @param int subscriberId
+     * @returns void */
     function clicked(statusId, subscriberId) {
         $.ajax({
-            url         : '/FananzWebApp/subscribers/changeStatus',
-            type      : 'POST',
+            url: '/FananzWebApp/subscribers/changeStatus',
+            type: 'POST',
             data: {
                 statusId: statusId,
                 subscriberId: subscriberId
@@ -425,6 +412,25 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
         });
 
     }
+
+    $("#btn-cat-add").click(function () {
+        var categoryName = $('#catg_name').val();
+        $.ajax({
+            url: '/FananzWebApp/eventcategories/addNewCategory',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                categoryName: categoryName
+            },
+            success: function (data, textStatus, jqXHR) {
+                alert(data.message);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });//end ajax
+        //TODO: clear the text box
+    });
+
 
 
 

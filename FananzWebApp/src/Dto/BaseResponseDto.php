@@ -70,7 +70,9 @@ class BaseResponseDto {
         223 => 'Sorry, email addresses supplied, is not available with us',
         224 => 'Sorry, error occurred while processing your request, please try again',
         225 => 'Some error occurred, please login',
-        226 => 'Status for the subscriber could not be updated'
+        226 => 'Status for the subscriber could not be updated',
+        227 => 'Category with same name already exist, please name if differently',
+        228 => 'Category could not be added, please try again later'
        ];
     
     protected $successDictionary = [       
@@ -97,7 +99,8 @@ class BaseResponseDto {
         121 => 'Forgot password email is sent successfully',
         122 => 'Thank you for contacting us, we will get back to you soon.',
         123 => 'Email has been successfully sent',
-        124 => 'Subscriber status updated successfully'
+        124 => 'Subscriber status updated successfully',
+        125 => 'Category added successfully'
        ];
     
 }
