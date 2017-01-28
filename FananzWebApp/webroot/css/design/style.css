@@ -343,6 +343,9 @@ button:focus, button:active{
 .banner-fananz,.top-products,.fandt,.top-brands,.newsletter,.footer,.content,.contact,.about,.team,.main-grid-border,.faq,.products,.collpse.tabs,.login,.check-out,.payment{
 	padding:50px 0 40px 0px;
 }
+.banner{
+  margin: 30px 0px;   
+}
 .banner-fananz h2{
     font-size: 34px;
     padding-bottom: 50px;
@@ -1175,10 +1178,12 @@ p.copy-right{
         padding-top: 20px;
     }
     .manage-banner {
-        height: 190px!important;
+        height: 210px!important;
         margin: 0 0 41px 0!important;
     }
-
+    .button-set {
+        padding-top: 0px!important;
+    }
 }
 @media screen and (max-width: 667px){
 	.banner-fananz h4 span {
@@ -1960,8 +1965,9 @@ select.form-control{
 display: block;
     margin: 0 auto;
     text-align: center;
-    padding-top: 21px;
+    padding-top: 24px;
 }
+
 .white_back_btn {
     background: #fff;
     display: inline-block;
@@ -2681,10 +2687,19 @@ padding: 0 20px 20px 20px;
 }
 .manage-banner{
     border: 1px solid #dadada;
-    height: 125px;
+    height: 150px;
     border-radius: 6px;
     margin: 20px 0;
 
+}
+.existing_info{
+    padding-left: 15px;
+}
+.existing_info .existing_name, .existing_info .existing_url{
+    display: inline-block;
+}
+.existing_info .existing_url{
+    padding-left: 30px;
 }
 .admin-wrapper .tab-content {
     padding-top: 40px;
@@ -2860,6 +2875,14 @@ input[type=search] {
     margin-bottom: 20px;
 }
 
+.data-not-found{
+    margin: 30px 0px;
+}
+.data-not-found .dnf-img img{
+    width: 400px;
+    margin: 0 auto;
+}
+
 .add-portfolio .portfolio-card{
     margin: auto;
     position: absolute;
@@ -2957,3 +2980,42 @@ input[type=search] {
     text-align: center;
 }
 }
+
+
+/**************** Pop up Style *****************/
+.popup{
+    width: 100%;
+    margin: 0 auto;
+    display: none;
+    position: fixed;
+    z-index: 101;
+    top: 10%;
+}
+.popup-inner{
+    width: 400px;
+    min-height: 80px;
+    margin: 100px auto;
+    background: #f3f3f3;
+    position: relative;
+    z-index: 103;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px #000;
+}
+.popup-inner img{
+    position: absolute;
+    width: 40px;
+    top: 20px;
+}
+.popup-inner h3{
+    margin-left: 50px;
+}
+.popup-inner img, .popup-inner h3{
+    display: inline-block;
+}
+.popup-inner h3{
+    clear: both;
+    color: #555555;
+    text-align: justify;
+}
+

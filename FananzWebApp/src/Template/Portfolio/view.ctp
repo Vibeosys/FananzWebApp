@@ -88,8 +88,19 @@ if (count($portfolioDetails) > 0) {
     <?php
 } else {
     ?>
-    <section>
-        NO RECORDS FOUND
+   <section class="data-not-found">
+       <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="dnf-img">
+                         <?= $this->Html->image('data-not-found3.png', array('class' => 'img-responsive')); ?>
+                    </div>
+                    <div class="dnf-content">
+                        <h2>No Records Found</h2>
+                    </div>
+                </div>
+           </div>
+        </div>
     </section>
     <?php
 }
