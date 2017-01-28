@@ -191,11 +191,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                     <div class="manage-banner">
                                         <p>Home Page Top Banner</p>
                                         <div class="col-lg-12">
-                                            <div class="existing_info">
-                                                <div class="existing_name"><span>Existing Banner: </span><span>Image Name</span></div>
-                                                <div class="existing_url"><span>Url: </span><a href="http://www.google.com" target="_blank">www.google.com</a></div>
-                                            </div>
-                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <label >
                                                         <input type="file" name="banner-home-top" id="banner-home-top" class="inputfile inputfile-2"  accept="image/*"/>
@@ -206,6 +202,16 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="existing_info">
+                                                <div class="existing_name">
+                                                    <span>Existing Banner: </span>
+                                                    <span class="existing_img_nm">Image Name</span>
+                                                </div>
+                                                <div class="existing_url">
+                                                    <span>Url: </span>
+                                                    <a href="http://www.google.com" target="_blank">www.google.com</a>
+                                                </div>
+                                            </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
                                                         <button type="submit" title="Submit" class="button black_sm">Update</button>
@@ -221,7 +227,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                     <div class="manage-banner">
                                         <p>Home Page Bottom Banner</p>
                                         <div class="col-lg-12">
-                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <label >
                                                         <input type="file" name="advt_banner" id="banner-home-bottom" class="inputfile inputfile-2"  accept="image/*"/>
@@ -232,6 +238,16 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="existing_info">
+                                                <div class="existing_name">
+                                                    <span>Existing Banner: </span>
+                                                    <span class="existing_img_nm">Image Name</span>
+                                                </div>
+                                                <div class="existing_url">
+                                                    <span>Url: </span>
+                                                    <a href="http://www.google.com" target="_blank">www.google.com</a>
+                                                </div>
+                                            </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
                                                         <button type="submit" title="Submit" class="button black_sm">Update</button>
@@ -247,7 +263,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                     <div class="manage-banner">
                                         <p>Category Page Top Banner</p>
                                         <div class="col-lg-12">
-                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <label >
                                                         <input type="file" name="advt_banner" id="banner-catg-top" class="inputfile inputfile-2"  accept="image/*"/>
@@ -258,6 +274,16 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="existing_info">
+                                                <div class="existing_name">
+                                                    <span>Existing Banner: </span>
+                                                    <span class="existing_img_nm">Image Name</span>
+                                                </div>
+                                                <div class="existing_url">
+                                                    <span>Url: </span>
+                                                    <a href="http://www.google.com" target="_blank">www.google.com</a>
+                                                </div>
+                                            </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
                                                         <button type="submit" title="Submit" class="button black_sm">Update</button>
@@ -273,7 +299,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                     <div class="manage-banner">
                                         <p>Category Page Bottom Banner</p>
                                         <div class="col-lg-12">
-                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <label >
                                                         <input type="file" name="advt_banner" id="banner-catg-bottom" class="inputfile inputfile-2"  accept="image/*"/>
@@ -284,6 +310,16 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="existing_info">
+                                                <div class="existing_name">
+                                                    <span>Existing Banner: </span>
+                                                    <span class="existing_img_nm">Image Name Image Name Image Name Image Name Image Name Image Name </span>
+                                                </div>
+                                                <div class="existing_url">
+                                                    <span>Url: </span>
+                                                    <a href="http://www.google.com" target="_blank">www.google.com</a>
+                                                </div>
+                                            </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
                                                         <button type="submit" title="Submit" class="button black_sm">Update</button>
@@ -325,12 +361,14 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
     </div>
 </section>
 
+<!--
 <div class='popup'>
     <div class='popup-inner'>
         <?= $this->Html->image('warning.png', array('alt' => 'warning', 'class' => 'img-responsive')); ?>
         <h3>Successful Message</h3>
     </div>
 </div>
+-->
 
 
 <script>

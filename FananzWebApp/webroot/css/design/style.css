@@ -67,8 +67,8 @@ img {
 .display-inline{
     display: inline-block;
 }
-.mg-top-25{
-    margin-top: 25px;
+.mg-top-15{
+    margin-top: 15px;
 }
 .required_field {
     color: red;
@@ -1032,7 +1032,10 @@ p.copy-right{
     .white_back_btn {
     padding: 8px 15px!important;
     width: 120px!important;
-}
+    }
+    .existing_info .existing_url {
+        padding-left: 0px!important;
+    }
 }
 
 @media screen and (min-width:768px) and (max-width:991px){
@@ -1066,15 +1069,6 @@ p.copy-right{
 		width: 50%;
 		float: left;
 		height:200px;
-	}
-
-	.footer a h3 {
-		padding-left: 30px;
-	}
-	.footer img {
-		width: 9%;
-		top: 2px;
-		left: 12px;
 	}
 	.footer a h3 span {
 		left: 155px;
@@ -1204,7 +1198,9 @@ p.copy-right{
 	.banner-agile p {
 		width: 55%;
 	}
-
+.existing_info .existing_url{
+    padding-left: 0px!important;
+}
 
 }
 @media screen and (max-width: 550px){
@@ -1325,7 +1321,14 @@ p.copy-right{
     .button.slider-btn{
         margin-top: 20px!important;
     }
-    
+     .existing_info .existing_name .existing_img_nm, .existing_info .existing_url a {
+        max-width: 170px!important;
+         min-width: 150px;
+    }
+    .manage-banner {
+    height: 245px!important;
+    margin: 0 0 41px 0!important;
+}
 }
 @media screen and (max-width: 480px){
 	.logo-w3 a h1 {
@@ -1365,7 +1368,14 @@ p.copy-right{
     .nbs-flexisel-item > .sliderfig-img {
     width: 35%;
     }
-
+    .existing_info .existing_name .existing_img_nm, .existing_info .existing_url a {
+        max-width: 160px!important;
+        min-width: 150px;
+    }
+    .manage-banner {
+    height: 245px!important;
+    margin: 0 0 41px 0!important;
+}
 }
 @media screen and (max-width: 414px){
 	#PPsbmincart {
@@ -2697,6 +2707,18 @@ padding: 0 20px 20px 20px;
 }
 .existing_info .existing_name, .existing_info .existing_url{
     display: inline-block;
+    font-size: 15px;
+}
+.existing_info .existing_name .existing_img_nm,.existing_info .existing_url a{
+    font-weight: 600;
+    display: inline-block;
+    max-width: 250px;
+    max-height: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+    top: 4px
 }
 .existing_info .existing_url{
     padding-left: 30px;
@@ -2972,6 +2994,9 @@ input[type=search] {
     height: 335px;
     text-align: center;
 }
+    .existing_info .existing_url {
+        padding-left: 0px!important;
+    }
 }
 @media screen and (min-width:1201px){
 .add-portfolio {
