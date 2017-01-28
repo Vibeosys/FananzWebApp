@@ -9,15 +9,12 @@ use App\Controller;
 use App\Dto\FindPortfolioDto;
 use Cake\View\Helper\HtmlHelper;
 
-//$this->layout = 'home_layout';
-//$this->layout = 'header';
 echo $this->element('header');
-
 
 echo $this->Html->css('/css/design/jquery.dataTables.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
-//echo $this->Html->css('design/nouislider.css');
-//echo $this->Html->css('design/responsiveslides.css');
+echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
+
 echo $this->Html->script('/js/jquery.custom-file-input.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/bootstrap-fileupload.js', ['block' => 'scriptTop']);
 
@@ -25,7 +22,7 @@ echo $this->Html->script('/js/datatables/jquery.dataTables.min.js', ['block' => 
 echo $this->Html->script('/js/datatables/dataTables.bootstrap.js', ['block' => true]);
 echo $this->Html->script('/js/datatables/dataTables.responsive.min.js', ['block' => true]);
 echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' => true]);
-//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css
+echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 ?>
 
 <section class="admin-dash" id="main">
@@ -70,12 +67,12 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="update-catg">
-                                        <p>Update/Delete Category</p>
+                                        <p>Update Category</p>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="activity">Category
                                                     <?php
-                                                    echo $this->Form->select('category', $categoryList, ['class' => 'form-control']);
+                                                    echo $this->Form->select('select-cat-id', $categoryList, ['id' => 'select-cat-id', 'class' => 'form-control']);
                                                     ?>                                                    
                                                 </label>
                                             </div>
@@ -83,7 +80,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="catg_name">Category Name
-                                                    <input type="text" id="catg_name" class="form-control" name="com_name">
+                                                    <input type="text" id="catg_name_to_update" class="form-control" name="com_name">
                                                     <span class="input-icon"><i class="fa fa-object-ungroup"></i></span>
                                                 </label>
                                             </div>
@@ -92,8 +89,8 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="button-set">
-                                                    <button type="submit" title="Submit" class="button black_sm">Update</button>
-                                                    <button type="submit" title="Submit" class="white_back_btn">Delete</button>
+                                                    <button type="button" id="btn-cat-update" class="button black_sm">Update</button>
+                                                    <!--                                                    <button type="submit" title="Submit" class="white_back_btn">Delete</button>-->
                                                     <!--                                   <a href="index.html" class="white_back_btn">Back</a>     -->
                                                 </div>
                                             </div>
@@ -109,9 +106,9 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <p>Add Sub Category</p>
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label for="activity">Category
+                                                <label for="activity">Choose Category
                                                     <?php
-                                                    echo $this->Form->select('category-sub', $categoryList, ['class' => 'form-control']);
+                                                    echo $this->Form->select('select-cat-subcat-add-id', $categoryList, ['class' => 'form-control', 'id' => 'select-cat-subcat-add-id']);
                                                     ?>
                                                 </label>
                                             </div>
@@ -119,7 +116,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="first_name">Sub Category
-                                                    <input type="text" id="first_name" class="form-control" name="fname">
+                                                    <input type="text" id="txt-subcat-name-add" class="form-control" name="fname">
                                                     <span class="input-icon"><i class="fa fa-object-ungroup"></i></span>
                                                 </label>
                                             </div>
@@ -130,7 +127,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="button-set">
-                                                    <button type="submit" title="Submit" class="button black_sm">Add</button>
+                                                    <button type="button" id="btn-subcat-add" class="button black_sm">Add</button>
                                                     <!--                                           <a href="index.html" class="white_back_btn">Back</a>     -->
                                                 </div>
                                             </div>
@@ -140,12 +137,12 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
 
                                 <div class="col-lg-12">
                                     <div class="update-sub-catg">
-                                        <p>Update/Delete Sub Category</p>
+                                        <p>Update Sub Category</p>
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label for="activity">Category
+                                                <label for="activity">Choose Category
                                                     <?php
-                                                    echo $this->Form->select('category-sub-view', $categoryList, ['class' => 'form-control']);
+                                                    echo $this->Form->select('select-cat-subcat-update-id', $categoryList, ['class' => 'form-control', 'id' => 'select-cat-subcat-update-id']);
                                                     ?>
                                                 </label>
                                             </div>
@@ -153,14 +150,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="first_name">Sub Category
-                                                    <select id="category" class="form-control" >
-                                                        <option value="Select Activity">Select Sub Category</option>
-                                                        <option value="Artists"><span>Singer</span></option>
-                                                        <option value="Media"><span>Musician</span></option>
-                                                        <option value="Event Ficilities">Belly Dancer</option>
-                                                        <option value="Model">Band</option>
-                                                        <option value="Birthday">Music Arranger</option>
-                                                        <option value="Night Life">Voice Over</option>
+                                                    <select id="select-subcat-update-id" class="form-control" >                                                    
                                                     </select>
                                                 </label>
                                             </div>
@@ -169,7 +159,7 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="first_name">Update Sub Category
-                                                    <input type="text" id="first_name" class="form-control" name="fname">
+                                                    <input type="text" id="txt-subcat-update" class="form-control" name="fname">
                                                     <span class="input-icon"><i class="fa fa-object-group"></i></span>
                                                 </label>
                                             </div>
@@ -178,8 +168,8 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <div class="button-set">
-                                                    <button type="submit" title="Submit" class="button black_sm">Update</button>
-                                                    <button type="submit" title="Submit" class="white_back_btn">Delete</button>
+                                                    <button type="button" id="btn-subcat-update" class="button black_sm">Update</button>
+                                                    <!--<button type="submit" title="Submit" class="white_back_btn">Delete</button>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -191,27 +181,15 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                     <div class="manage-banner">
                                         <p>Home Page Top Banner</p>
                                         <div class="col-lg-12">
-                                            <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <label >
                                                         <input type="file" name="banner-home-top" id="banner-home-top" class="inputfile inputfile-2"  accept="image/*"/>
                                                         <label for="banner-home-top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
                                                     </label>
-                                                    <input type="url" class="form-control" name="banner-url">
-                                                     <span class="input-icon"><i class="fa fa-link"></i></span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                <div class="existing_info">
-                                                <div class="existing_name">
-                                                    <span>Existing Banner: </span>
-                                                    <span class="existing_img_nm">Image Name</span>
-                                                </div>
-                                                <div class="existing_url">
-                                                    <span>Url: </span>
-                                                    <a href="http://www.google.com" target="_blank">www.google.com</a>
-                                                </div>
-                                            </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
                                                         <button type="submit" title="Submit" class="button black_sm">Update</button>
@@ -233,21 +211,21 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                                         <input type="file" name="advt_banner" id="banner-home-bottom" class="inputfile inputfile-2"  accept="image/*"/>
                                                         <label for="banner-home-bottom"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
                                                     </label>
-                                                     <input type="url" class="form-control" name="banner-url">
+                                                    <input type="url" class="form-control" name="banner-url">
                                                     <span class="input-icon"><i class="fa fa-link"></i></span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="existing_info">
-                                                <div class="existing_name">
-                                                    <span>Existing Banner: </span>
-                                                    <span class="existing_img_nm">Image Name</span>
+                                                    <div class="existing_name">
+                                                        <span>Existing Banner: </span>
+                                                        <span class="existing_img_nm">Image Name</span>
+                                                    </div>
+                                                    <div class="existing_url">
+                                                        <span>Url: </span>
+                                                        <a href="http://www.google.com" target="_blank">www.google.com</a>
+                                                    </div>
                                                 </div>
-                                                <div class="existing_url">
-                                                    <span>Url: </span>
-                                                    <a href="http://www.google.com" target="_blank">www.google.com</a>
-                                                </div>
-                                            </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
                                                         <button type="submit" title="Submit" class="button black_sm">Update</button>
@@ -263,27 +241,15 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                     <div class="manage-banner">
                                         <p>Category Page Top Banner</p>
                                         <div class="col-lg-12">
-                                            <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <label >
                                                         <input type="file" name="advt_banner" id="banner-catg-top" class="inputfile inputfile-2"  accept="image/*"/>
                                                         <label for="banner-catg-top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
                                                     </label>
-                                                     <input type="url" class="form-control" name="banner-url">
-                                                    <span class="input-icon"><i class="fa fa-link"></i></span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                <div class="existing_info">
-                                                <div class="existing_name">
-                                                    <span>Existing Banner: </span>
-                                                    <span class="existing_img_nm">Image Name</span>
-                                                </div>
-                                                <div class="existing_url">
-                                                    <span>Url: </span>
-                                                    <a href="http://www.google.com" target="_blank">www.google.com</a>
-                                                </div>
-                                            </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
                                                         <button type="submit" title="Submit" class="button black_sm">Update</button>
@@ -299,27 +265,15 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
                                     <div class="manage-banner">
                                         <p>Category Page Bottom Banner</p>
                                         <div class="col-lg-12">
-                                            <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <label >
                                                         <input type="file" name="advt_banner" id="banner-catg-bottom" class="inputfile inputfile-2"  accept="image/*"/>
                                                         <label for="banner-catg-bottom"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
                                                     </label>
-                                                     <input type="url" class="form-control" name="banner-url">
-                                                    <span class="input-icon"><i class="fa fa-link"></i></span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                <div class="existing_info">
-                                                <div class="existing_name">
-                                                    <span>Existing Banner: </span>
-                                                    <span class="existing_img_nm">Image Name Image Name Image Name Image Name Image Name Image Name </span>
-                                                </div>
-                                                <div class="existing_url">
-                                                    <span>Url: </span>
-                                                    <a href="http://www.google.com" target="_blank">www.google.com</a>
-                                                </div>
-                                            </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
                                                         <button type="submit" title="Submit" class="button black_sm">Update</button>
@@ -360,23 +314,10 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
         </div>
     </div>
 </section>
-
-<!--
-<div class='popup'>
-    <div class='popup-inner'>
-        <?= $this->Html->image('warning.png', array('alt' => 'warning', 'class' => 'img-responsive')); ?>
-        <h3>Successful Message</h3>
-    </div>
-</div>
--->
-
-
 <script>
     var oTable = null;
 
     $(document).ready(function () {
-         $('.popup').show().fadeOut(10000);
-        
         var heading_last = $('table.table-bordered th:last-child').text();
         if (heading_last == 'Action') {
             $('th:last-child').removeClass('sorting');
@@ -474,8 +415,18 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
 
     }
 
+    /**
+     * Add a new category
+     * @param void param     
+     * */
     $("#btn-cat-add").click(function () {
         var categoryName = $('#catg_name').val();
+        //validate category
+        if (categoryName == '') {
+            alert('Category cannot be blank');
+            return;
+        }
+        //Send ajax post to add category
         $.ajax({
             url: '/FananzWebApp/eventcategories/addNewCategory',
             type: 'POST',
@@ -489,10 +440,143 @@ echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' 
             error: function (jqXHR, textStatus, errorThrown) {
             }
         });//end ajax
-        //TODO: clear the text box
+        //clear the text box
+        $('#catg_name').val("");
     });
 
+    /**
+     * Update existing category
+     */
+    $('#btn-cat-update').click(function () {
+        var categoryNameToUpdate = $('#catg_name_to_update').val();
+        var selectedCategoryId = $("#select-cat-id option:selected").val();
+        //alert(selectedCategoryId)
+        //validate category id
+        if (selectedCategoryId == 0) {
+            alert('Please select a category to update');
+            return;
+        }
+        //validate category
+        if (categoryNameToUpdate == '') {
+            alert('Category title cannot be blank');
+            return;
+        }
 
+        $.ajax({
+            url: '/FananzWebApp/eventcategories/updateCategory',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                selectedCategoryId: selectedCategoryId,
+                categoryNameToUpdate: categoryNameToUpdate
+            },
+            success: function (data, textStatus, jqXHR) {
+                alert(data.message);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        }); // ajax call
+        //clear the text
+        $("#catg_name_to_update").val("");
+    });
 
+//txt-subcat-name-add select-cat-subcat-add-id
 
+    /**
+     * Add a new subcategory
+     */
+    $("#btn-subcat-add").on('click', function () {
+        var selectedCategoryId = $("#select-cat-subcat-add-id option:selected").val();
+        var subcategoryName = $("#txt-subcat-name-add").val();
+        //validate category id 
+        if (selectedCategoryId == 0) {
+            alert('Please select a category to add subcategory');
+            return;
+        }
+        //validate sub category name
+        if (subcategoryName == '') {
+            alert('Sub category title cannot be blank');
+            return;
+        }
+        //POST to ajax
+        $.ajax({
+            url: '/FananzWebApp/subcategories/addSubcategory',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                categoryId: selectedCategoryId,
+                subCategoryName: subcategoryName
+            },
+            success: function (data, textStatus, jqXHR) {
+                alert(data.message);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });// Ajax post
+
+        //Clear the text box
+        $("#txt-subcat-name-add").val("");
+    });
+
+    /**
+     * When category changes then populate the sub category
+     * @param {type} param     
+     * */
+    $("#select-cat-subcat-update-id").change(function () {
+        var categoryId = $(this).find('option:selected').val();
+        //clear the subcategory list first
+        $('#select-subcat-update-id').empty();
+        //Post ajax to bind the sub categories
+        $.ajax({
+            url: '/FananzWebApp/subcategories/getSubCategoryList/' + categoryId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                $.each(data, function (key, value) {
+                    $('#select-subcat-update-id').append($('<option></option>').val(key).html(value));
+                }); // each
+            } // success
+        }); // ajax
+    });
+
+    $("#btn-subcat-update").click(function () {
+        var selectedSubCategoryId = $("#select-subcat-update-id option:selected").val();
+        var subcategoryName = $("#txt-subcat-update").val();
+        //validate category id 
+        if (selectedSubCategoryId == 0) {
+            swal({
+                title: "Alert",
+                text: "Please select a sub category to update the title",
+                timer: 2000,
+                showConfirmButton: false
+            });
+            //alert('Please select a category to add subcategory');
+            return;
+        }
+        //validate sub category name
+        if (subcategoryName == '') {
+            swal({
+                title: "Alert",
+                text: "Please provide a title to update",
+                timer: 2000,
+                showConfirmButton: false
+            });
+            return;
+        }
+
+        $.ajax({
+            url: '/FananzWebApp/subcategories/updateSubcategory',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                subCategoryId: selectedSubCategoryId,
+                subCategoryName: subcategoryName
+            },
+            success: function (data, textStatus, jqXHR) {
+                swal("Update !", data.message, "success");
+            }
+        });
+        //Clear the text box
+        $("#txt-subcat-update").val("");
+    });
 </script>

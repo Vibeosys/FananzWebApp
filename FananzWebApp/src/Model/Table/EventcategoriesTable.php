@@ -211,5 +211,27 @@ class EventcategoriesTable extends Table {
         }
         return $categoryAdded;
     }
+    
+    /**
+     * Update existing category name
+     * @param string $category
+     * @param int $categoryId
+     * @return boolean
+     */
+    public function updateCategoryName($category, $categoryId){
+        $updateSuccess = false;
+        $dbCategory = $this->find()
+                ->where(['CatId' => $categoryId])
+                ->select(['CatId', 'CatName'])
+                ->first();
+        
+        if($dbCategory){
+            $dbCategory->CatName = $category;
+            if($this->save($dbCategory)){
+                $updateSuccess = true;
+            }
+        }
+        return $updateSuccess;
+    }
 
 }

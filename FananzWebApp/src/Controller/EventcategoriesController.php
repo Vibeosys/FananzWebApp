@@ -50,6 +50,10 @@ class EventcategoriesController extends AppController {
         $this->set('_serialize', ['eventcategory']);
     }
 
+    /**
+     * Ajax method
+     * @return type
+     */
     public function addNewCategory() {
         $this->apiInitialize();
         $categoryName = $this->request->data['categoryName'];
@@ -64,6 +68,22 @@ class EventcategoriesController extends AppController {
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(125));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(228));
+        }
+    }
+
+    /**
+     * Ajax method
+     */
+    public function updateCategory() {
+        $this->apiInitialize();
+        $categoryNameToUpdate = $this->request->data['categoryNameToUpdate'];
+        $selectedCategoryId = $this->request->data['selectedCategoryId'];
+
+        $categoryUpdated = $this->Eventcategories->updateCategoryName($categoryNameToUpdate, $selectedCategoryId);
+        if ($categoryUpdated) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(126));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(229));
         }
     }
 

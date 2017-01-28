@@ -71,8 +71,12 @@ class BaseResponseDto {
         224 => 'Sorry, error occurred while processing your request, please try again',
         225 => 'Some error occurred, please login',
         226 => 'Status for the subscriber could not be updated',
-        227 => 'Category with same name already exist, please name if differently',
-        228 => 'Category could not be added, please try again later'
+        227 => 'Category with same name already exist, please name it differently',
+        228 => 'Category could not be added, please try again later',
+        229 => 'Category could not be updated, please try again later',
+        230 => 'Sub category title for the selected category already exist, please name it differently',
+        231 => 'Sub category could not be added, please try again',
+        232 => 'Sub category could not be updated, please try again'
        ];
     
     protected $successDictionary = [       
@@ -100,7 +104,10 @@ class BaseResponseDto {
         122 => 'Thank you for contacting us, we will get back to you soon.',
         123 => 'Email has been successfully sent',
         124 => 'Subscriber status updated successfully',
-        125 => 'Category added successfully'
+        125 => 'Category added successfully',
+        126 => 'Category updated successfully',
+        127 => 'Sub category added successfully',
+        128 => 'Sub category updated successfully'
        ];
     
 }
