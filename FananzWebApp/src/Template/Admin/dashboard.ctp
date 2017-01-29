@@ -12,6 +12,7 @@ use Cake\View\Helper\HtmlHelper;
 echo $this->element('header');
 
 echo $this->Html->css('/css/design/jquery.dataTables.min.css', ['block' => true]);
+echo $this->Html->css('/css/design/bootstrap-fileupload.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
 echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
 
@@ -176,114 +177,50 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                     </div>
                                 </div>
                             </div>
-                            <div id="advt_banner" class="tab-pane fade">
-                                <div class="col-lg-12">
-                                    <div class="manage-banner">
-                                        <p>Home Page Top Banner</p>
-                                        <div class="col-lg-12">
-                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <label >
-                                                        <input type="file" name="banner-home-top" id="banner-home-top" class="inputfile inputfile-2"  accept="image/*"/>
-                                                        <label for="banner-home-top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <div class="button-set">
-                                                        <button type="submit" title="Submit" class="button black_sm">Update</button>
-                                                        <button type="submit" title="Submit" class="white_back_btn">Delete</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div id="advt_banner" class="tab-pane fade">                               
 
                                 <div class="col-lg-12">
                                     <div class="manage-banner">
+                                        <?= $this->Form->create(false, array('type' => 'file', 'id' => 'advtBannerAdd')) ?>
                                         <p>Home Page Bottom Banner</p>
                                         <div class="col-lg-12">
                                             <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
+                                                <?= $this->Form->select('select-banner-type-id', $bannerTypeList, ['class' => 'form-control', 'id' => 'select-banner-type-id']) ?>
                                                 <div class="form-group">
                                                     <label >
-                                                        <input type="file" name="advt_banner" id="banner-home-bottom" class="inputfile inputfile-2"  accept="image/*"/>
-                                                        <label for="banner-home-bottom"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
+                                                        <input type="file" name="banner-pic-file" id="banner-pic-file" class="inputfile inputfile-2"  accept="image/*"/>
+                                                        <label for="banner-pic-file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
                                                     </label>
-                                                    <input type="url" class="form-control" name="banner-url">
+                                                    <input type="url" id="banner-url-id" class="form-control" name="banner-url-id">
                                                     <span class="input-icon"><i class="fa fa-link"></i></span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="existing_info">
                                                     <div class="existing_name">
-                                                        <span>Existing Banner: </span>
-                                                        <span class="existing_img_nm">Image Name</span>
+                                                        <span>Banner Image: </span>
+                                                        <span class="existing_img_nm">N/A</span>
                                                     </div>
                                                     <div class="existing_url">
-                                                        <span>Url: </span>
-                                                        <a href="http://www.google.com" target="_blank">www.google.com</a>
+                                                        <span>Click URL: </span>
+                                                        <a id="link-click-url-id" href="#" target="_blank">N/A</a>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
-                                                        <button type="submit" title="Submit" class="button black_sm">Update</button>
-                                                        <button type="submit" title="Submit" class="white_back_btn">Delete</button>
+                                                        <button type="submit" class="button black_sm">Update</button>
+                                                        <button type="button" class="white_back_btn" id="btn-banner-delete-id">Delete</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <?= $this->Form->end() ?>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
-                                    <div class="manage-banner">
-                                        <p>Category Page Top Banner</p>
-                                        <div class="col-lg-12">
-                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <label >
-                                                        <input type="file" name="advt_banner" id="banner-catg-top" class="inputfile inputfile-2"  accept="image/*"/>
-                                                        <label for="banner-catg-top"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <div class="button-set">
-                                                        <button type="submit" title="Submit" class="button black_sm">Update</button>
-                                                        <button type="submit" title="Submit" class="white_back_btn">Delete</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-lg-12">
-                                    <div class="manage-banner">
-                                        <p>Category Page Bottom Banner</p>
-                                        <div class="col-lg-12">
-                                            <div class="col-lg-6 mg-top-25 col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <label >
-                                                        <input type="file" name="advt_banner" id="banner-catg-bottom" class="inputfile inputfile-2"  accept="image/*"/>
-                                                        <label for="banner-catg-bottom"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    <div class="button-set">
-                                                        <button type="submit" title="Submit" class="button black_sm">Update</button>
-                                                        <button type="submit" title="Submit" class="white_back_btn">Delete</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+
                             </div><!--End Advt Banner -->
                             <!--Start Manage User  --->
                             <div id="manage_user_tab" class="tab-pane fade in active">
@@ -328,7 +265,6 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         });
     });
 
-    var subscriberTable = null;
     /**
      * On click of the manage subscriber tab will populate the records in the datatable.
      * 
@@ -520,7 +456,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 
     /**
      * When category changes then populate the sub category
-     * @param {type} param     
+     * @param void param     
      * */
     $("#select-cat-subcat-update-id").change(function () {
         var categoryId = $(this).find('option:selected').val();
@@ -539,6 +475,9 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         }); // ajax
     });
 
+    /**
+     * Update the sub category for the selected category id
+     */
     $("#btn-subcat-update").click(function () {
         var selectedSubCategoryId = $("#select-subcat-update-id option:selected").val();
         var subcategoryName = $("#txt-subcat-update").val();
@@ -579,4 +518,138 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         //Clear the text box
         $("#txt-subcat-update").val("");
     });
+
+    /**
+     * Add or update the advt banner 
+     * @param void param 
+     * */
+    $("#advtBannerAdd").submit(function (e) {
+        e.preventDefault();
+
+        var bannerUrl = $("#banner-url-id").val();
+        var bannerFileImageUrl = $('#banner-pic-file').prop('files')[0];
+        var bannerLocation = $('#select-banner-type-id option:selected').val();
+        var selectedFile = $("#banner-pic-file").val();
+
+        //Validate details
+        if (bannerLocation == -1) {
+            swal({
+                title: "Alert",
+                text: "Please select a banner location",
+                timer: 2000,
+                showConfirmButton: false
+            });
+            return;
+        }
+
+        if (selectedFile == '') {
+            swal({
+                title: "Alert",
+                text: "Please select a banner image file",
+                timer: 2000,
+                showConfirmButton: false
+            });
+            return;
+        }
+
+        //Prepare the details to post
+        var formData = new FormData();
+        formData.append('banner-pic-file', bannerFileImageUrl);
+        formData.append('banner-url', bannerUrl);
+        formData.append('banner-location', bannerLocation);
+
+        $.ajax({
+            url: '/FananzWebApp/advtbanner/addNewAdvtBanner',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'text json',
+            success: function (data, textStatus, jqXHR) {
+                if (data.errorCode == 0) {
+                    swal("Advt Banner Upload !", data.message, "success");
+                    getBannerDetails();
+                } else {
+                    swal("Advt Banner Upload !", data.message, "error");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+
+        //TODO: clean up the file and text box
+        $("#banner-pic-file").val("");
+        $("#banner-url-id").val("");
+    });
+
+    /**
+     * Get dynamic values for selected banner location
+     */
+    $("#select-banner-type-id").change(getBannerDetails);
+
+    /**
+     * Gets banner details for selected banner type
+     * @returns void */
+    function getBannerDetails() {
+        var bannerLocation = $("#select-banner-type-id").find('option:selected').val();
+
+        $.ajax({
+            url: '/FananzWebApp/advtbanner/bannerDetails/' + bannerLocation,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                if (data.errorCode == 0) {
+                    var bannerDetails = JSON.parse(data.data);
+                    //alert(bannerDetails.imageUrl);
+                    $(".existing_img_nm").html(bannerDetails.imageUrl);
+                    $("#link-click-url-id").html(bannerDetails.clickUrl);
+                    $("#link-click-url-id").attr('href', bannerDetails.clickUrl);
+                }
+                else {
+                    $(".existing_img_nm").html("N/A");
+                    $("#link-click-url-id").html("N/A");
+                    $("#link-click-url-id").attr('href', '#');
+                }
+            }
+        }); // ajax
+    }
+    
+    /**
+     * Deleting an existing banner by selecting the banner location
+     */
+    $("#btn-banner-delete-id").click(function () {
+        var bannerLocation = $('#select-banner-type-id option:selected').val();
+        //Validate details
+        if (bannerLocation == -1) {
+            swal({
+                title: "Alert",
+                text: "Please select a banner location",
+                timer: 2000,
+                showConfirmButton: false
+            });
+            return;
+        }
+
+        $.ajax({
+            url: '/FananzWebApp/advtbanner/deleteBanner',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                bannerLocation: bannerLocation
+            },
+            success: function (data, textStatus, jqXHR) {
+                if (data.errorCode == 0) {
+                    swal("Advt Banner Deletion!", data.message, "success");
+                    //Clean up
+                    $(".existing_img_nm").html("N/A");
+                    $("#link-click-url-id").html("N/A");
+                    $("#link-click-url-id").attr('href', '#');
+                } else {
+                    swal("Advt Banner Deletion!", data.message, "error");
+                }
+            }
+        }); // ajax
+    });
+
 </script>

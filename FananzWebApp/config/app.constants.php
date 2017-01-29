@@ -62,3 +62,10 @@ define('SUBSCRIBER_BYPASS', 3);
  */
 define('SUBSCRIPTION_STATUS_SUBSCRIBED', 'Subscribed');
 define('SUBSCRIPTION_STATUS_REGISTERED', 'Registered');
+/**
+ * Banner type costants
+ */
+define('HOME_PAGE_TOP_BANNER', 1);
+define('HOME_PAGE_BOTTOM_BANNER', 2);
+define('PORTFOLIO_PAGE_TOP_BANNER', 3);
+define('PORTFOLIO_PAGE_BOTTOM_BANNER', 4);

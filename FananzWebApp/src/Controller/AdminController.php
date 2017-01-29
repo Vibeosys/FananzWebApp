@@ -24,8 +24,10 @@ class AdminController extends AppController {
 
         $eventCategoryTable = new \App\Model\Table\EventcategoriesTable();
         $categoryList = $eventCategoryTable->getCategories();
-        
-        $this->set('categoryList', $categoryList);
+        $bannerTypeList = \App\Utils\BannerTypeUtil::getDefaultTypeList();
+
+        $this->set(['categoryList' => $categoryList,
+            'bannerTypeList' => $bannerTypeList]);
     }
 
     public function subscriberList() {

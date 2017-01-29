@@ -76,7 +76,11 @@ class BaseResponseDto {
         229 => 'Category could not be updated, please try again later',
         230 => 'Sub category title for the selected category already exist, please name it differently',
         231 => 'Sub category could not be added, please try again',
-        232 => 'Sub category could not be updated, please try again'
+        232 => 'Sub category could not be updated, please try again',
+        233 => 'Selected banner image could not be uploaded',
+        234 => 'Banner details could not be saved, please try again later',
+        235 => 'Banner could not be deleted',
+        236 => 'No advt banner found for the requested type'
        ];
     
     protected $successDictionary = [       
@@ -107,7 +111,10 @@ class BaseResponseDto {
         125 => 'Category added successfully',
         126 => 'Category updated successfully',
         127 => 'Sub category added successfully',
-        128 => 'Sub category updated successfully'
+        128 => 'Sub category updated successfully',
+        129 => 'Banner details updated successfully',
+        130 => 'Banner deleted successfully',
+        131 => 'Banner details'
        ];
     
 }

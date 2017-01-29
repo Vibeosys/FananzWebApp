@@ -100,4 +100,7 @@ class AppController extends Controller
         return $subscriberTable->validateSubscriber($subscriberUserData);
     }
     
+    protected function _getWebrootDir() {
+        return "http://" . $this->request->host() . $this->request->webroot;
+    }
 }
