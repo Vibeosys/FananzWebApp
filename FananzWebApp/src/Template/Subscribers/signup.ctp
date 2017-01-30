@@ -17,6 +17,7 @@ echo $this->Html->script('/js/jquery.custom-file-input.js', ['block' => 'scriptT
 echo $this->Html->script('/js/bootstrap-fileupload.js', ['block' => 'scriptTop']);
 
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
+echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
 echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 ?>
 <section class="corporate-register">
@@ -36,7 +37,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                     <div class="row border-outer">
                         <div class="tab-content">
                             <div id="corporate" class="tab-pane fade in active">
-                                <form name="corporate_form" id="corporate_form">
+                                <form name="corporate_form" id="corporate_form" action="" method="post">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="subscription-desc">Annual subscription charges<span> <?= PAYMENT_CURRENCY . ' ' . CORPORATE_PAYMENT ?></span></div>
@@ -109,14 +110,15 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group login-check">
-                                        <input type="checkbox" id="cor_check" name="cor_check" value="">
+                                        <input type="checkbox" id="cor_check" class="cor_check" name="cor_check">
                                         <label for="cor_check"><span></span>I agree to <a href="#termCondModal" class="portfolio-link" data-toggle="modal">Terms & Conditions</a>.</label>
+                                        <label class="error-check cor-error"></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="button-set">
-                                            <button type="submit" title="Submit" class="button black_sm">Submit</button>
+                                            <button type="submit" title="Submit" class="button black_sm cor_submit">Submit</button>
                                             <a href="index.html" class="white_back_btn">Back</a>     
                                         </div>
                                     </div>
@@ -125,6 +127,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                             </div>
 
                             <div id="freelance" class="tab-pane fade">
+                                <form name="freelance_form" id="freelance_form" action="" method="post">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="subscription-desc">Annual subscription charges <span> <?= PAYMENT_CURRENCY . ' ' . FREELANCE_PAYMENT ?></span></div>
@@ -132,8 +135,8 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="first_name">Nick Name
-                                            <input type="text" id="first_name" class="form-control" name="fname">
+                                        <label for="nick_name">Nick Name
+                                            <input type="text" id="nick_name" class="form-control" name="nick_name">
                                             <span class="input-icon"><i class="fa fa-user"></i></span>
                                         </label>
                                     </div>
@@ -197,18 +200,20 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group login-check">
-                                        <input type="checkbox" id="freelance_check" value="">
+                                        <input type="checkbox" id="freelance_check" value="" name="freelance_check">
                                         <label for="freelance_check"><span></span>I agree to <a href="#termCondModal" class="portfolio-link" data-toggle="modal">Terms & Conditions</a>.</label>
+                                        <label class="error-check fl-error"></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="button-set">
-                                            <button type="submit" title="Submit" class="button black_sm" onclick=" window.location.assign('payment.html')">Submit</button>
+                                            <button type="submit" title="Submit" class="button black_sm fl_submit" >Submit</button>
                                             <a href="index.html" class="white_back_btn">Back</a>     
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>

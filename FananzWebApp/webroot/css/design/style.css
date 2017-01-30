@@ -18,6 +18,13 @@ body a:focus, a:hover {
 .bg-light-gray{
     background: #f5f5f5;
 }
+label.error , .error-check{
+    margin-left: 10px;
+    width: auto;
+    display: inline;
+    color: red;
+    font-style: italic;
+}
 .error_red{
     color:red;
     padding-left: 5px;
@@ -1038,9 +1045,6 @@ p.copy-right a:hover{
         padding: 8px 15px!important;
         width: 120px!important;
     }
-    .existing_info .existing_url {
-        padding-left: 15px!important;
-    }
 }
 
 @media screen and (min-width:768px) and (max-width:991px){
@@ -1885,6 +1889,7 @@ select.form-control{
     height: 38px;
     width: 36px;
     border-right: 1px solid #ccc;
+    left: 16px;
 }
 .form-group .input-icon i{
     position: relative;
@@ -2189,6 +2194,7 @@ select.form-control{
     font-weight: 400;
     cursor: pointer;
 }
+
 .login-check input[type="checkbox"]+label span:first-child {
     width: 16px;
     height: 16px;
@@ -2196,6 +2202,7 @@ select.form-control{
     position: absolute;
     left: 0;
     top: 2px;
+    background: #fff;
 }
 .login-check input[type="checkbox"]:checked+label span:first-child:before {
     content: "";
@@ -2707,7 +2714,7 @@ select.form-control{
 }
 .manage-banner{
     border: 1px solid #dadada;
-    height: 180px;
+    height: 250px;
     border-radius: 6px;
     margin: 20px 0;
 
@@ -2720,7 +2727,6 @@ select.form-control{
     margin-top: 10px;
 }   
 .existing_info .existing_name, .existing_info .existing_url{
-    display: inline-block;
     font-size: 15px;
 }
 .existing_info .existing_name .existing_img_nm,.existing_info .existing_url a{
@@ -2733,9 +2739,6 @@ select.form-control{
     overflow: hidden;
     position: relative;
     top: 4px
-}
-.existing_info .existing_url{
-    padding-left: 30px;
 }
 .admin-wrapper .tab-content {
     padding-top: 40px;
@@ -3054,9 +3057,6 @@ input[type=search] {
         max-height: 335px;
         height: 335px;
         text-align: center;
-    }
-    .existing_info .existing_url {
-        padding-left: 15px!important;
     }
 }
 @media screen and (min-width:1201px){
