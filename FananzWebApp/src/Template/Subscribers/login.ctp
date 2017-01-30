@@ -65,7 +65,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                 <h2>Register Now</h2>
                             </div>
                             <div class="register-button-set">
-                                <a href="<?=VIRTUAL_DIR_PATH.'/subscribers/signup'?>" class="button black_sm">Register</a>
+                                <a href="<?= VIRTUAL_DIR_PATH . '/subscribers/signup' ?>" class="button black_sm">Register</a>
                             </div>
                         </div>
                     </div>
@@ -98,21 +98,43 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 <div class="header-modal"> <h1>Forgot Your Password?</h1></div>
 
                 <div class="modal-body">
-                    <form action="" method="post">
-                        <h3>RETRIEVE YOUR PASSWORD HERE</h3>
-                        <p>Please enter your email address below. You will receive a link to reset your password.</p>
-                        <div class="form-group">
-                            <label for="user_email">Email
-                                <input type="email" id="user_email" class="form-control" name="email">
-                                <span class="input-icon"><i class="fa fa-user"></i></span>
-                            </label>
-                        </div>
-                        <div class="forgot_set">
-                            <button type="submit" title="Submit" class="button black_sm">Submit</button>
-                        </div>
-                    </form>
+                    <?= $this->Form->create(false, ['id' => 'frmForgotPassword']) ?>
+                    <h3>RETRIEVE YOUR PASSWORD HERE</h3>
+                    <p>Please enter your email address below. You will receive password on your email.</p>
+                    <div class="form-group">
+                        <label for="user_email">Email
+                            <input type="email" id="emailId" class="form-control" name="email">
+                            <span class="input-icon"><i class="fa fa-user"></i></span>
+                        </label>
+                    </div>
+                    <div class="forgot_set">
+                        <button type="submit" title="Submit" class="button black_sm">Submit</button>
+                    </div>
+                    <?= $this->Form->end() ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $("#frmForgotPassword").submit(function (e) {
+        e.preventDefault();
+
+        var emailId = $('#emailId').val();
+        $.ajax({
+            url: '/FananzWebApp/subscribers/forgotPassword',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                emailId: emailId
+            },
+            success: function (data, textStatus, jqXHR) {
+                if (data.errorCode == 0) {
+                    swal("Email sent!", data.message, "success");
+                } else {
+                    swal("Error occurred!", data.message, "error");
+                }
+            }
+        });//end of ajax
+    });
+</script>

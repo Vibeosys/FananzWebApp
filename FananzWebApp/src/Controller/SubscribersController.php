@@ -14,7 +14,7 @@ class SubscribersController extends AppController {
     //Web method
     public function login($errorCode = null) {
         $this->layout = 'home_layout';
-        
+
         //Error message display logic
         $errorMessage = null;
         if ($errorCode != null) {
@@ -45,12 +45,12 @@ class SubscribersController extends AppController {
     public function portfolio() {
         
     }
-    
+
     //Web method
-    public function signup(){
+    public function signup() {
         
     }
-    
+
     //API call
     public function signin() {
         $this->apiInitialize();
@@ -116,8 +116,12 @@ class SubscribersController extends AppController {
 
     public function forgotPassword() {
         $this->apiInitialize();
-        $forgotPasswordRequest = \App\Dto\ForgotPasswordRequestDto::Deserialize($this->postedData);
 
+        $forgotPasswordRequest = \App\Dto\ForgotPasswordRequestDto::Deserialize($this->postedData);
+        //Bypass email id for web request
+        if ($this->request->data['emailId'] != null) {
+            $forgotPasswordRequest->emailId = $this->request->data['emailId'];
+        }
         $emailPasswordDto = $this->Subscribers->getSubscriberInfo($forgotPasswordRequest->emailId);
         if ($emailPasswordDto) {
             //$emailSuccess = false;
