@@ -1181,7 +1181,7 @@ p.copy-right a:hover{
         padding-top: 20px;
     }
     .manage-banner {
-        height: 280px!important;
+        height: 530px!important;
         margin: 0 0 41px 0!important;
     }
     .button-set {
@@ -1330,12 +1330,8 @@ p.copy-right a:hover{
     .button.slider-btn{
         margin-top: 20px!important;
     }
-    .existing_info .existing_name .existing_img_nm, .existing_info .existing_url a {
-        max-width: 170px!important;
-        min-width: 150px;
-    }
     .manage-banner {
-        height: 315px!important;
+        height: 515px!important;
         margin: 0 0 41px 0!important;
     }
 }
@@ -1377,10 +1373,7 @@ p.copy-right a:hover{
     .nbs-flexisel-item > .sliderfig-img {
         width: 35%;
     }
-    .existing_info .existing_name .existing_img_nm, .existing_info .existing_url a {
-        max-width: 160px!important;
-        min-width: 150px;
-    }
+
     .manage-banner {
         height: 245px!important;
         margin: 0 0 41px 0!important;
@@ -1843,6 +1836,7 @@ option{
 .form-group label{
     width: 100%;
     font-weight: 500;
+    font-size: 14px;
 }
 input.form-control{
     -webkit-box-shadow: inset 35px 1px 1px rgba(0,0,0,.075);
@@ -2018,6 +2012,9 @@ select.form-control{
 /************** Forgot Password ***************/
 #fogotpasswordModal .modal-content{
     border-radius: 0;
+}
+#fogotpasswordModal .modal-content .form-group .input-icon {
+    left: 21px;
 }
 .forgot_passowrd-popup{
     border: none;
@@ -2231,6 +2228,9 @@ select.form-control{
 }
 .wrapper-left .partner-login{
     padding: 0px 20px;
+}
+.wrapper-left .partner-login .form-group .input-icon {
+    left: 35px;
 }
 .border-right-2{
     border-left: 2px solid #d8d8d8;
@@ -2714,7 +2714,7 @@ select.form-control{
 }
 .manage-banner{
     border: 1px solid #dadada;
-    height: 250px;
+    height: 290px;
     border-radius: 6px;
     margin: 20px 0;
 
@@ -2723,22 +2723,28 @@ select.form-control{
     margin-bottom: 10px;   
 }
 .existing_info{
-    padding-left: 15px;
-    margin-top: 10px;
+    margin-top: 15px;
 }   
 .existing_info .existing_name, .existing_info .existing_url{
     font-size: 15px;
 }
-.existing_info .existing_name .existing_img_nm,.existing_info .existing_url a{
+.existing_info  .input-icon {
+    position: absolute;
+    margin-top: -2.51em;
+    height: 38px;
+    width: 36px;
+    border-right: 1px solid #ccc;
+    left: 16px;
+}
+.existing_info .existing_name .existing_img_nm, .existing_info .existing_url .link-click-url-id{
     font-weight: 600;
     display: inline-block;
-    max-width: 250px;
-    max-height: 20px;
+    max-width: 100%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     position: relative;
-    top: 4px
+    background: #fff;
 }
 .admin-wrapper .tab-content {
     padding-top: 40px;

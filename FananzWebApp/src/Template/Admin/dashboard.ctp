@@ -183,38 +183,47 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                 <div class="col-lg-12">
                                     <div class="manage-banner">
                                         <?= $this->Form->create(false, array('type' => 'file', 'id' => 'advtBannerAdd')) ?>
-                                        <p>Home Page Bottom Banner</p>
+                                        <p>Advertisement Banner</p>
                                         <div class="col-lg-12">
                                             <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
-                                                <?= $this->Form->select('select-banner-type-id', $bannerTypeList, ['class' => 'form-control', 'id' => 'select-banner-type-id']) ?>
                                                 <div class="form-group">
-                                                    <label >
+                                                <label for="select-banner-type-id">Select Banner Location
+                                                <?= $this->Form->select('select-banner-type-id', $bannerTypeList, ['class' => 'form-control', 'id' => 'select-banner-type-id']) ?></label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label > Select Banner Image</label>
                                                         <input type="file" name="banner-pic-file" id="banner-pic-file" class="inputfile inputfile-2"  accept="image/*"/>
-                                                        <label for="banner-pic-file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
+                                                        <label for="banner-pic-file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span>
                                                     </label>
-<!--
-                                                    <label >
-                                                    <input type="file" name="advt_banner" id="banner-catg-bottom" class="inputfile inputfile-2"  accept="image/*"/>
-                                                    <label for="banner-catg-bottom"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span></label>
-                                                </label>
--->
-
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Provide Click URL
                                                     <input type="url" id="banner-url-id" class="form-control" name="banner-url-id">
                                                     <span class="input-icon"><i class="fa fa-link"></i></span>
+                                                        </label>
                                                 </div>
                                             </div>
                                          
 
                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                <div class="existing_info">
-                                                    <div class="existing_name">
-                                                        <span>Banner Image: </span>
-                                                        <span class="existing_img_nm">N/A</span>
+                                                
+                                                    <div class="existing_info">
+                                                        <div class="form-group">
+                                                        <div class="existing_name">
+                                                            <label>Banner Image: 
+                                                            <input type="text" readonly value="N/A" class="form-control existing_img_nm">
+                                                                </label>
+                                                            <a href="" target="_blank" class="input-icon"><span ><i class="fa fa-link"></i></span></a>
+                                                        </div>
                                                     </div>
-                                                    <div class="existing_url">
-                                                        <span>Click URL: </span>
-                                                        <a id="link-click-url-id" href="#" target="_blank">N/A</a>
+                                                    <div class="form-group">
+                                                        <div class="existing_url">
+                                                            <label>Click URL: 
+                                                            <input type="text" readonly value="N/A" class="form-control link-click-url-id">
+                                                                  </label>
+                                                            <a href="" target="_blank" class="input-icon"><span ><i class="fa fa-link"></i></span></a>
                                                     </div>
+                                                </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="button-set">
@@ -661,7 +670,4 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
             }
         }); // ajax
     });
-    jQuery('#banner-pic-file').change(function(){
-       
-    }); 
 </script>
