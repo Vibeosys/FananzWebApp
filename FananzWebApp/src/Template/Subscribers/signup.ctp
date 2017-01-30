@@ -17,6 +17,7 @@ echo $this->Html->script('/js/jquery.custom-file-input.js', ['block' => 'scriptT
 echo $this->Html->script('/js/bootstrap-fileupload.js', ['block' => 'scriptTop']);
 
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
+echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 ?>
 <section class="corporate-register">
     <div class="container">
@@ -35,6 +36,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                     <div class="row border-outer">
                         <div class="tab-content">
                             <div id="corporate" class="tab-pane fade in active">
+                                <form name="corporate_form" id="corporate_form">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="subscription-desc">Annual subscription charges<span> <?= PAYMENT_CURRENCY . ' ' . CORPORATE_PAYMENT ?></span></div>
@@ -43,7 +45,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="com_name">Business Name
-                                            <input type="text" id="com_name" class="form-control" name="com_name">
+                                            <input type="text" id="com_name" class="form-control" name="cor_business_name">
                                             <span class="input-icon"><i class="fa fa-address-book-o"></i></span>
                                         </label>
                                     </div>
@@ -51,7 +53,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="represent_name">Name of Representative
-                                            <input type="text" id="represent_name" class="form-control" name="represent_name">
+                                            <input type="text" id="represent_name" class="form-control" name="cor_represent_name">
                                             <span class="input-icon"><i class="fa fa-address-card-o"></i></span>
                                         </label>
                                     </div>
@@ -107,18 +109,19 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group login-check">
-                                        <input type="checkbox" id="cor_check" value="">
+                                        <input type="checkbox" id="cor_check" name="cor_check" value="">
                                         <label for="cor_check"><span></span>I agree to <a href="#termCondModal" class="portfolio-link" data-toggle="modal">Terms & Conditions</a>.</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="button-set">
-                                            <button type="submit" title="Submit" class="button black_sm" onclick=" window.location.assign('payment.html')">Submit</button>
+                                            <button type="submit" title="Submit" class="button black_sm">Submit</button>
                                             <a href="index.html" class="white_back_btn">Back</a>     
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
 
                             <div id="freelance" class="tab-pane fade">
