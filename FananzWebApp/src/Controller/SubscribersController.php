@@ -33,9 +33,17 @@ class SubscribersController extends AppController {
         $subscriberUserDto->emailId = $this->request->data['name'];
         $subscriberUserDto->password = $this->request->data['password'];
         $subscriberDetails = $this->Subscribers->signIn($subscriberUserDto);
+        
+        //Save to session
+        $this->sessionManager->saveSubscriberLoginInfo($subscriberDetails);
+        
         if ($subscriberDetails) {
-            //Add details to session manager
-            $this->setAction('portfolio');
+            $isSubscribed = $this->sessionManager->isSubscriberSubscribed();
+            if ($isSubscribed) {//Add details to session manager
+                $this->setAction('portfolio');
+            } else {
+                $this->setAction('paysubscription');
+            }
         } else {
             $this->setAction('login', 204);
         }
@@ -43,12 +51,26 @@ class SubscribersController extends AppController {
 
     //Web method
     public function portfolio() {
-        
+        $isSubscribed = $this->sessionManager->isSubscriberSubscribed();
     }
 
     //Web method
     public function signup() {
         
+    }
+
+    public function paysubscription() {
+        $subscriberType = $this->sessionManager->getSubscriberType();
+        $amount = 0;
+        $currency = PAYMENT_CURRENCY;
+        if ($subscriberType == FREELANCE_PAYMENT) {
+            $amount = FREELANCE_PAYMENT;
+        } else {
+            $amount = CORPORATE_PAYMENT;
+        }
+
+        $this->set(['paymentCurrency' => $currency,
+            'paymentAmount' => $amount]);
     }
 
     //API call

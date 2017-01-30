@@ -30,6 +30,11 @@ class SessionManagerUtil {
         $verifySubscriberLogin = $this->_session->check('Subscriber.Name') && $this->_session->check('Subscriber.Id');
         return $verifySubscriberLogin;
     }
+    
+    public function isSubscriberSubscribed(){
+       $isSubscribed = $this->_session->read('Subscriber.IsSubscribed');
+       return $isSubscribed;
+    }
 
     public function logout() {
         $this->_session->destroy();
@@ -40,10 +45,19 @@ class SessionManagerUtil {
         $this->_session->write('User.Id', $userId);
     }
 
-    public function saveSubscriberLoginInfo($subscriberId, $subscriberName, $subscriberType) {
-        $this->_session->write('Subscriber.Name', $subscriberName);
-        $this->_session->write('Subscriber.Id', $subscriberId);
-        $this->_session->write('Subscriber.Type', $subscriberType);
+    /**
+     * Saves subscriber info after login
+     * @param \App\Dto\SubscriberPostSigninDetailsDto $subcriberDetails
+     */
+    public function saveSubscriberLoginInfo($subcriberDetails) {
+        $this->_session->write('Subscriber.Name', $subcriberDetails->name);
+        $this->_session->write('Subscriber.Id', $subcriberDetails->subscriberId);
+        $this->_session->write('Subscriber.Type', $subcriberDetails->sType);
+        $this->_session->write('Subscriber.IsSubscribed', $subcriberDetails->isSubscribed);
     }
 
+    public function getSubscriberType(){
+        $subType = $this->_session->read('Subscriber.Type');
+        return $subType;
+    }
 }

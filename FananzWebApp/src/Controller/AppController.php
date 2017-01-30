@@ -22,6 +22,8 @@ use Cake\Event\Event;
  *
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
+ * @property \App\Utils\SessionManagerUtil $sessionManager 
+ * @property \App\Dto\SubscriberUserDto $postedSubscriberData
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
@@ -33,6 +35,7 @@ class AppController extends Controller
     protected $postedUserInfo;
     protected $userAuthenticated;
     protected $postedSubscriberData;
+    protected $sessionManager;
     //protected $empInfo;
     
     /**
@@ -40,6 +43,7 @@ class AppController extends Controller
      *
      * Use this method to add common initialization code like loading components.
      *
+     * 
      * e.g. `$this->loadComponent('Security');`
      *
      * @return void
@@ -51,6 +55,7 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
+        $this->sessionManager = new \App\Utils\SessionManagerUtil($this->request->session());
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
