@@ -14,6 +14,7 @@ echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => tr
 <section class="login subscribe-payment">
     <div class="container">
         <div class="row">
+
             <div class="login-wrapper">
                 <div class="login-form-container">
                     <div class="col-lg-12">
@@ -23,6 +24,15 @@ echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => tr
                         </div>
 
                     </div>
+                    
+                    <div class="col-lg-12">
+                        <div class="error-msg-container">
+                            <div class="<?= $errorDivClass ?>">
+                                <p><i class="fa fa-minus-circle"></i> <?= $errorMsg ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="col-lg-12">
                         <div class="total-price">
                             <h3>Annual subscription fees </h3><span><?= $paymentCurrency . ' ' . $paymentAmount ?></span>
@@ -34,7 +44,7 @@ echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => tr
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <a href="<?=VIRTUAL_DIR_PATH.'/pptransactions/'?>">
+                        <a href="<?= VIRTUAL_DIR_PATH . '/pptransactions/initpayment' ?>">
                             <div class="paypal-link">
                                 <div class="paypal-img">
                                     <?= $this->Html->image('pp.png', ['alt' => 'paypal']) ?>   
@@ -46,7 +56,7 @@ echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => tr
                             </div>
                         </a>
                     </div>
-                        <div class="col-lg-12 block-line">
+                    <div class="col-lg-12 block-line">
                         <div class="line-or">
                             <span>OR</span>
                         </div>
@@ -59,7 +69,7 @@ echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => tr
                             </div>
                         </div>
                     </div>
-                  <div class="col-lg-12 block-line">
+                    <div class="col-lg-12 block-line">
                         <div class="line-or">
                             <span>OR</span>
                         </div>

@@ -89,8 +89,16 @@ class PptransactionsTable extends Table {
         return false;
     }
 
-    public function updateTransactionDetails($invoiceNo, $subscriberId, $paypalId,
-            $paymentStatus, $paymentMethod) {
+    /**
+     * Updates transactions for paypal id
+     * @param string $invoiceNo
+     * @param int $subscriberId
+     * @param string $paypalId
+     * @param string $paymentStatus
+     * @param string $paymentMethod
+     * @return boolean
+     */
+    public function updateTransactionDetails($invoiceNo, $subscriberId, $paypalId, $paymentStatus, $paymentMethod) {
         $dbPayment = $this->find()
                 ->where(['TransId' => $invoiceNo, 'SubscriberId' => $subscriberId])
                 ->first();
@@ -98,6 +106,50 @@ class PptransactionsTable extends Table {
             $dbPayment->PaymentMethod = $paymentMethod;
             $dbPayment->CompletionDate = new \Cake\I18n\Time();
             $dbPayment->PaypalTransId = $paypalId;
+            $dbPayment->PaymentStatus = $paymentStatus;
+            if ($this->save($dbPayment)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Updates paypal id for a given invoice number
+     * @param string $paypalId
+     * @param string $invNo
+     * @return boolean
+     */
+    public function updatePaypalIdForInvoice($paypalId, $invNo) {
+        $dbPayment = $this->find()
+                ->where(['TransId' => $invNo])
+                ->first();
+        if ($dbPayment) {
+            $dbPayment->PaypalTransId = $paypalId;
+            
+            if ($this->save($dbPayment)) {
+                return true;    
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Updates transaction for paypal
+     * @param int $subscriberId
+     * @param string $paypalId
+     * @param string $paymentStatus
+     * @param string $paymentMethod
+     * @return boolean
+     */
+    public function updateTransactionsForPaypal($subscriberId, $paypalId, $paymentStatus, $paymentMethod) {
+        $dbPayment = $this->find()
+                ->where(['PaypalTransId' => $paypalId, 'SubscriberId' => $subscriberId])
+                ->first();
+        if ($dbPayment) {
+            $dbPayment->PaymentMethod = $paymentMethod;
+            $dbPayment->CompletionDate = new \Cake\I18n\Time();
+            //$dbPayment->PaypalTransId = $paypalId;
             $dbPayment->PaymentStatus = $paymentStatus;
             if ($this->save($dbPayment)) {
                 return true;

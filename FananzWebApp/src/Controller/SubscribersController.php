@@ -47,8 +47,8 @@ class SubscribersController extends AppController {
         } else {
             $this->setAction('login', 204);
         }
-    }
-
+    }    
+    
     //Web method
     public function portfolio() {
         $isSubscribed = $this->sessionManager->isSubscriberSubscribed();
@@ -59,7 +59,7 @@ class SubscribersController extends AppController {
         
     }
 
-    public function paysubscription() {
+    public function paysubscription($errorCode = null) {
         $subscriberType = $this->sessionManager->getSubscriberType();
         $amount = 0;
         $currency = PAYMENT_CURRENCY;
@@ -69,6 +69,17 @@ class SubscribersController extends AppController {
             $amount = CORPORATE_PAYMENT;
         }
 
+        //Show error for Payment failure
+        //Error message display logic
+        $errorMessage = null;
+        if ($errorCode != null) {
+            $errorMessage = \App\Dto\BaseResponseDto::getErrorText($errorCode);
+            $this->set('errorDivClass', 'error-wrapper error-msg-display-block');
+        } else {
+            $this->set('errorDivClass', 'error-wrapper error-msg-display-none');
+        }
+
+        $this->set('errorMsg', $errorMessage);
         $this->set(['paymentCurrency' => $currency,
             'paymentAmount' => $amount]);
     }

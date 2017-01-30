@@ -60,4 +60,13 @@ class SessionManagerUtil {
         $subType = $this->_session->read('Subscriber.Type');
         return $subType;
     }
+    
+    public function getSubscriberId(){
+        $subscriberId = $this->_session->read('Subscriber.Id');
+        return $subscriberId;
+    }
+    
+    public function changeSubscriberStatus(){
+        $this->_session->write('Subscriber.IsSubscribed', true);
+    }
 }
