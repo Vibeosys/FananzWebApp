@@ -33,10 +33,10 @@ class SubscribersController extends AppController {
         $subscriberUserDto->emailId = $this->request->data['name'];
         $subscriberUserDto->password = $this->request->data['password'];
         $subscriberDetails = $this->Subscribers->signIn($subscriberUserDto);
-        
+
         //Save to session
         $this->sessionManager->saveSubscriberLoginInfo($subscriberDetails);
-        
+
         if ($subscriberDetails) {
             $isSubscribed = $this->sessionManager->isSubscriberSubscribed();
             if ($isSubscribed) {//Add details to session manager
@@ -47,11 +47,22 @@ class SubscribersController extends AppController {
         } else {
             $this->setAction('login', 204);
         }
-    }    
-    
+    }
+
     //Web method
     public function portfolio() {
         $isSubscribed = $this->sessionManager->isSubscriberSubscribed();
+        if (!$isSubscribed) {
+            $this->setAction('login');
+            return;
+        }
+        $subscriberId = $this->sessionManager->getSubscriberId();
+        $portfolioTable = new \App\Model\Table\PortfolioTable();
+        $portfolioList = $portfolioTable->getPortfolioListbySubscriber($subscriberId);
+
+        $subscriberDetails = $this->Subscribers->getSubscriberDetailsById($subscriberId);
+        $this->set(['portfolioList' => $portfolioList, 
+            'subscriberDetails' => $subscriberDetails]);
     }
 
     //Web method

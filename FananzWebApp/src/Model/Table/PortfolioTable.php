@@ -296,7 +296,7 @@ class PortfolioTable extends Table {
     public function getPortfoliosBySubscriber($subscriberId) {
         $this->addRelations();
         $portfolioList = null;
-        $results = $this->find()
+        $results = $this->getTable()->find()
                 ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])
                 ->where(['subscribers.IsSubscribed' => 1,
                     'Portfolio.SubscriberId' => $subscriberId])
@@ -308,6 +308,44 @@ class PortfolioTable extends Table {
                     'Portfolio.IsActive',
                     'portfolio_photos.PhotoUrl'])
                 ->orderDesc('Portfolio.CreatedDate')
+                ->all();
+
+        $resultArray = $results->toArray();
+        $recordCounter = 0;
+        foreach ($resultArray as $resultRecord) {
+            $subscriberPortfolioResponse = new \App\Dto\SubscriberPortfolioListResponseDto();
+            $subscriberPortfolioResponse->portfolioId = $resultRecord->PortfolioId;
+            $subscriberPortfolioResponse->category = $resultRecord->eventcategory->CatName;
+            $subscriberPortfolioResponse->subCategory = $resultRecord->subcategory->SubCatName;
+            $subscriberPortfolioResponse->minPrice = $resultRecord->MinPrice;
+            $subscriberPortfolioResponse->maxPrice = $resultRecord->MaxPrice;
+            $subscriberPortfolioResponse->coverImageUrl = $resultRecord->portfolio_photo->PhotoUrl;
+            $subscriberPortfolioResponse->isActive = $resultRecord->IsActive;
+            $portfolioList[$recordCounter++] = $subscriberPortfolioResponse;
+        }
+        return $portfolioList;
+    }
+    
+    /**
+     * Duplicated for the sake of no impact
+     * @param type $subscriberId
+     * @return \App\Dto\SubscriberPortfolioListResponseDto
+     */
+    public function getPortfolioListbySubscriber($subscriberId) {
+        $this->addRelations();
+        $portfolioList = null;
+        $results = $this->getTable()->find()
+                ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])
+                ->where(['subscribers.IsSubscribed' => 1,
+                    'portfolio.SubscriberId' => $subscriberId])
+                ->select(['PortfolioId',
+                    'eventcategories.CatName',
+                    'subcategories.SubCatName',
+                    'MinPrice',
+                    'MaxPrice',
+                    'portfolio.IsActive',
+                    'portfolio_photos.PhotoUrl'])
+                ->orderDesc('portfolio.CreatedDate')
                 ->all();
 
         $resultArray = $results->toArray();
@@ -573,24 +611,24 @@ class PortfolioTable extends Table {
     }
 
     private function addRelations() {
-        $this->belongsTo('subscribers', [
+        $this->getTable()->belongsTo('subscribers', [
             'foreignKey' => 'SubscriberId',
             'joinType' => 'INNER'
         ]);
 
-        $this->belongsTo('eventcategories', [
+        $this->getTable()->belongsTo('eventcategories', [
             'bindingKey' => 'CatId',
             'foreignKey' => 'CategoryId',
             'joinType' => 'INNER'
         ]);
 
-        $this->belongsTo('subcategories', [
+        $this->getTable()->belongsTo('subcategories', [
             'bindingKey' => 'SubCatId',
             'foreignKey' => 'SubcategoryId',
             'joinType' => 'LEFT'
         ]);
 
-        $this->hasOne('portfolio_photos', [
+        $this->getTable()->hasOne('portfolio_photos', [
             'foreignKey' => 'PortfolioId',
             'conditions' => ['portfolio_photos.IsCoverImage' => 1]
         ]);

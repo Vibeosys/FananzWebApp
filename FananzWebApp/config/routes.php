@@ -79,6 +79,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('/', ['controller' => 'HomePage' , 'action' => 'index' ]);
     Router::connect('/portfolio/*', ['controller' => 'Portfolio', 'action' => 'view']);
+    Router::connect('/portfolio/add', ['controller' => 'Portfolio', 'action' => 'add']);
     Router::connect('/portfolio/filteredPortfolios', ['controller' => 'Portfolio', 'action' => 'filteredPortfolios']);
     Router::connect('/portfolio/resetFilter', ['controller' => 'Portfolio', 'action' => 'resetFiler']);
     Router::connect('/admin/subscriberList', ['controller' => 'Admin', 'action' => 'subscriberList']);

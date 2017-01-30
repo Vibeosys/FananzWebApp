@@ -170,6 +170,45 @@ class SubscribersTable extends Table {
     }
 
     /**
+     * Sign in for subscriber
+     * @param int $subscriberId 
+     * @return \App\Dto\SubscriberDetailedInfo $subscriberDetails
+     */
+    public function getSubscriberDetailsById($subscriberId) {
+        $subscriberDetails = NULL;
+        $result = $this->find()
+                ->where(['SubscriberId' => $subscriberId])
+                ->select(['SubscriberId',
+                    'SubscriberName',
+                    'EmailId',
+                    'IsSubscribed',
+                    'SubscriptionDate',
+                    'Stype',
+                    'Nickname',
+                    'TelephoneNo',
+                    'MobileNo',
+                    'WebsiteUrl',
+                    'CountryOfResidence'])
+                ->first();
+
+        if ($result) {
+            $subscriberDetails = new \App\Dto\SubscriberDetailedInfo();
+            $subscriberDetails->name = $result->SubscriberName;
+            $subscriberDetails->nickName = $result->Nickname == NULL ? "" : $result->Nickname;
+            $subscriberDetails->sType = $result->Stype == CORPORATE_SUB_TYPE ? 'c' : 'f';
+            $subscriberDetails->isSubscribed = $result->IsSubscribed ? true : false;
+            $subscriberDetails->subscriberId = $result->SubscriberId;
+            $subscriberDetails->telNo = $result->TelephoneNo;
+            $subscriberDetails->mobileNo = $result->MobileNo;
+            $subscriberDetails->websiteUrl = $result->WebsiteUrl;
+            $subscriberDetails->country = $result->CountryOfResidence;
+            $subscriberDetails->subscriptionDate = $result->SubscriptionDate;
+            $subscriberDetails->emailId = $result->EmailId;
+        }
+        return $subscriberDetails;
+    }
+    
+    /**
      * Updates subscriber profile
      * @param \App\Dto\SubscriberProfileUpdateRequestDto $subscriberProfileUpdateRequest
      * @param int $subscriberId 

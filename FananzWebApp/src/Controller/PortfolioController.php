@@ -39,6 +39,33 @@ class PortfolioController extends AppController {
         ]);
     }
 
+    public function add() {
+        $this->layout='home_layout';
+        
+        /*        $options = array(
+          'Group 1' => array(
+          'Value 1' => 'Label 1',
+          'Value 2' => 'Label 2'
+          ),
+          'Group 2' => array(
+          'Value 3' => 'Label 3'
+          )
+          );
+          echo $this->Form->select('field', $options);
+
+          Output:
+
+          <select name="data[User][field]" id="UserField">
+          <optgroup label="Group 1">
+          <option value="Value 1">Label 1</option>
+          <option value="Value 2">Label 2</option>
+          </optgroup>
+          <optgroup label="Group 2">
+          <option value="Value 3">Label 3</option>
+          </optgroup>
+          </select> */
+    }
+
     /**
      * Website method
      */
