@@ -11,6 +11,47 @@ use App\Controller\AppController;
  */
 class SubscribersController extends AppController {
 
+    //Web method
+    public function login($errorCode = null) {
+        $this->layout = 'home_layout';
+        
+        //Error message display logic
+        $errorMessage = null;
+        if ($errorCode != null) {
+            $errorMessage = \App\Dto\BaseResponseDto::getErrorText($errorCode);
+            $this->set('errorDivClass', 'error-wrapper error-msg-display-block');
+        } else {
+            $this->set('errorDivClass', 'error-wrapper error-msg-display-none');
+        }
+
+        $this->set('errorMsg', $errorMessage);
+    }
+
+    //Web method
+    public function checkLogin() {
+        $subscriberUserDto = new \App\Dto\SubscriberUserDto();
+        $subscriberUserDto->emailId = $this->request->data['name'];
+        $subscriberUserDto->password = $this->request->data['password'];
+        $subscriberDetails = $this->Subscribers->signIn($subscriberUserDto);
+        if ($subscriberDetails) {
+            //Add details to session manager
+            $this->setAction('portfolio');
+        } else {
+            $this->setAction('login', 204);
+        }
+    }
+
+    //Web method
+    public function portfolio() {
+        
+    }
+    
+    //Web method
+    public function signup(){
+        
+    }
+    
+    //API call
     public function signin() {
         $this->apiInitialize();
         $subscriberLoginDetails = \App\Dto\SubscriberUserDto::Deserialize($this->postedData);
@@ -22,6 +63,7 @@ class SubscribersController extends AppController {
         }
     }
 
+    //API call
     public function register() {
         $this->apiInitialize();
         $subscriberDetails = \App\Dto\SubscriberRegistrationDto::Deserialize($this->postedData);
@@ -53,6 +95,7 @@ class SubscribersController extends AppController {
         }
     }
 
+    //API call
     public function updateSubscriber() {
         $this->apiInitialize();
         $isAuthorized = $this->isSubscriberAuthorised();
@@ -122,14 +165,13 @@ class SubscribersController extends AppController {
         if ($statusId == SUBSCRIBER_ACTIVATE) {
             $statusChanged = $this->Subscribers->changeStatus($subscriberId, SUBSCRIPTION_STATUS_ACTIVE);
         }
-        if($statusId == SUBSCRIBER_BYPASS){
+        if ($statusId == SUBSCRIBER_BYPASS) {
             $statusChanged = $this->Subscribers->updateSubscriptionInfo($subscriberId);
         }
         //If status changed then update the result
-        if($statusChanged){
+        if ($statusChanged) {
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(124));
-        }
-        else{
+        } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(226));
         }
     }

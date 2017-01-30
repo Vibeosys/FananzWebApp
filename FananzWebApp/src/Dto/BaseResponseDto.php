@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Dto;
 
 /*
@@ -13,11 +14,16 @@ namespace App\Dto;
  * @author niteen
  */
 class BaseResponseDto {
-    
+
     public $errorCode;
     public $message;
     public $data;
 
+    public static function getErrorText($errorCode) {
+        $baseResponse = new BaseResponseDto();
+        $errMsg = $baseResponse->errorDictionary[$errorCode];
+        return $errMsg;
+    }
 
     //format {"errorCode":"100", "message":"User is not authenticated"}
     public static function prepareError($errorcode) {
@@ -26,24 +32,23 @@ class BaseResponseDto {
         $baseResponse->message = $baseResponse->errorDictionary[$errorcode];
         return json_encode($baseResponse);
     }
-    
-     public static function prepareSuccessMessage($successCode, $data = 0) {
+
+    public static function prepareSuccessMessage($successCode, $data = 0) {
         $baseResponse = new BaseResponseDto();
         $baseResponse->errorCode = 0;
-        $baseResponse->message =$baseResponse->successDictionary[$successCode];
+        $baseResponse->message = $baseResponse->successDictionary[$successCode];
         $baseResponse->data = $data;
         return json_encode($baseResponse);
     }
-    
+
     public static function prepareJsonSuccessMessage($successCode, $data = 0) {
         $baseResponse = new BaseResponseDto();
         $baseResponse->errorCode = 0;
-        $baseResponse->message =$baseResponse->successDictionary[$successCode];
+        $baseResponse->message = $baseResponse->successDictionary[$successCode];
         $baseResponse->data = json_encode($data);
         return json_encode($baseResponse);
     }
 
-    
     protected $errorDictionary = [
         201 => 'Sorry, no portfolio available, please send special request to reach to you',
         202 => 'No categories yet added, do you want to suggest something',
@@ -81,9 +86,8 @@ class BaseResponseDto {
         234 => 'Banner details could not be saved, please try again later',
         235 => 'Banner could not be deleted',
         236 => 'No advt banner found for the requested type'
-       ];
-    
-    protected $successDictionary = [       
+    ];
+    protected $successDictionary = [
         101 => 'List of available portfolios',
         102 => 'List of categories/subcategories',
         103 => 'Registration was successful',
@@ -115,6 +119,6 @@ class BaseResponseDto {
         129 => 'Banner details updated successfully',
         130 => 'Banner deleted successfully',
         131 => 'Banner details'
-       ];
-    
+    ];
+
 }

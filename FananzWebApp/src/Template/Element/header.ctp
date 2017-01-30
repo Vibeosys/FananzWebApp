@@ -35,7 +35,7 @@ echo $this->Html->script('custom.js', ['block' =>'scriptTop']);
             </div>
             <div class="col-md-6 header-top-request">
                 <ul>
-                    <li class="border-right"><a href="partnerwithus.html">Partner With Us</a></li>
+                    <li class="border-right"><a href="<?=VIRTUAL_DIR_PATH.'/subscribers/login'?>">Partner With Us</a></li>
                     <li><a href="login.php">Login</a></li>
                     <!--				<li><a href="subscriber_login.html">Subscriber Login</a></li>-->
                 </ul>
