@@ -280,7 +280,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         }
 
         $('.btn-on-hold-user').on('click', function () {
-            alert('On hold button clicked');
+              swal("Info !", "On hold button clicked", "info");
         });
     });
 
@@ -359,12 +359,12 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
             dataType: 'json',
             success: function (data, textStatus, jqXHR) {
                 if (data) {
-                    alert('Status Changed');
+                     swal("Info !", "Status Changed", "error");
                 }
             }
             ,
             error: function (jqXHR, textStatus, errorThrown) {
-                alert('Some error occurred');
+                 swal("Info !", "Some error occurred", "error");
             }
         });
 
@@ -379,6 +379,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         //validate category
         if (categoryName == '') {
             alert('Category cannot be blank');
+            swal("Info !", "Category cannot be blank", "error");
             return;
         }
         //Send ajax post to add category
@@ -390,7 +391,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 categoryName: categoryName
             },
             success: function (data, textStatus, jqXHR) {
-                alert(data.message);
+                 swal("Info !", data.message, "success");
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }
@@ -408,12 +409,13 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         //alert(selectedCategoryId)
         //validate category id
         if (selectedCategoryId == 0) {
-            alert('Please select a category to update');
+              swal("Info !", "Please select a category to update", "error");
+            
             return;
         }
         //validate category
         if (categoryNameToUpdate == '') {
-            alert('Category title cannot be blank');
+            swal("Info !", "Category title cannot be blank", "error");
             return;
         }
 
@@ -426,7 +428,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 categoryNameToUpdate: categoryNameToUpdate
             },
             success: function (data, textStatus, jqXHR) {
-                alert(data.message);
+                swal("Info !", data.message, "success");
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }
@@ -445,12 +447,12 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         var subcategoryName = $("#txt-subcat-name-add").val();
         //validate category id 
         if (selectedCategoryId == 0) {
-            alert('Please select a category to add subcategory');
+              swal("Info!", "Please select a category to add subcategory", "error");
             return;
         }
         //validate sub category name
         if (subcategoryName == '') {
-            alert('Sub category title cannot be blank');
+            swal("Info !", "Sub category title cannot be blank", "error");
             return;
         }
         //POST to ajax
@@ -463,7 +465,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 subCategoryName: subcategoryName
             },
             success: function (data, textStatus, jqXHR) {
-                alert(data.message);
+               swal("Info !", data.message, "success");
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }

@@ -186,51 +186,10 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                </div>
                            </div>
                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                               <div class="form-group">
-                                 <label for="accnt_no">Branch Name
-                                 <input type="text" id="accnt_no" class="form-control" name="accnt_no">
-                                 <span class="input-icon"><i class="fa fa-address-card-o"></i></span>
-                                 </label>
-                              </div>
-                           </div>
-                            
-                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                              <div class="form-group">
-                                 <label for="branch_name">Bank Address
-                                 <input type="text" id="branch_name" class="form-control" name="branch_name">
-                                 <span class="input-icon"><i class="fa fa-address-book-o"></i></span>
-                                 </label>
-                              </div>
-                           </div>
-                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                               <div class="form-group">
                                  <label for="cor_tel_no">Account No
                                  <input type="tel" id="cor_tel_no" class="form-control" name="cor_tel_no">
                                  <span class="input-icon"><i class="fa fa-code"></i></span>
-                                 </label>
-                              </div>
-                           </div>
-                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                              <div class="form-group">
-                                 <label for="accnt_name">IFSC Code
-                                 <input type="tel" id="accnt_name" class="form-control" name="accnt_name">
-                                 <span class="input-icon"><i class="fa fa-code"></i></span>
-                                 </label>
-                              </div>
-                            </div>
-                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                              <div class="form-group">
-                                 <label for="bank_country">Account Holder Name
-                                 <input type="text" id="bank_country" class="form-control" name="bank_country">
-                                 <span class="input-icon"><i class="fa fa-user"></i></span>
-                                 </label>
-                              </div>
-                            </div>
-                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                              <div class="form-group">
-                                 <label for="cor_country">Bank Country
-                                 <input type="text" id="cor_country" class="form-control" name="cor_country">
-                                 <span class="input-icon"><i class="fa fa-globe"></i></span>
                                  </label>
                               </div>
                            </div>

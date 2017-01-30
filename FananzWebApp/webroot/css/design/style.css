@@ -18,6 +18,11 @@ body a:focus, a:hover {
 .bg-light-gray{
     background: #f5f5f5;
 }
+
+.required_field{
+    color: red;
+    font-size: 15px;
+}
 label.error , .error-check{
     margin-left: 10px;
     width: auto;

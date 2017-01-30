@@ -45,7 +45,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="com_name">Business Name
+                                        <label for="com_name">Business Name <span class="required_field">*</span>
                                             <input type="text" id="com_name" class="form-control" name="cor_business_name">
                                             <span class="input-icon"><i class="fa fa-address-book-o"></i></span>
                                         </label>
@@ -53,7 +53,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="represent_name">Name of Representative
+                                        <label for="represent_name">Name of Representative <span class="required_field">*</span>
                                             <input type="text" id="represent_name" class="form-control" name="cor_represent_name">
                                             <span class="input-icon"><i class="fa fa-address-card-o"></i></span>
                                         </label>
@@ -61,7 +61,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="cor_email">Email
+                                        <label for="cor_email">Email<span class="required_field">*</span>
                                             <input type="email" id="cor_email" class="form-control" name="cor_email">
                                             <span class="input-icon"><i class="fa fa-envelope-open-o"></i></span>
                                         </label>
@@ -69,7 +69,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="cor_password">Password
+                                        <label for="cor_password">Password<span class="required_field">*</span>
                                             <input type="password" id="cor_password" class="form-control" name="cor_password">
                                             <button type="button" id="show_pwd">  <i class="fa fa-eye" id="show_icon"></i></button>
                                             <span class="input-icon"><i class="fa fa-lock"></i></span>
@@ -86,7 +86,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="cor_mob_no">Mobile No
+                                        <label for="cor_mob_no">Mobile No<span class="required_field">*</span>
                                             <input type="tel" id="cor_mob_no" class="form-control" name="cor_mob_no">
                                             <span class="input-icon"><i class="fa fa-mobile"></i></span>
                                         </label>
@@ -94,7 +94,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="cor_website_name">Website Name
+                                        <label for="cor_website_name">Website Name<span class="required_field">*</span>
                                             <input type="text" id="cor_website_name" class="form-control" name="cor_website_name">
                                             <span class="input-icon"><i class="fa fa-tv"></i></span>
                                         </label>
@@ -102,7 +102,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="cor_country">Country of Residence
+                                        <label for="cor_country">Country of Residence<span class="required_field">*</span>
                                             <input type="text" id="cor_country" class="form-control" name="cor_country">
                                             <span class="input-icon"><i class="fa fa-globe"></i></span>
                                         </label>
@@ -135,7 +135,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="nick_name">Nick Name
+                                        <label for="nick_name">Nick Name<span class="required_field">*</span>
                                             <input type="text" id="nick_name" class="form-control" name="nick_name">
                                             <span class="input-icon"><i class="fa fa-user"></i></span>
                                         </label>
@@ -143,7 +143,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="dob">Date of Birth
+                                        <label for="dob">Date of Birth<span class="required_field">*</span>
                                             <input type="date" id="dob" class="form-control" name="dob">
                                             <span class="input-icon"><i class="fa fa-user"></i></span>
                                         </label>
@@ -151,7 +151,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="fl_email">Email
+                                        <label for="fl_email">Email<span class="required_field">*</span>
                                             <input type="email" id="fl_email" class="form-control" name="fl_email">
                                             <span class="input-icon"><i class="fa fa-envelope-open-o"></i></span>
                                         </label>
@@ -159,7 +159,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="fl_password">Password
+                                        <label for="fl_password">Password<span class="required_field">*</span>
                                             <input type="password" id="fl_password" class="form-control" name="fl_password">
                                             <button type="button" id="show_pwd_fl">  <i class="fa fa-eye" id="show_icon_fl"></i></button>
                                             <span class="input-icon"><i class="fa fa-lock"></i></span>
@@ -176,7 +176,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="fl_mob_no">Mobile No
+                                        <label for="fl_mob_no">Mobile No<span class="required_field">*</span>
                                             <input type="tel" id="fl_mob_no" class="form-control" name="fl_mob_no">
                                             <span class="input-icon"><i class="fa fa-mobile"></i></span>
                                         </label>
@@ -184,7 +184,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="fl_website_name">Website Name
+                                        <label for="fl_website_name">Website Name<span class="required_field">*</span>
                                             <input type="text" id="fl_website_name" class="form-control" name="fl_website_name">
                                             <span class="input-icon"><i class="fa fa-tv"></i></span>
                                         </label>
@@ -192,7 +192,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="fl_country">Country of Residence
+                                        <label for="fl_country">Country of Residence<span class="required_field">*</span>
                                             <input type="text" id="fl_country" class="form-control" name="fl_country">
                                             <span class="input-icon"><i class="fa fa-globe"></i></span>
                                         </label>

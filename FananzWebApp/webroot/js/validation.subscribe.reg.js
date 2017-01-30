@@ -17,11 +17,11 @@ $(document).ready(function() {
 					required: true,
 					minlength: 5
 				},
-                cor_tel_no: {
-					required: true,
-					minlength: 10,
-                    maxlength: 12
-				},
+//                cor_tel_no: {
+//					required: true,
+//					minlength: 10,
+//                    maxlength: 12
+//				},
                 cor_mob_no: {
 					required: true,
 					minlength: 10,
@@ -56,10 +56,10 @@ $(document).ready(function() {
 					required: "Please enter a password",
 					minlength: "Your password must be at least 5 characters long"
 				},
-                cor_tel_no: {
-					required: "Please enter a Telephone no",
-					minlength: "Your telephone must consist of at least 10 to 12 digits"
-				},
+//                cor_tel_no: {
+//					required: "Please enter a Telephone no",
+//					minlength: "Your telephone must consist of at least 10 to 12 digits"
+//				},
                 cor_mob_no: {
 					required: "Please enter a mobile no",
 					minlength: "Your mobile must consist of at least 10 digits"
@@ -86,11 +86,11 @@ $(document).ready(function() {
 					required: true,
 					minlength: 5
 				},
-                fl_tel_no: {
-					required: true,
-					minlength: 10,
-                    maxlength: 12
-				},
+//                fl_tel_no: {
+//					required: true,
+//					minlength: 10,
+//                    maxlength: 12
+//				},
                 fl_mob_no: {
 					required: true,
 					minlength: 10,
@@ -124,10 +124,10 @@ $(document).ready(function() {
 					required: "Please enter a password",
 					minlength: "Your password must be at least 5 characters long"
 				},
-                fl_tel_no: {
-					required: "Please enter a Telephone no",
-					minlength: "Your telephone must consist of at least 10 to 12 digits"
-				},
+//                fl_tel_no: {
+//					required: "Please enter a Telephone no",
+//					minlength: "Your telephone must consist of at least 10 to 12 digits"
+//				},
                 fl_mob_no: {
 					required: "Please enter a mobile no",
 					minlength: "Your mobile must consist of at least 10 digits"
