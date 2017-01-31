@@ -80,6 +80,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'HomePage' , 'action' => 'index' ]);
     Router::connect('/portfolio/*', ['controller' => 'Portfolio', 'action' => 'view']);
     Router::connect('/portfolio/add', ['controller' => 'Portfolio', 'action' => 'add']);
+    Router::connect('/portfolio/save', ['controller' => 'Portfolio', 'action' => 'save']);
     Router::connect('/portfolio/details', ['controller' => 'Portfolio', 'action' => 'getPortfolioDetailsForWeb']);
     Router::connect('/portfolio/filteredPortfolios', ['controller' => 'Portfolio', 'action' => 'filteredPortfolios']);
     Router::connect('/portfolio/resetFilter', ['controller' => 'Portfolio', 'action' => 'resetFiler']);

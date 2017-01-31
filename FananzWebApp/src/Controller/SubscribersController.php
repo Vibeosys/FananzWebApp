@@ -105,13 +105,13 @@ class SubscribersController extends AppController {
             $this->setAction('signup', 222, CORPORATE_SUB_TYPE);
             return;
         }
-        
+
         $file = $this->request->data['trade_certificate'];
         if ($file == null) {
             $this->setAction('signup', 237, CORPORATE_SUB_TYPE);
             return;
         }
-        
+
         $tradeCertificateUrl = \App\Utils\ImageFileUploader::uploadMultipartImage($this->_getWebrootDir(), $file);
         $subscriberDetails->tradeCertificateUrl = $tradeCertificateUrl;
         $subscriberId = $this->Subscribers->registerSubscriber($subscriberDetails);
@@ -164,10 +164,32 @@ class SubscribersController extends AppController {
         $subscriberId = $this->sessionManager->getSubscriberId();
         $portfolioTable = new \App\Model\Table\PortfolioTable();
         $portfolioList = $portfolioTable->getPortfolioListbySubscriber($subscriberId);
-
+        $subscriberType = $this->sessionManager->getSubscriberType();
+        $addPortfolioAllowed = $this->_isNewPortfolioAllowed($subscriberType, $portfolioList);
         $subscriberDetails = $this->Subscribers->getSubscriberDetailsById($subscriberId);
         $this->set(['portfolioList' => $portfolioList,
-            'subscriberDetails' => $subscriberDetails]);
+            'subscriberDetails' => $subscriberDetails,
+            'addPortfolioAllowed' => $addPortfolioAllowed]);
+    }
+
+    private function _isNewPortfolioAllowed($subscriberType, $portfolioList) {
+        if ($portfolioList == NULL)
+            return true;
+
+        if ($subscriberType == CORPORATE_SUB_TYPE) {
+            if (count($portfolioList) < IMAGE_CORPORATE_LIMIT) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if ($subscriberType == FREELANCE_SUB_TYPE) {
+            if (count($portfolioList) < IMAGE_FREELANCE_LIMIT) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     //Web method

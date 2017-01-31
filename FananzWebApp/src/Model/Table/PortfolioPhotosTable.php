@@ -37,6 +37,9 @@ class PortfolioPhotosTable extends Table {
         ]);
     }
 
+    private function getTable(){
+        return \Cake\ORM\TableRegistry::get('portfolio_photos');
+    }
     /**
      * Default validation rules.
      *
@@ -139,6 +142,26 @@ class PortfolioPhotosTable extends Table {
             }
         }
         return FALSE;
+    }
+
+    /**
+     * Adds portfolio photos in batch
+     * @param \App\Dto\ServerImageResponseDto $serverPhotos
+     * @param int $portfolioId
+     * @return boolean
+     */
+    public function addPortfolioPhotos($serverPhotos, $portfolioId) {
+        $portfolioPhotoEntities = [];
+        foreach ($serverPhotos as $portfolioPhoto) {
+            $subscriberPhoto = $this->getTable()->newEntity();
+            $subscriberPhoto->PortfolioId = $portfolioId;
+            $subscriberPhoto->PhotoUrl = $portfolioPhoto->photoUrl;
+            $subscriberPhoto->IsCoverImage = $portfolioPhoto->isCoverImage;            
+            array_push($portfolioPhotoEntities, $subscriberPhoto);
+        }
+        if ($this->getTable()->saveMany($portfolioPhotoEntities)) {
+            return true;
+        }
     }
 
 }

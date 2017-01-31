@@ -266,7 +266,7 @@ class PortfolioTable extends Table {
      * @param int $subscriberId
      */
     public function addPortfolio($portfolioAddition, $subscriberId) {
-        $portfolioNew = $this->newEntity();
+        $portfolioNew = $this->getTable()->newEntity();
         $portfolioNew->SubscriberId = $subscriberId;
         $portfolioNew->CategoryId = $portfolioAddition->categoryId;
         //In case of subcategory is 0 instead of NULL then take care
@@ -281,7 +281,7 @@ class PortfolioTable extends Table {
         $portfolioNew->IsActive = 1;
         $portfolioNew->CreatedDate = new \Cake\I18n\Time();
 
-        if ($this->save($portfolioNew)) {
+        if ($this->getTable()->save($portfolioNew)) {
             return $portfolioNew->PortfolioId;
         } else {
             return 0;
@@ -332,7 +332,7 @@ class PortfolioTable extends Table {
      * @return \App\Dto\SubscriberPortfolioListResponseDto
      */
     public function getPortfolioListbySubscriber($subscriberId) {
-        $this->addRelations();
+        $this->addTableRelationMapping();
         $portfolioList = null;
         $results = $this->getTable()->find()
                 ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])

@@ -69,3 +69,8 @@ define('HOME_PAGE_TOP_BANNER', 1);
 define('HOME_PAGE_BOTTOM_BANNER', 2);
 define('PORTFOLIO_PAGE_TOP_BANNER', 3);
 define('PORTFOLIO_PAGE_BOTTOM_BANNER', 4);
+/**
+ * Portfolio image count
+ */
+define('IMAGE_CORPORATE_LIMIT', 6);
+define('IMAGE_FREELANCE_LIMIT', 3);

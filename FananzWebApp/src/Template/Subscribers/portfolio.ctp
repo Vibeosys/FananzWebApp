@@ -32,7 +32,8 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         <?= $this->Form->hidden('subscriberId', ['value' => $subscriberDetails->subscriberId]) ?>
         <div class="row">
             <?php
-            if (is_array($portfolioList) && count($portfolioList)) {
+            
+            if (is_array($portfolioList) && count($portfolioList) > 0) {
                 foreach ($portfolioList as $portfolio) {
                     ?>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
@@ -76,6 +77,9 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 }//end of portfolio
             }
             ?>
+            <?php 
+            if($addPortfolioAllowed){
+            ?>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
                 <a href="<?=VIRTUAL_DIR_PATH.'/portfolio/add'?>">
                     <div class="portfolio-wrapper add-portfolio">
@@ -86,6 +90,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                     </div>
                 </a>
             </div>
+            <?php }?>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="detail-corporate">
                     <div class="row"> 
