@@ -40,20 +40,125 @@ class SubscribersController extends AppController {
         if ($subscriberDetails) {
             $isSubscribed = $this->sessionManager->isSubscriberSubscribed();
             if ($isSubscribed) {//Add details to session manager
-                $this->setAction('portfolio');
+                $this->redirect('/subscribers/portfolio');
             } else {
-                $this->setAction('paysubscription');
+                $this->redirect('/subscribers/paysubscription');
             }
         } else {
             $this->setAction('login', 204);
         }
     }
 
+    public function registerFreelance() {
+        $subscriberDetails = $this->_buildFreelanceRegistration($this->request->data);
+        $isDuplicateSubcriber = $this->Subscribers->isSubscriberExists($subscriberDetails->emailId);
+        if ($isDuplicateSubcriber) {
+            //Throw error
+            $this->setAction('signup', 222, FREELANCE_SUB_TYPE);
+            return;
+        }
+
+        $subscriberId = $this->Subscribers->registerSubscriber($subscriberDetails);
+        if ($subscriberId) {
+            //Send welcome email
+            try {
+                $subscriberPayLaterDetails = $this->Subscribers->getSubscriberDetails($subscriberId);
+                \App\Utils\EmailSenderUtility::sendWelcomeEmail($subscriberPayLaterDetails);
+            } catch (\Exception $ex) {
+                \Cake\Log\Log::error('Error while sending welcome email ' . $ex->getTraceAsString());
+            }
+            //Build session data to store data
+            $subscriberDetailInfo = new \App\Dto\SubscriberDetailedInfo();
+            $subscriberDetailInfo->name = $subscriberDetails->name;
+            $subscriberDetailInfo->emailId = $subscriberDetails->emailId;
+            $subscriberDetailInfo->sType = $subscriberDetails->subScrType;
+            $subscriberDetailInfo->subscriberId = $subscriberId;
+            $subscriberDetailInfo->isSubscribed = false;
+            //Save values to session
+            $this->sessionManager->saveSubscriberLoginInfo($subscriberDetailInfo);
+            $this->redirect('/subscribers/paysubscription');
+        } else {
+            //$this->response->body(\App\Dto\BaseResponseDto::prepareError(203));
+            $this->setAction('signup', [203, FREELANCE_SUB_TYPE]);
+        }
+    }
+
+    private function _buildFreelanceRegistration($requestData) {
+        $subscriberDetails = new \App\Dto\SubscriberRegistrationDto();
+        $subscriberDetails->emailId = $requestData['fl_email'];
+        $subscriberDetails->password = $requestData['fl_password'];
+        $subscriberDetails->country = $requestData['fl_country'];
+        $subscriberDetails->mobileNo = $requestData['fl_mob_no'];
+        $subscriberDetails->telNo = $requestData['fl_tel_no'];
+        $subscriberDetails->nickName = $requestData['nick_name'];
+        $subscriberDetails->websiteUrl = $requestData['fl_website_name'];
+        $subscriberDetails->name = $requestData['fl_name'];
+        $subscriberDetails->subScrType = FREELANCE_SUB_TYPE;
+        return $subscriberDetails;
+    }
+
+    public function registerCorporate() {
+        $subscriberDetails = $this->_buildCorporateRegistration($this->request->data);
+        $isDuplicateSubcriber = $this->Subscribers->isSubscriberExists($subscriberDetails->emailId);
+        if ($isDuplicateSubcriber) {
+            //Throw error
+            $this->setAction('signup', 222, CORPORATE_SUB_TYPE);
+            return;
+        }
+        
+        $file = $this->request->data['trade_certificate'];
+        if ($file == null) {
+            $this->setAction('signup', 237, CORPORATE_SUB_TYPE);
+            return;
+        }
+        
+        $tradeCertificateUrl = \App\Utils\ImageFileUploader::uploadMultipartImage($this->_getWebrootDir(), $file);
+        $subscriberDetails->tradeCertificateUrl = $tradeCertificateUrl;
+        $subscriberId = $this->Subscribers->registerSubscriber($subscriberDetails);
+        if ($subscriberId) {
+            //Send welcome email
+            try {
+                $subscriberPayLaterDetails = $this->Subscribers->getSubscriberDetails($subscriberId);
+                \App\Utils\EmailSenderUtility::sendWelcomeEmail($subscriberPayLaterDetails);
+            } catch (\Exception $ex) {
+                \Cake\Log\Log::error('Error while sending welcome email ' . $ex->getTraceAsString());
+            }
+            //Build session data to store data
+            $subscriberDetailInfo = new \App\Dto\SubscriberDetailedInfo();
+            $subscriberDetailInfo->name = $subscriberDetails->name;
+            $subscriberDetailInfo->emailId = $subscriberDetails->emailId;
+            $subscriberDetailInfo->sType = $subscriberDetails->subScrType;
+            $subscriberDetailInfo->subscriberId = $subscriberId;
+            $subscriberDetailInfo->isSubscribed = false;
+            //Save values to session
+            $this->sessionManager->saveSubscriberLoginInfo($subscriberDetailInfo);
+            $this->redirect('/subscribers/paysubscription');
+        } else {
+            //$this->response->body(\App\Dto\BaseResponseDto::prepareError(203));
+            $this->setAction('signup', [203, CORPORATE_SUB_TYPE]);
+        }
+    }
+
+    private function _buildCorporateRegistration($requestData) {
+        $subscriberDetails = new \App\Dto\SubscriberRegistrationDto();
+        $subscriberDetails->emailId = $requestData['cor_email'];
+        $subscriberDetails->password = $requestData['cor_password'];
+        $subscriberDetails->country = $requestData['cor_country'];
+        $subscriberDetails->mobileNo = $requestData['cor_mob_no'];
+        $subscriberDetails->telNo = $requestData['cor_tel_no'];
+        //$subscriberDetails->nickName = $requestData['nick_name'];
+        $subscriberDetails->websiteUrl = $requestData['cor_website_name'];
+        $subscriberDetails->name = $requestData['cor_business_name'];
+        $subscriberDetails->contactPerson = $requestData['cor_represent_name'];
+        $subscriberDetails->subScrType = CORPORATE_SUB_TYPE;
+        return $subscriberDetails;
+    }
+
     //Web method
     public function portfolio() {
         $isSubscribed = $this->sessionManager->isSubscriberSubscribed();
         if (!$isSubscribed) {
-            $this->setAction('login');
+            $this->redirect('/subscribers/login');
             return;
         }
         $subscriberId = $this->sessionManager->getSubscriberId();
@@ -61,13 +166,34 @@ class SubscribersController extends AppController {
         $portfolioList = $portfolioTable->getPortfolioListbySubscriber($subscriberId);
 
         $subscriberDetails = $this->Subscribers->getSubscriberDetailsById($subscriberId);
-        $this->set(['portfolioList' => $portfolioList, 
+        $this->set(['portfolioList' => $portfolioList,
             'subscriberDetails' => $subscriberDetails]);
     }
 
     //Web method
-    public function signup() {
-        
+    public function signup($errorCode = null, $subType = null) {
+        $activeTab = CORPORATE_SUB_TYPE;
+        //Error message display logic
+        $errorMessage = null;
+        if ($errorCode != null) {
+            $errorMessage = \App\Dto\BaseResponseDto::getErrorText($errorCode);
+            //If the sub type is corporate then show error in corporate tab
+            if ($subType == CORPORATE_SUB_TYPE) {
+                $this->set('errorDivCorporateClass', 'error-wrapper error-msg-display-block');
+                $this->set('errorDivFreelanceClass', 'error-wrapper error-msg-display-none');
+            } else {
+                $activeTab = FREELANCE_SUB_TYPE;
+                $this->set('errorDivFreelanceClass', 'error-wrapper error-msg-display-block');
+                $this->set('errorDivCorporateClass', 'error-wrapper error-msg-display-none');
+            }
+        } else {
+            //Default show none style
+            $this->set('errorDivFreelanceClass', 'error-wrapper error-msg-display-none');
+            $this->set('errorDivCorporateClass', 'error-wrapper error-msg-display-none');
+        }
+
+        $this->set('errorMsg', $errorMessage);
+        $this->set('activeTab', $activeTab);
     }
 
     public function paysubscription($errorCode = null) {
@@ -93,6 +219,23 @@ class SubscribersController extends AppController {
         $this->set('errorMsg', $errorMessage);
         $this->set(['paymentCurrency' => $currency,
             'paymentAmount' => $amount]);
+    }
+
+    //Wed method call
+    public function paylater() {
+        $subscriberId = $this->sessionManager->getSubscriberId();
+        $subscriberDetails = $this->Subscribers->getSubscriberDetails($subscriberId);
+        $emailSendSuccess = false;
+
+        try {
+            if ($subscriberDetails) {
+                \App\Utils\EmailSenderUtility::sendPayLaterEmail($subscriberDetails);
+                $emailSendSuccess = true;
+            }
+        } catch (\Exception $ex) {
+            \Cake\Log\Log::error('Could not send pay later email ' . $ex->getTraceAsString());
+        }
+        $this->redirect('/subscribers/login');
     }
 
     //API call
