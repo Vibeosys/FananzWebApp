@@ -3065,14 +3065,32 @@ input[type=search] {
     text-align: right;
     font-size: 28px;
 }
+.header-portfolio .portfolio-header .my-portfolio-img{
+    width: 50px;
+}
+.cover-photo-wrapper .prev_thumb{
+    max-width: 300px;
+    max-height: 200px;
+    width: 292px;
+    height: 192px;
+}
+.cover-photo-wrapper .file-upload{
+    max-height: 200px!important;
+    max-width: 300px!important;
+    width: 300px!important;
+    height: 200px!important;
+}
 .prev_thumb{
     margin: 3px;
-       height: auto;
+    height: auto;
     width: auto;
     max-height: 66px;
     max-width: 120px;
     min-height: auto;
     min-width: auto;
+}
+.portfolio-file{
+    margin: 0px 12px;
 }
 .file-upload{
     position: relative;
@@ -3080,13 +3098,18 @@ input[type=search] {
     width: auto;
     height: auto;
     max-height: 73px;
-    max-width: 126px;
+    max-width: 128px;
     line-height: 30px;
     text-align: center;
 /*    z-index: 1038;*/
     cursor: pointer;
     border-radius: 4px;
     display: inline-block;
+}
+input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .portfolio-file:focus {
+    border: none;
+    outline: none;
+    
 }
 .file{
     opacity: 0.0; 
@@ -3097,12 +3120,15 @@ input[type=search] {
     right: 0; 
     width: 100%; 
     height:100%;
-    cursor: pointer;        
+    cursor: default;  
+    z-index: -1;
 }
 .preview{
+    cursor: default;
+}
+.cover-photo-wrapper .file, .cover-photo-wrapper .preview{
     cursor: pointer;
 }
-
 .form-group .input-icon1 {
     position: absolute;
     margin-top: -2.7em;
@@ -3117,6 +3143,74 @@ input[type=search] {
     color: gray;
 
 }
+.portfolio-img-btn{
+    margin-top: -5px;
+    border-radius: 3px;
+}
+.portfolio-img-btn .edit-portfolio{
+    width: 100%;
+}
+.portfolio-img-btn .edit-portfolio .edit-pf-btn{
+    display: inline-block;
+    width: 49%;
+    padding-left: 2px;
+}
+.portfolio-img-btn .edit-portfolio .edit-pf-btn button{
+    background: transparent;
+    color: #394fc3;
+    border: none;
+    text-decoration: underline;
+}
+.img-size{
+   font-size: 12px;
+    color: #afafaf;
+    font-style: italic;
+}
+
+.portfolio-img-btn .edit-portfolio .delete-pf-btn button{
+    background: transparent;
+    color: #e46c6c;
+    border: none;
+    text-decoration: underline;
+}
+.portfolio-img-btn .edit-portfolio .edit-pf-btn button, .portfolio-img-btn .edit-portfolio .delete-pf-btn button{
+    width: 100%;
+    font-size: 11px;
+}
+.portfolio-img-btn .edit-portfolio .delete-pf-btn{
+    display: inline-block;
+    width: 48%;
+}
+.slick_prev {
+    left: -100px;
+    padding-right: 2px !important;
+}
+.slick_next {
+    right: -100px;
+    padding-left: 2px !important;
+}
+.slick_prev i,
+.slick_next i {
+    margin-top: 9px;
+    font-size: 36px!important;
+    color: #888;
+}
+.slick_prev,
+.slick_next {
+    width: 30px;
+    height: 45px;
+    z-index: 1;
+    top: 0;
+    margin-top: -22px;
+    position: absolute;
+    font-size: 20px;
+    text-align: center;
+    color: #d7d7d7;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border 0.2s linear, background 0.2s linear, color 0.2s linear, opacity 0.2s linear;
+}
+
 @media screen and (min-width:768px) and (max-width:991px){
     .add-portfolio {
         max-height: 363px;

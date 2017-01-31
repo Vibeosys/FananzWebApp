@@ -10,7 +10,9 @@ use App\Controller;
 echo $this->element('header');
 
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
+echo $this->Html->css('/css/design/slick.css', ['block' => true]);
 echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
+echo $this->Html->css('/css/design/slick-theme.css', ['block' => true]);
 
 echo $this->Html->script('/js/jquery.custom-file-input.js', ['block' => 'scriptTop']);
 
@@ -19,6 +21,8 @@ echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
 echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 echo $this->Html->script('/js/custom.js', ['block' => true]);
 echo $this->Html->script('/js/jquery.file.upload.js', ['block' => true]);
+echo $this->Html->script('/js/slick.min.js', ['block' => true]);
+echo $this->Html->script('/js/portfolio.carousel.js', ['block' => true]);
 ?>    
 <section class="add-corp-portfolio" id="main">
     <div class="container">
@@ -58,21 +62,69 @@ echo $this->Html->script('/js/jquery.file.upload.js', ['block' => true]);
                                 </label>
                             </div>
                             <div class="form-group">
+                                <label>
+                                    Cover Photo <span class="required_field"> *</span><span class="img-size">size 500 x 400</span>
+                                    <div class="cover-photo-wrapper">
+                                        <div class="file-upload"> 
+                                            <input type="file" class="file"  title="file 1" accept="image/*" id="file">
+                                            <div id="prev_file" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
+                                        </div>
+                                    </div>
+                                     
+                                </label>
+                            </div>
+                            <div class="form-group">
                                 <label >
-                                    Photos<span class="required_field"> *</span>
-                                    <div class="file-upload-container">
-                                        <div class="file-upload"> 
-                                            <input type="file" class="file"  title="file 1" accept="image/*" id="file1">
-                                            <div id="prev_file1" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
-                                        </div>
-                                        <div class="file-upload"> 
-                                            <input type="file" class="file"  title="file 2" accept="image/*" id="file2">
-                                            <div id="prev_file2" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
-                                        </div>
-                                        <div class="file-upload"> 
-                                            <input type="file" class="file"  title="file 2" accept="image/*" id="file3">
-                                            <div id="prev_file3" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
-                                        </div>
+                                    Photos<span class="required_field"> *</span><span class="img-size">size 300 x 200</span>
+                                      <div class="add_portfolio_carousel style_1 per_row_2" id="add_portfolio_carousel">
+                                          <div class="portfolio-file" id="parent3">
+                                              <div class="file-upload" id="child1"> 
+                                                  <input type="file" class="file"  title="file 1" accept="image/*" id="file1">
+                                                  <div id="prev_file1" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
+                                              </div>
+                                              <div class="portfolio-img-btn" id="parent2">
+                                                    <div class="edit-portfolio" id="parent1">
+                                                        <div class="edit-pf-btn" id="parent"><button type="button" class="photo-edit-btn">Replace</button></div>
+                                                         <div class="delete-pf-btn"><button type="button" class="photo-delete-btn">Delete</button></div>
+                                                    </div>
+                                              </div>
+                                          </div>      
+                                           <div class="portfolio-file">
+                                            <div class="file-upload"> 
+                                                <input type="file" class="file"  title="file 2" accept="image/*" id="file2">
+                                                <div id="prev_file2" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
+                                            </div>
+                                               <div class="portfolio-img-btn">
+                                                    <div class="edit-portfolio">
+                                                        <div class="edit-pf-btn"><button type="button" class="photo-edit-btn">Replace</button></div>
+                                                         <div class="delete-pf-btn"><button type="button" class="photo-delete-btn">Delete</button></div>
+                                                    </div>
+                                              </div>
+                                          </div>      
+                                          <div class="portfolio-file">
+                                            <div class="file-upload"> 
+                                                <input type="file" class="file"  title="file 2" accept="image/*" id="file3">
+                                                <div id="prev_file3" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
+                                            </div>
+                                              <div class="portfolio-img-btn">
+                                                    <div class="edit-portfolio">
+                                                        <div class="edit-pf-btn"><button type="button" class="photo-edit-btn">Replace</button></div>
+                                                         <div class="delete-pf-btn"><button type="button" class="photo-delete-btn">Delete</button></div>
+                                                    </div>
+                                              </div>
+                                          </div> 
+                                           <div class="portfolio-file">
+                                            <div class="file-upload"> 
+                                                <input type="file" class="file"  title="file 2" accept="image/*" id="file4">
+                                                <div id="prev_file4" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
+                                            </div>
+                                              <div class="portfolio-img-btn">
+                                                    <div class="edit-portfolio">
+                                                        <div class="edit-pf-btn"><button type="button" class="photo-edit-btn">Replace</button></div>
+                                                         <div class="delete-pf-btn"><button type="button" class="photo-delete-btn">Delete</button></div>
+                                                    </div>
+                                              </div>
+                                          </div> 
                                     </div>
                                 </label>
                             </div>
@@ -119,7 +171,7 @@ echo $this->Html->script('/js/jquery.file.upload.js', ['block' => true]);
                             <div class="form-group">
                                 <div class="button-set">
                                     <button type="submit" title="Update" class="button black_sm">Add</button>
-                                    <button  type="submit" title="Delete"  class="white_back_btn" onclick=" window.location.assign('portfolio.html')">Back</button>     
+                                    <button  type="submit" title="Delete"  class="white_back_btn">Back</button>     
                                 </div>
                             </div>
                         </form>
@@ -134,5 +186,24 @@ echo $this->Html->script('/js/jquery.file.upload.js', ['block' => true]);
 <script type="text/javascript">
     $(document).ready(function(){
         $('.file').preimage();
+        
+         $('.photo-edit-btn').click(function(e){
+             e.preventDefault();
+            var edit_id = $(this).parent().parent().parent().parents('.portfolio-file').find('.file').attr('id');
+               
+            $('#'+edit_id).trigger('click');
+            
+        });
+        
+        $('.photo-delete-btn').click(function(e){
+            e.preventDefault();
+            var delete_id = $(this).parent().parent().parent().parents('.portfolio-file').find('.preview').attr('id');
+            var val1 = $('#'+delete_id).find('.prev_thumb').attr('src','../img/demoUpload.jpg');
+            var cln = $('#'+delete_id).val('');
+        });
+        
     });
+    
+    
+    
 </script>
