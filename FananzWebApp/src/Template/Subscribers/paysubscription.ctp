@@ -24,7 +24,7 @@ echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => tr
                         </div>
 
                     </div>
-                    
+
                     <div class="col-lg-12">
                         <div class="error-msg-container">
                             <div class="<?= $errorDivClass ?>">
@@ -32,7 +32,7 @@ echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => tr
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-12">
                         <div class="total-price">
                             <h3>Annual subscription fees </h3><span><?= $paymentCurrency . ' ' . $paymentAmount ?></span>
@@ -77,7 +77,9 @@ echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => tr
                     <div class="col-lg-12">
                         <div class="paying-later">
                             <div class="paying-btn-wrapper">
-                                <button class="button paying-by-later"> Skip this for now <span class="paying-by-later-icon"></span></button>
+                                <?= $this->Form->create(false, ['url' => ['action' => 'paylater']]) ?>
+                                <button type="submit" class="button paying-by-later"> Skip this for now <span class="paying-by-later-icon"></span></button>
+                                <?= $this->Form->end() ?>
                             </div>
                         </div>
                     </div>

@@ -28,5 +28,5 @@ class SubscriberRegistrationDto extends JsonDeserializer {
     public $websiteUrl;
     public $country;
     public $nickName;
-
+    public $tradeCertificateUrl;
 }

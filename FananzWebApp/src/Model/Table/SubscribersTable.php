@@ -124,6 +124,9 @@ class SubscribersTable extends Table {
         $newSubscriber->WebsiteUrl = $subscriber->websiteUrl;
         $newSubscriber->Nickname = $subscriber->nickName;
         $newSubscriber->CountryOfResidence = $subscriber->country;
+        if($subscriber->tradeCertificateUrl != ''){
+            $newSubscriber->TradeCertificateUrl = $subscriber->tradeCertificateUrl;
+        }
         $newSubscriber->IsActive = 1;
         if ($this->save($newSubscriber)) {
             return $newSubscriber->SubscriberId;
