@@ -325,7 +325,7 @@ class PortfolioTable extends Table {
         }
         return $portfolioList;
     }
-    
+
     /**
      * Duplicated for the sake of no impact
      * @param type $subscriberId
@@ -422,7 +422,7 @@ class PortfolioTable extends Table {
      * @return \App\Dto\FindPortfolioDto
      */
     public function getSelectedPortfolioList() {
-        $this->getTable()->addRelations();
+        $this->addTableRelationMapping();
         $portfolioList = null;
         $resultsData = $this->getTable()->find()
                 ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])
@@ -611,6 +611,30 @@ class PortfolioTable extends Table {
     }
 
     private function addRelations() {
+        $this->belongsTo('subscribers', [
+            'foreignKey' => 'SubscriberId',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->belongsTo('eventcategories', [
+            'bindingKey' => 'CatId',
+            'foreignKey' => 'CategoryId',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->belongsTo('subcategories', [
+            'bindingKey' => 'SubCatId',
+            'foreignKey' => 'SubcategoryId',
+            'joinType' => 'LEFT'
+        ]);
+
+        $this->hasOne('portfolio_photos', [
+            'foreignKey' => 'PortfolioId',
+            'conditions' => ['portfolio_photos.IsCoverImage' => 1]
+        ]);
+    }
+
+    private function addTableRelationMapping() {
         $this->getTable()->belongsTo('subscribers', [
             'foreignKey' => 'SubscriberId',
             'joinType' => 'INNER'

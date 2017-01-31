@@ -99,10 +99,24 @@ class PortfolioController extends AppController {
         //  $this->set(['portfolioDetails' => json_encode($portfolioDetails)])
     }
 
+    //REST API
     public function getPortfolioDetails() {
         $this->apiInitialize();
         $portfolioDetaiRequest = \App\Dto\PortfolioDetailRequestDto::Deserialize($this->postedData);
         $portfolioDetails = $this->Portfolio->getPortfolioDetails($portfolioDetaiRequest);
+        if ($portfolioDetails) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(107, $portfolioDetails));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(208));
+        }
+    }
+    
+    public function getPortfolioDetailsForWeb() {
+        $this->apiInitialize();
+        $portfolioDetailsRequest = new \App\Dto\PortfolioDetailRequestDto();
+        $portfolioDetailsRequest->portfolioId = $this->request->data['portfolioId'];
+        //$portfolioDetaiRequest = \App\Dto\PortfolioDetailRequestDto::Deserialize($this->postedData);
+        $portfolioDetails = $this->Portfolio->getPortfolioDetails($portfolioDetailsRequest);
         if ($portfolioDetails) {
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(107, $portfolioDetails));
         } else {

@@ -3298,3 +3298,18 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
 .error-msg-container .error-wrapper p i{
     padding-right: 15px;
 }
+/*Share button classes*/
+.share-link-social .share-link-fb .link-fb, .share-link-social .share-link-yt .link-yt{
+    display: inline-block;
+}
+.share-link-social .share-link-fb .link-fb input, .share-link-social .share-link-yt .link-yt input{
+    display: inline-block;
+    padding: 8px 21px 10px 14px;
+    border: 1px solid #d6d6d6;
+    width: 300px;
+    margin: 10px 0px;
+    max-width: 300px;
+}
+.share-link-social .share-link-fb img, .share-link-social .share-link-yt img{
+    width: 40px;
+}

@@ -88,18 +88,18 @@ if (count($portfolioDetails) > 0) {
     <?php
 } else {
     ?>
-   <section class="data-not-found">
-       <div class="container">
+    <section class="data-not-found">
+        <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="dnf-img">
-                         <?= $this->Html->image('data-not-found3.png', array('class' => 'img-responsive')); ?>
+                        <?= $this->Html->image('data-not-found3.png', array('class' => 'img-responsive')); ?>
                     </div>
                     <div class="dnf-content">
                         <h2>No Records Found</h2>
                     </div>
                 </div>
-           </div>
+            </div>
         </div>
     </section>
     <?php
@@ -159,8 +159,9 @@ if (count($portfolioDetails) > 0) {
                                         <div class="price">AED<span> <?= $portfolio->minPrice ?> - <?= $portfolio->maxPrice ?> </span></div>
                                     </div>
                                     <div class="cate-link">
+                                        <?= $this->Form->hidden('hdnPortfolioId', ['value' => $portfolio->portfolioId]) ?>
                                         <div class="detail-artists">
-                                            <a href="#detail_artists" data-toggle="modal" class="detail_artists">Details</a>    
+                                            <a href="#" data-toggle="modal" class="detail_artists" onclick="showDetails(<?= $portfolio->portfolioId ?>)">Details</a>    
                                         </div>
                                         <div class="request-artists">
                                             <a href="#request_artists" data-toggle="modal">Request Now</a>    
@@ -188,10 +189,10 @@ if (count($portfolioDetails) > 0) {
                         </div>
                     </div>
                 </div>  
-            
-           
+
+
                 <?php
-           }
+            }
             ?>
         </div>
     </div>
@@ -213,7 +214,7 @@ if (count($portfolioDetails) > 0) {
     <div class="modal-dialog">
         <div class="modal-content">
             <button type="button" class="float-right close-popup-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
-            <div class="header-modal"> Details of Artists</div>
+            <div class="header-modal" id="portfolio-header-id"> Details of Artists</div>
             <div class="modal-body">
                 <div class="rslides_container">
                     <ul class="rslides" id="slider1">
@@ -238,15 +239,23 @@ if (count($portfolioDetails) > 0) {
                     </ul>
                 </div>
                 <div class="detail_artists_right">
-                    <h3>Taylor Swift</h3>
-                    <h4>Singer</h4>
-                    <div class="price"><span class="da-1">Price </span> <span class="da-2">AED  3000 - 5000</span></div>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                    <h3 id="portfolio-title-id"></h3>
+                    <h4 id="portfolio-cat-id"></h4>
+                    <div class="price"><span class="da-1">Price in AED</span> <span class="da-2" id="portfolio-price-range-id"></span></div>
+                    <p id="portfolio-desc-id"></p>
+                    <div class="share-link-social">
+                        <div class="share-link-fb">
+                            <a href="#" id="link-portfolio-fb" target="_blank"><img src="<?= VIRTUAL_DIR_PATH . '/img/fb.png' ?>"></a><div class="link-fb"><input type="text" readonly value="" id="txtFbId"></div>
+                        </div>
+                        <div class="share-link-yt">
+                            <a href="#" id="link-portfolio-yt" target="_blank"><img src="<?= VIRTUAL_DIR_PATH . '/img/yt.png' ?>"></a><div class="link-yt"><input type="text" readonly value="" id="txtYtubeId"></div>
+                        </div>
+                    </div>
                     <div class="share-btn">
                         <span class="sb-text"> Share  <i class="fa fa-share-alt"></i>    </span>
                         <div class="share-btn-social">
                             <span><a href="" class="sbs-mail"><i class="fa fa-envelope"></i></a></span>
-                            <span><a href="" class="sbs-fb"><i class="fa fa-facebook"></i></a></span>
+                            <span><a href="#" class="sbs-fb" onclick="shareToFacebook()"><i class="fa fa-facebook"></i></a></span>
                             <span><a href="" class="sbs-tw"><i class="fa fa-twitter"></i></a></span>
                             <span><a href="" class="sbs-gp"><i class="fa fa-google-plus"></i></a></span>
                         </div>
@@ -289,6 +298,46 @@ echo $this->Html->script('Pagination.js');
 
 <script type="text/javascript">
 
+    /*$(document).ready(function () {
+     $.ajaxSetup({cache: true});
+     $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
+     FB.init({
+     appId: '{your-app-id}',
+     version: 'v2.7' // or v2.1, v2.2, v2.3, ...
+     });
+     $('#loginbutton,#feedbutton').removeAttr('disabled');
+     FB.getLoginStatus(updateStatusCallback);
+     });
+     
+     function updateStatusCallback() {
+     alert('I am being called for facebook'');
+     }
+     });*/
+
+    function shareToFacebook() {
+        /*$.ajaxSetup({cache: true});
+         $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
+         FB.init({
+         appId: '{your-app-id}',
+         version: 'v2.7' // or v2.1, v2.2, v2.3, ...
+         });
+         $('#loginbutton,#feedbutton').removeAttr('disabled');
+         FB.getLoginStatus(updateStatusCallback);
+         });
+         
+         function updateStatusCallback() {
+         alert('I am being called for facebook'');
+         }*/
+
+        FB.ui(
+                {
+                    method: 'share',
+                    href: 'http://www.vibeosys.com'
+                }, function (response) {
+            alert(response);
+        });
+    }
+
     $(window).load(function () {
         $("#slider1").responsiveSlides({
             auto: true,
@@ -300,154 +349,206 @@ echo $this->Html->script('Pagination.js');
         });
     });
 
+    /**
+     * Shows portfolio details of the provided portfolio and opens up modal dialog
+     * @param {type} input
+     * @param {type} handle
+     * @returns {undefined}
+     */
+    function showDetails(portfolioId) {
+        //alert(portfolioId);
+        $.ajax({
+            url: '/FananzWebApp/portfolio/details',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                portfolioId: portfolioId
+            },
+            success: function (data, textStatus, jqXHR) {
+                if (data.errorCode != 0) {
+                    swal('Info', data.message, 'error');
+                    return;
+                }
+                var portfolioData = JSON.parse(data.data);
+                $("#portfolio-header-id").html("Portfolio of " + portfolioData.subscriberName);
+                $("#portfolio-title-id").html(portfolioData.subscriberName);
+                $("#portfolio-price-range-id").html(portfolioData.minPrice + " - " + portfolioData.maxPrice);
+                if (portfolioData.subCategory != null) {
+                    $("#portfolio-cat-id").html(portfolioData.category + " - " + portfolioData.subCategory);
+                } else {
+                    $("#portfolio-cat-id").html(portfolioData.category);
+                }
+                if(portfolioData.fbLink != null){
+                    $("#txtFbId").val(portfolioData.fbLink);
+                    $("#link-portfolio-fb").attr('href', portfolioData.fbLink);
+                }
+                if(portfolioData.youtubeLink != null){
+                    $("#txtYtubeId").val(portfolioData.youtubeLink);
+                    $("#link-portfolio-yt").attr('href', portfolioData.youtubeLink);
+                }
+                $("#portfolio-desc-id").html(portfolioData.aboutUs);                
+                if (portfolioData.photos != null) {
+                    var liList = '';
+                    $.each(portfolioData.photos, function (id, obj) {
+                        //alert(obj);
+                        liList += "<li><img src='" + obj + "'></li>";
+                    });
+                    alert(liList);
+                    $("#slider1").html(liList);
+                }// if data photos not null
+                else {
+                    $("#slider1").html("<li><img src='/FananzWebApp/img/default_img.jpg'></li>");
+                }
+
+                $('#detail_artists').modal('show');
+            },
+        });
+    }
 </script>
 <script>
-   $('#resetFilter').click(function(){
-       alert('here');
+    $('#resetFilter').click(function () {
+        alert('here');
         var categoryId = $('#categoryId').val();
         var subCategoryId = $('#subCategoryId').val();
-       $.ajax({
+        $.ajax({
             type: 'POST',
-                    url: '/FananzWebApp/portfolio/resetFilter',
-                    data: {
-                        
-                            categoryId: categoryId,
-                            subCategoryId: subCategoryId
-                            
-                    },
-                    
-                    dataType:'json',
-                    success: function (result, jqXHR) {
-                        if (result)
-                        {
-                            var portfolioHtml="";
-                            // alert(result.toString());
-                            $.each(result, function (idx,obj)
-                            {
-                            var subCategory=obj.subcategory;
-                           
-                            var category=obj.category;
-                            var concatinatedString=''
-                            if(subCategory!=="")
-                            {
-                               concatinatedString = category +'-'+ subCategory;
-                             }
-                             else
-                             {
-                               concatinatedString = category;  
-                             }
-                             var imageUrl="";
-                            
-                                if(obj.coverImageUrl!=null)
-                                {
-                                  imageUrl= obj.coverImageUrl; 
+            url: '/FananzWebApp/portfolio/resetFilter',
+            data: {
+                categoryId: categoryId,
+                subCategoryId: subCategoryId
 
-                                }
-                                else
-                                {
-                                   imageUrl='/FananzWebApp/img/default_img.jpg'; 
-                                }
-                             portfolioHtml+= '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#detail_artists" data-toggle="modal">Details</a>  </div> <div class="request-artists"><a href="#request_artists" data-toggle="modal">Request Now</a> </div>          </div></div></div></div> </li>';
-                                
-                            }
-                                    
-                              
-                            );
-                              
-                            var startPaginator='<div class="container"><div class="row"><div class="col-lg-12"><div class="pagination-inner"><label>Show:</label><select id="Itemsperpage"><option  selected="selected">9</option><option>15</option><option>21</option></select></div></div></div></div>';
-                           
-                            $('#paginationStart').html(startPaginator);
-                             
-                            $('#portfolioUl').html(portfolioHtml);
-                            
-                            var paginator ='<div class="pg-bottom"> <div class="total-page"><p id="legend1"></p></div><div class="page-holder"><div class="holder"></div></div></div>';                           
-                            $('$paginator_last').html(paginator);
+            },
+            dataType: 'json',
+            success: function (result, jqXHR) {
+                if (result)
+                {
+                    var portfolioHtml = "";
+                    // alert(result.toString());
+                    $.each(result, function (idx, obj)
+                    {
+                        var subCategory = obj.subcategory;
+
+                        var category = obj.category;
+                        var concatinatedString = ''
+                        if (subCategory !== "")
+                        {
+                            concatinatedString = category + '-' + subCategory;
                         }
+                        else
+                        {
+                            concatinatedString = category;
                         }
-                    });
-        
-        
-  }); 
-    
-    
-    
+                        var imageUrl = "";
+
+                        if (obj.coverImageUrl != null)
+                        {
+                            imageUrl = obj.coverImageUrl;
+
+                        }
+                        else
+                        {
+                            imageUrl = '/FananzWebApp/img/default_img.jpg';
+                        }
+                        portfolioHtml += '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#detail_artists" data-toggle="modal">Details</a>  </div> <div class="request-artists"><a href="#request_artists" data-toggle="modal">Request Now</a> </div>          </div></div></div></div> </li>';
+
+                    }
+
+
+                    );
+
+                    var startPaginator = '<div class="container"><div class="row"><div class="col-lg-12"><div class="pagination-inner"><label>Show:</label><select id="Itemsperpage"><option  selected="selected">9</option><option>15</option><option>21</option></select></div></div></div></div>';
+
+                    $('#paginationStart').html(startPaginator);
+
+                    $('#portfolioUl').html(portfolioHtml);
+
+                    var paginator = '<div class="pg-bottom"> <div class="total-page"><p id="legend1"></p></div><div class="page-holder"><div class="holder"></div></div></div>';
+                    $('$paginator_last').html(paginator);
+                }
+            }
+        });
+
+
+    });
+
+
+
 </script>
 <script>
 
- $(document).ready(function () {
-    
-   var minPrice = $('#txtMinPrice').val();
-   var maxPrice = $('#txtMaxPrice').val();
-   var categoryId = $('#categoryId').val();
-   var subCategoryId = $('#subCategoryId').val();
-   
-   $('#submitFiler').on('click', function (){
-    var sortById = $('#short_select').val();
-    //alert('hello');
-   
-   $.ajax({
-            type: 'POST',
-                    url: '/FananzWebApp/portfolio/filteredPortfolios',
-                    data: {
-                        sortById: sortById,
-                            categoryId: categoryId,
-                            subCategoryId: subCategoryId,
-                            minPrice: minPrice,
-                            maxPrice:maxPrice
-                    },
-                    
-                    dataType:'json',
-                    success: function (result, jqXHR) {
-                        if (result)
-                        {
-                            var portfolioHtml="";
-                            // alert(result.toString());
-                            $.each(result, function (idx,obj)
-                            {
-                            var subCategory=obj.subcategory;
-                           
-                            var category=obj.category;
-                            var concatinatedString=''
-                            if(subCategory!="")
-                            {
-                               concatinatedString = category +'-'+ subCategory;
-                             }
-                             else
-                             {
-                               concatinatedString = category;  
-                             }
-                             var imageUrl="";
-                            
-                                if(obj.coverImageUrl!=null)
-                                {
-                                  imageUrl= obj.coverImageUrl; 
+    $(document).ready(function () {
 
-                                }
-                                else
-                                {
-                                   imageUrl='/FananzWebApp/img/default_img.jpg'; 
-                                }
-                             portfolioHtml+= '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#detail_artists" data-toggle="modal">Details</a>  </div> <div class="request-artists"><a href="#request_artists" data-toggle="modal">Request Now</a> </div>          </div></div></div></div> </li>';
-                                
+        var minPrice = $('#txtMinPrice').val();
+        var maxPrice = $('#txtMaxPrice').val();
+        var categoryId = $('#categoryId').val();
+        var subCategoryId = $('#subCategoryId').val();
+
+        $('#submitFiler').on('click', function () {
+            var sortById = $('#short_select').val();
+            //alert('hello');
+
+            $.ajax({
+                type: 'POST',
+                url: '/FananzWebApp/portfolio/filteredPortfolios',
+                data: {
+                    sortById: sortById,
+                    categoryId: categoryId,
+                    subCategoryId: subCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                },
+                dataType: 'json',
+                success: function (result, jqXHR) {
+                    if (result)
+                    {
+                        var portfolioHtml = "";
+                        // alert(result.toString());
+                        $.each(result, function (idx, obj)
+                        {
+                            var subCategory = obj.subcategory;
+
+                            var category = obj.category;
+                            var concatinatedString = ''
+                            if (subCategory != "")
+                            {
+                                concatinatedString = category + '-' + subCategory;
                             }
-                                    
-                              
-                            );
-                              
-                            var startPaginator='<div class="container"><div class="row"><div class="col-lg-12"><div class="pagination-inner"><label>Show:</label><select id="Itemsperpage"><option  selected="selected">9</option><option>15</option><option>21</option></select></div></div></div></div>';
-                           
-                            $('#paginationStart').html(startPaginator);
-                             
-                            $('#portfolioUl').html(portfolioHtml);
-                            
-                            var paginator ='<div class="pg-bottom"> <div class="total-page"><p id="legend1"></p></div><div class="page-holder"><div class="holder"></div></div></div>';                           
-                            $('$paginator_last').html(paginator);
+                            else
+                            {
+                                concatinatedString = category;
+                            }
+                            var imageUrl = "";
+
+                            if (obj.coverImageUrl != null)
+                            {
+                                imageUrl = obj.coverImageUrl;
+
+                            }
+                            else
+                            {
+                                imageUrl = '/FananzWebApp/img/default_img.jpg';
+                            }
+                            portfolioHtml += '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#detail_artists" data-toggle="modal">Details</a>  </div> <div class="request-artists"><a href="#request_artists" data-toggle="modal">Request Now</a> </div>          </div></div></div></div> </li>';
+
                         }
-                        }
-                    });
-   
-   });
-});
+
+
+                        );
+
+                        var startPaginator = '<div class="container"><div class="row"><div class="col-lg-12"><div class="pagination-inner"><label>Show:</label><select id="Itemsperpage"><option  selected="selected">9</option><option>15</option><option>21</option></select></div></div></div></div>';
+
+                        $('#paginationStart').html(startPaginator);
+
+                        $('#portfolioUl').html(portfolioHtml);
+
+                        var paginator = '<div class="pg-bottom"> <div class="total-page"><p id="legend1"></p></div><div class="page-holder"><div class="holder"></div></div></div>';
+                        $('$paginator_last').html(paginator);
+                    }
+                }
+            });
+
+        });
+    });
 
 
 
@@ -461,72 +562,71 @@ echo $this->Html->script('Pagination.js');
         var subCategoryId = $('#subCategoryId').val();
         var minPrice = $('#txtMinPrice').val();
         var maxPrice = $('#txtMaxPrice').val();
-       // alert('hello'+categoryId);
+        // alert('hello'+categoryId);
         //var SubCat= $('#SubCat').val();
-         
+
         $('#short_select').on('change', function () {
-         var sortById = $('#short_select').val();
+            var sortById = $('#short_select').val();
 
             $.ajax({
-            type: 'POST',
-                    url: '/FananzWebApp/portfolio/filteredPortfolios',
-                    data: {
+                type: 'POST',
+                url: '/FananzWebApp/portfolio/filteredPortfolios',
+                data: {
                     sortById: sortById,
-                            categoryId: categoryId,
-                            subCategoryId: subCategoryId,
-                            minPrice: minPrice,
-                            maxPrice:maxPrice
-                    },
-                    
-                    dataType:'json',
-                    success: function (result, jqXHR) {
-                        if (result)
+                    categoryId: categoryId,
+                    subCategoryId: subCategoryId,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                },
+                dataType: 'json',
+                success: function (result, jqXHR) {
+                    if (result)
+                    {
+                        var portfolioHtml = "";
+                        // alert(result.toString());
+                        $.each(result, function (idx, obj)
                         {
-                            var portfolioHtml="";
-                            // alert(result.toString());
-                            $.each(result, function (idx,obj)
-                            {
-                            var subCategory=obj.subcategory;
-                           
-                            var category=obj.category;
-                            var concatinatedString=''
-                            if(subCategory!="")
-                            {
-                               concatinatedString = category +'-'+ subCategory;
-                             }
-                             else
-                             {
-                               concatinatedString = category;  
-                             }
-                             var imageUrl="";
-                            
-                                if(obj.coverImageUrl!=null)
-                                {
-                                  imageUrl= obj.coverImageUrl; 
+                            var subCategory = obj.subcategory;
 
-                                }
-                                else
-                                {
-                                   imageUrl='/FananzWebApp/img/default_img.jpg'; 
-                                }
-                             portfolioHtml+= '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#detail_artists" data-toggle="modal">Details</a>  </div> <div class="request-artists"><a href="#request_artists" data-toggle="modal">Request Now</a> </div>          </div></div></div></div> </li>';
-                                
+                            var category = obj.category;
+                            var concatinatedString = ''
+                            if (subCategory != "")
+                            {
+                                concatinatedString = category + '-' + subCategory;
                             }
-                                    
-                              
-                            );
-                              
-                            var startPaginator='<div class="container"><div class="row"><div class="col-lg-12"><div class="pagination-inner"><label>Show:</label><select id="Itemsperpage"><option  selected="selected">9</option><option>15</option><option>21</option></select></div></div></div></div>';
-                           
-                            $('#paginationStart').html(startPaginator);
-                             
-                            $('#portfolioUl').html(portfolioHtml);
-                            
-                            var paginator ='<div class="pg-bottom"> <div class="total-page"><p id="legend1"></p></div><div class="page-holder"><div class="holder"></div></div></div>';                           
-                            $('$paginator_last').html(paginator);
+                            else
+                            {
+                                concatinatedString = category;
+                            }
+                            var imageUrl = "";
+
+                            if (obj.coverImageUrl != null)
+                            {
+                                imageUrl = obj.coverImageUrl;
+
+                            }
+                            else
+                            {
+                                imageUrl = '/FananzWebApp/img/default_img.jpg';
+                            }
+                            portfolioHtml += '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#detail_artists" data-toggle="modal">Details</a>  </div> <div class="request-artists"><a href="#request_artists" data-toggle="modal">Request Now</a> </div>          </div></div></div></div> </li>';
+
                         }
-                        }
-                    });
+
+
+                        );
+
+                        var startPaginator = '<div class="container"><div class="row"><div class="col-lg-12"><div class="pagination-inner"><label>Show:</label><select id="Itemsperpage"><option  selected="selected">9</option><option>15</option><option>21</option></select></div></div></div></div>';
+
+                        $('#paginationStart').html(startPaginator);
+
+                        $('#portfolioUl').html(portfolioHtml);
+
+                        var paginator = '<div class="pg-bottom"> <div class="total-page"><p id="legend1"></p></div><div class="page-holder"><div class="holder"></div></div></div>';
+                        $('$paginator_last').html(paginator);
+                    }
+                }
+            });
         });
 
 
