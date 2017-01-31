@@ -9,17 +9,16 @@ use App\Controller;
 
 echo $this->element('header');
 
-echo $this->Html->css('/css/design/bootstrap-fileupload.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
 echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
 
 echo $this->Html->script('/js/jquery.custom-file-input.js', ['block' => 'scriptTop']);
-echo $this->Html->script('/js/bootstrap-fileupload.js', ['block' => 'scriptTop']);
 
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
 echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 echo $this->Html->script('/js/custom.js', ['block' => true]);
+echo $this->Html->script('/js/jquery.file.upload.js', ['block' => true]);
 ?>    
 <section class="add-corp-portfolio" id="main">
     <div class="container">
@@ -61,18 +60,18 @@ echo $this->Html->script('/js/custom.js', ['block' => true]);
                             <div class="form-group">
                                 <label >
                                     Photos<span class="required_field"> *</span>
-                                    <div class="file-upload">
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail" ><img src="img/demoUpload.jpg" alt="" /> <span class="btn btn-file btn-primary"><input type="file" accept="image/*" id="cor_file_1" /></span></div>
-                                            <div class="fileupload-preview fileupload-exists thumbnail"></div>
+                                    <div class="file-upload-container">
+                                        <div class="file-upload"> 
+                                            <input type="file" class="file"  title="file 1" accept="image/*" id="file1">
+                                            <div id="prev_file1" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
                                         </div>
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail" ><img src="img/demoUpload.jpg" alt="" /> <span class="btn btn-file btn-primary"><input type="file" accept="image/*" id="cor_file_2" /></span></div>
-                                            <div class="fileupload-preview fileupload-exists thumbnail"></div>
+                                        <div class="file-upload"> 
+                                            <input type="file" class="file"  title="file 2" accept="image/*" id="file2">
+                                            <div id="prev_file2" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
                                         </div>
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail" ><img src="img/demoUpload.jpg" alt="" /> <span class="btn btn-file btn-primary"><input type="file" accept="image/*" id="cor_file_3" /></span></div>
-                                            <div class="fileupload-preview fileupload-exists thumbnail"></div>
+                                        <div class="file-upload"> 
+                                            <input type="file" class="file"  title="file 2" accept="image/*" id="file3">
+                                            <div id="prev_file3" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
                                         </div>
                                     </div>
                                 </label>
@@ -80,13 +79,13 @@ echo $this->Html->script('/js/custom.js', ['block' => true]);
                             <div class="form-group">
                                 <label for="cor_fb_link">Facebook Link <span class="required_field"> *</span>
                                     <input type="text" id="cor_fb_link" class="form-control" name="cor_fb_link" required>
-                                    <span class="input-icon"><i class="fa fa-facebook"></i></span>
+                                    <span class="input-icon1"><i class="fa fa-facebook"></i></span>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label for="cor_yt_link">Youtube Link<span class="required_field"> *</span>
                                     <input type="text" id="cor_yt_link" class="form-control" name="cor_yt_link" required>
-                                    <span class="input-icon"><i class="fa fa-youtube"></i></span>
+                                    <span class="input-icon1"><i class="fa fa-youtube"></i></span>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -103,13 +102,13 @@ echo $this->Html->script('/js/custom.js', ['block' => true]);
                             <div class="form-group">
                                 <label for="mini_price">Minimum Price(AED)<span class="required_field"> *</span>
                                     <input type="text" id="mini_price" class="form-control" name="mini price" placeholder="AED 2000" required>
-                                    <span class="input-icon"><i class="fa fa-money"></i></span>
+                                    <span class="input-icon1"><i class="fa fa-money"></i></span>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label for="max_price">Maximum Price(AED)<span class="required_field"> *</span>
                                     <input type="text" id="max_price" class="form-control" name="max_price" placeholder="AED 5000" required>
-                                    <span class="input-icon"><i class="fa fa-money"></i></span>
+                                    <span class="input-icon1"><i class="fa fa-money"></i></span>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -130,3 +129,10 @@ echo $this->Html->script('/js/custom.js', ['block' => true]);
         </div>
     </div>
 </section>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.file').preimage();
+    });
+</script>
