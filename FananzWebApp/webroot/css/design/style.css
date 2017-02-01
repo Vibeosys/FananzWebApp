@@ -18,7 +18,16 @@ body a:focus, a:hover {
 .bg-light-gray{
     background: #f5f5f5;
 }
-
+.loading-img{
+    position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+    background: url('../../img/loading.gif') 50% 50% no-repeat rgb(249,249,249);
+    background-size: 50px;
+}
 .required_field{
     color: red;
     font-size: 15px;
@@ -2563,10 +2572,16 @@ select.form-control{
 .detail_artists .header-modal {
     font-size: 20px;
     padding: 10px;
+    width: 50%;
+    text-align: center;
     margin-left: 0;
     border-bottom: 1px solid #f4f4f4;
 }
-
+@media screen and (max-width:767px){
+    .detail_artists .header-modal {
+        width: 100%!important;
+    }
+}
 .detail_artists .close-popup-btn:hover{
     color: #000;
 }
@@ -3331,4 +3346,45 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
 }
 .share-link-social .share-link-fb img, .share-link-social .share-link-yt img{
     width: 40px;
+}
+
+/*********** error Style **************/
+
+.error-page{
+    margin-top: 154px;
+    margin-bottom: 50px;
+}
+.error-page .error-wrapper{
+    padding:20px 0px;
+}
+
+.error-page .error-wrapper .error-img{
+    padding: 30px 0px;
+}
+.error-page .error-wrapper .error-container img{
+    width: 200px;
+    max-width: 200px;
+    min-width: 200px;
+    margin: 0 auto;
+    display: block;
+}
+
+.error-inner-content{
+    padding: 30px 0px;
+}
+.error-inner-content h1{
+    font-size: 88px;
+    text-align: left;
+    font-weight: 100;
+}
+.error-inner-content h2{
+    font-size: 48px;
+    text-align: left;
+    font-weight: 300;
+}
+.error-inner-content h3{
+    font-size:20px;
+    text-align: left;
+    font-weight: 300;
+    padding-top: 10px;
 }
