@@ -98,6 +98,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                 <h2>Profile Details</h2>
                             </div>
                         </div> 
+                        <?=$this->Form->create(false, ['url' => ['action' => 'saveBasicInfo']])?>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="com_name">Business Name
@@ -106,18 +107,37 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                 </label>
                             </div>
                         </div>
+                        <?php if($subscriberType == FREELANCE_SUB_TYPE) : ?>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                                <label for="represent_name">Name of Representative
-                                    <input type="text" id="represent_name" class="form-control" name="represent_name" value="<?= $subscriberDetails->name ?>">
+                                <label for="represent_name">Nick Name
+                                    <input type="text" id="represent_name" class="form-control" name="nick_name" value="<?= $subscriberDetails->nickName?>">
                                     <span class="input-icon"><i class="fa fa-address-card-o"></i></span>
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <?php else : ?>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label for="represent_name">Name of Representative
+                                    <input type="text" id="represent_name" class="form-control" name="represent_name" value="<?= $subscriberDetails->contactPerson ?>">
+                                    <span class="input-icon"><i class="fa fa-address-card-o"></i></span>
+                                </label>
+                            </div>
+                        </div>
+                        <?php endif;?>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="cor_email">Email
                                     <input type="email" id="cor_email" class="form-control" name="cor_email" value="<?= $subscriberDetails->emailId ?>">
+                                    <span class="input-icon"><i class="fa fa-envelope-open-o"></i></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label for="cor_password">Password
+                                    <input type="password" id="cor_password" class="form-control" name="cor_password" value="<?= $subscriberDetails->password ?>">
                                     <span class="input-icon"><i class="fa fa-envelope-open-o"></i></span>
                                 </label>
                             </div>
@@ -140,7 +160,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                                <label for="cor_website_name">Website Name
+                                <label for="cor_website_name">Website URL
                                     <input type="text" id="cor_website_name" class="form-control" name="cor_website_name" value="<?= $subscriberDetails->websiteUrl ?>">
                                     <span class="input-icon"><i class="fa fa-tv"></i></span>
                                 </label>
@@ -157,11 +177,11 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <div class="button-set">
-                                    <button type="submit" title="Edit" class="button black_sm">Edit</button>
                                     <button  type="submit" title="Update"  class="white_back_btn">Update</button>     
                                 </div>
                             </div>
                         </div>
+                        <?=$this->Form->end()?>
                     </div>
                 </div>
             </div>
@@ -192,7 +212,6 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <div class="button-set">
-                                    <button type="submit" title="Edit" class="button black_sm">Edit</button>
                                     <button  type="submit" title="Update"  class="white_back_btn">Update</button>     
                                 </div>
                             </div>
