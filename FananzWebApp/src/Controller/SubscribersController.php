@@ -169,7 +169,34 @@ class SubscribersController extends AppController {
         $subscriberDetails = $this->Subscribers->getSubscriberDetailsById($subscriberId);
         $this->set(['portfolioList' => $portfolioList,
             'subscriberDetails' => $subscriberDetails,
-            'addPortfolioAllowed' => $addPortfolioAllowed]);
+            'addPortfolioAllowed' => $addPortfolioAllowed,
+            'subscriberType' => $subscriberType]);
+    }
+
+    //Web method
+    public function saveBasicInfo() {
+
+        if (!$this->sessionManager->isSubscriberLoggedIn()) {
+            $this->redirect('/subscribers/login');
+            return;
+        }
+        $subscriberId = $this->sessionManager->getSubscriberId();
+        
+        $requestData = $this->request->data;
+        $subscriberInfo = new \App\Dto\SubscriberProfileUpdateRequestDto();
+        $subscriberInfo->name = $requestData['com_name'];
+        $subscriberInfo->nickName = $requestData['nick_name'];
+        $subscriberInfo->contactPerson = $requestData['represent_name'];
+        $subscriberInfo->emailId = $requestData['cor_email'];
+        $subscriberInfo->password = $requestData['cor_password'];
+        $subscriberInfo->telNo = $requestData['cor_tel_no'];
+        $subscriberInfo->mobileNo = $requestData['cor_mob_no'];
+        $subscriberInfo->websiteUrl = $requestData['cor_website_name'];
+        $subscriberInfo->country = $requestData['cor_country'];
+
+        $this->Subscribers->updateSubscriberProfile($subscriberInfo, $subscriberId);
+        
+        $this->redirect('/subscribers/portfolio');
     }
 
     private function _isNewPortfolioAllowed($subscriberType, $portfolioList) {
@@ -183,8 +210,8 @@ class SubscribersController extends AppController {
                 return false;
             }
         }
-        
-        if($subscriberType == CORPORATE_SUB_TYPE){
+
+        if ($subscriberType == CORPORATE_SUB_TYPE) {
             return true;
         }
     }

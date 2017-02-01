@@ -83,6 +83,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     Router::connect('/portfolio/update/*', ['controller' => 'Portfolio', 'action' => 'update']);
     Router::connect('/portfolio/saveupdate', ['controller' => 'Portfolio', 'action' => 'saveupdate']);
     Router::connect('/portfolio/save', ['controller' => 'Portfolio', 'action' => 'save']);
+    //saveBasicInfo
+    Router::connect('/portfolio/saveBasicInfo', ['controller' => 'Portfolio', 'action' => 'saveBasicInfo']);
     Router::connect('/portfolio/details', ['controller' => 'Portfolio', 'action' => 'getPortfolioDetailsForWeb']);
     Router::connect('/portfolio/filteredPortfolios', ['controller' => 'Portfolio', 'action' => 'filteredPortfolios']);
     Router::connect('/portfolio/resetFilter', ['controller' => 'Portfolio', 'action' => 'resetFiler']);

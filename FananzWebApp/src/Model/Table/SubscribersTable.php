@@ -188,6 +188,7 @@ class SubscribersTable extends Table {
                     'SubscriptionDate',
                     'Stype',
                     'Nickname',
+                    'Password',
                     'TelephoneNo',
                     'MobileNo',
                     'WebsiteUrl',
@@ -207,6 +208,7 @@ class SubscribersTable extends Table {
             $subscriberDetails->country = $result->CountryOfResidence;
             $subscriberDetails->subscriptionDate = $result->SubscriptionDate;
             $subscriberDetails->emailId = $result->EmailId;
+            $subscriberDetails->password = $result->Password;
         }
         return $subscriberDetails;
     }
@@ -218,7 +220,7 @@ class SubscribersTable extends Table {
      * @return boolean true if success or else false
      */
     public function updateSubscriberProfile($subscriberProfileUpdateRequest, $subscriberId) {
-        $dbSubscriber = $this->find()
+        $dbSubscriber = $this->getTable()->find()
                 ->where(['SubscriberId' => $subscriberId])
                 ->first();
 
@@ -237,7 +239,7 @@ class SubscribersTable extends Table {
                 $dbSubscriber->Nickname = $subscriberProfileUpdateRequest->nickName;
             }
 
-            if ($this->save($dbSubscriber)) {
+            if ($this->getTable()->save($dbSubscriber)) {
                 return true;
             }
         }
