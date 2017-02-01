@@ -176,19 +176,16 @@ class SubscribersController extends AppController {
         if ($portfolioList == NULL)
             return true;
 
-        if ($subscriberType == CORPORATE_SUB_TYPE) {
-            if (count($portfolioList) < IMAGE_CORPORATE_LIMIT) {
+        if ($subscriberType == FREELANCE_SUB_TYPE) {
+            if (count($portfolioList) < FREELANCE_PORTFOLIO_LIMIT) {
                 return true;
             } else {
                 return false;
             }
         }
-        if ($subscriberType == FREELANCE_SUB_TYPE) {
-            if (count($portfolioList) < IMAGE_FREELANCE_LIMIT) {
-                return true;
-            } else {
-                return false;
-            }
+        
+        if($subscriberType == CORPORATE_SUB_TYPE){
+            return true;
         }
     }
 

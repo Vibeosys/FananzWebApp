@@ -42,14 +42,8 @@ class PortfolioController extends AppController {
     public function add() {
         $this->layout = 'home_layout';
 
-
         $subscriberType = $this->sessionManager->getSubscriberType();
-        $allowedImageCount = 0;
-        if ($subscriberType == CORPORATE_SUB_TYPE) {
-            $allowedImageCount = IMAGE_CORPORATE_LIMIT;
-        } else {
-            $allowedImageCount = IMAGE_FREELANCE_LIMIT;
-        }
+        $allowedImageCount = $this->_getAllowedImageCount($subscriberType);
 
         $eventCategoryTable = new \App\Model\Table\EventcategoriesTable();
         $categoryList = $eventCategoryTable->getCategories();
@@ -58,31 +52,84 @@ class PortfolioController extends AppController {
             'allowedImageCount' => $allowedImageCount,
             'categoryList' => $categoryList
         ]);
-        /*        $options = array(
-          'Group 1' => array(
-          'Value 1' => 'Label 1',
-          'Value 2' => 'Label 2'
-          ),
-          'Group 2' => array(
-          'Value 3' => 'Label 3'
-          )
-          );
-          echo $this->Form->select('field', $options);
+    }
 
-          Output:
+    public function update($portfolioId, $errorCode = null) {
+        $errorDivClass = '';
+        $errorMsg = '';
 
-          <select name="data[User][field]" id="UserField">
-          <optgroup label="Group 1">
-          <option value="Value 1">Label 1</option>
-          <option value="Value 2">Label 2</option>
-          </optgroup>
-          <optgroup label="Group 2">
-          <option value="Value 3">Label 3</option>
-          </optgroup>
-          </select> */
+        if ($errorCode != null) {
+            $errorMsg = \App\Dto\BaseResponseDto::getErrorText($errorCode);
+            $errorDivClass = 'error-wrapper error-msg-display-block';
+        } else {
+            $errorDivClass = 'error-wrapper error-msg-display-none';
+        }
+
+        //$portfolioTable = new \App\Model\Table\PortfolioTable();
+        $portfolioDetails = $this->Portfolio->getPortfolioData($portfolioId);
+
+        $eventCategoryTable = new \App\Model\Table\EventcategoriesTable();
+        $categoryList = $eventCategoryTable->getCategories();
+
+        $subCategoriesTable = new \App\Model\Table\SubcategoriesTable();
+        $subCategoryList = $subCategoriesTable->getSubCategoryList($portfolioDetails->categoryId);
+
+        $subscriberType = $this->sessionManager->getSubscriberType();
+        $allowedImageCount = $this->_getAllowedImageCount($subscriberType);
+
+        $this->set([
+            'allowedImageCount' => $allowedImageCount,
+            'categoryList' => $categoryList,
+            'subCategoryList' => $subCategoryList,
+            'portfolioDetails' => $portfolioDetails,
+            'errorDivClass' => $errorDivClass,
+            'errorMsg' => $errorMsg
+        ]);
+    }
+
+    public function saveupdate() {
+        if (!$this->sessionManager->isSubscriberLoggedIn()) {
+            $this->redirect('/subscribers/login');
+            return;
+        }
+
+        $subscriberId = $this->sessionManager->getSubscriberId();
+
+        $portfolio = $this->_buildPortfolioForUpdate($this->request->data);
+        $portfolioPhotos = $this->_buildPortfolioPhotosForUpdate($this->request->data);
+
+        $success = false;
+        $portfolioTable = new \App\Model\Table\PortfolioTable();
+        $updated = $portfolioTable->updatePortfolio($portfolio);
+
+        $portfolioPhotosTable = new \App\Model\Table\PortfolioPhotosTable();
+        $updatedPhotos = $portfolioPhotosTable->addOrdUpdatePhotos($portfolioPhotos, $portfolio->portfolioId);
+
+        if ($updated && $updatedPhotos) {
+            $this->redirect('/subscribers/portfolio');
+        } else {
+            $errorCode = 216;
+            $this->redirect('/portfolio/update/' + $portfolio->portfolioId + '/' + $errorCode);
+        }
+    }
+
+    private function _getAllowedImageCount($subscriberType) {
+        $allowedImageCount = 0;
+        if ($subscriberType == CORPORATE_SUB_TYPE) {
+            $allowedImageCount = IMAGE_CORPORATE_LIMIT;
+        } else {
+            $allowedImageCount = IMAGE_FREELANCE_LIMIT;
+        }
+        return $allowedImageCount;
     }
 
     public function save() {
+
+        if (!$this->sessionManager->isSubscriberLoggedIn()) {
+            $this->redirect('/subscribers/login');
+            return;
+        }
+
         $subscriberId = $this->sessionManager->getSubscriberId();
 
         $portfolio = $this->_buildPortfolio($this->request->data);
@@ -91,7 +138,7 @@ class PortfolioController extends AppController {
         $success = false;
         $portfolioTable = new \App\Model\Table\PortfolioTable();
         $portfolioId = $portfolioTable->addPortfolio($portfolio, $subscriberId);
-        
+
         if ($portfolioId != 0) {
             $portfolioPhotosTable = new \App\Model\Table\PortfolioPhotosTable();
             $success = $portfolioPhotosTable->addPortfolioPhotos($portfolioPhotos, $portfolioId);
@@ -112,6 +159,20 @@ class PortfolioController extends AppController {
         $portfolio->minPrice = $requestData['min_price'];
         $portfolio->maxPrice = $requestData['max_price'];
         $portfolio->aboutUs = $requestData['corpo_self'];
+        return $portfolio;
+    }
+
+    private function _buildPortfolioForUpdate($requestData) {
+        $portfolio = new \App\Dto\PortfolioUpdateRequestDto();
+        $portfolio->categoryId = $requestData['select-cat-id'];
+        $portfolio->subCategoryId = $requestData['select-subcat-id'];
+        $portfolio->fbLink = $requestData['cor_fb_link'];
+        $portfolio->youtubeLink = $requestData['cor_yt_link'];
+        $portfolio->minPrice = $requestData['min_price'];
+        $portfolio->maxPrice = $requestData['max_price'];
+        $portfolio->aboutUs = $requestData['corpo_self'];
+        $portfolio->portfolioId = $requestData['hdnPortfolioId'];
+        $portfolio->isActive = $requestData['rd_active'];
         return $portfolio;
     }
 
@@ -143,9 +204,12 @@ class PortfolioController extends AppController {
             if (!is_array($fileContents)) {
                 continue;
             }
+            $tmpFileName = $fileContents['tmp_name'];
+            if ($tmpFileName == '')
+                continue;
 
             //Just to make sure, we dont count the uploaded images twice
-            if ($fileContents['tmp_name'] == $coverImageTmpName) {
+            if ($tmpFileName == $coverImageTmpName) {
                 continue;
             }
 
@@ -153,6 +217,58 @@ class PortfolioController extends AppController {
             //$resultPhotoId = 0;
             //Upload the get the server image path
             $uploadedFilePath = \App\Utils\ImageFileUploader::uploadMultipartImage($this->_getWebrootDir(), $fileContents);
+
+            $portfolioPhoto->isCoverImage = false;
+            $portfolioPhoto->photoUrl = $uploadedFilePath;
+            array_push($portfolioList, $portfolioPhoto);
+        }
+
+        return $portfolioList;
+    }
+
+    private function _buildPortfolioPhotosForUpdate($requestData) {
+        $portfolioList = [];
+        $coverImageTmpName = '';
+
+        $portfolioCoverPhoto = new \App\Dto\ServerImageResponseDto();
+
+        $coverImagePath = $requestData['coverImage'];
+        if ($coverImagePath['tmp_name'] != '') {
+            //Upload the cover image first
+            $uploadedCoverImage = \App\Utils\ImageFileUploader::uploadMultipartImage($this->_getWebrootDir(), $coverImagePath);
+            $portfolioCoverPhoto->isCoverImage = true;
+            $portfolioCoverPhoto->photoUrl = $uploadedCoverImage;
+            $portfolioCoverPhoto->photoId = -1;
+
+            //Get the tmp name, to not consider it again
+            if (is_array($coverImagePath)) {
+                $coverImageTmpName = $coverImagePath['tmp_name'];
+            }
+            //Create entry for cover image in the array
+            array_push($portfolioList, $portfolioCoverPhoto);
+        }
+
+
+        //Then upload the rest of images
+        foreach ($requestData as $fileKey => $fileContents) {
+            //Check if filecontent is an array, leave everything aside
+            if (!is_array($fileContents)) {
+                continue;
+            }
+            //Just to make sure, we dont count the uploaded images twice
+            $tmpFileName = $fileContents['tmp_name'];
+            if ($tmpFileName == '' || $tmpFileName == $coverImageTmpName)
+                continue;
+
+            $portfolioPhoto = new \App\Dto\ServerImageResponseDto();
+            //Upload the get the server image path
+            $uploadedFilePath = \App\Utils\ImageFileUploader::uploadMultipartImage($this->_getWebrootDir(), $fileContents);
+
+            if ($uploadedFilePath == null)
+                continue;
+            //Split the string file1211 to 1211 just remove file and get the photo id
+            $fileNameStartsWith = strlen('file');
+            $portfolioPhoto->photoId = substr($fileKey, $fileNameStartsWith);
 
             $portfolioPhoto->isCoverImage = false;
             $portfolioPhoto->photoUrl = $uploadedFilePath;

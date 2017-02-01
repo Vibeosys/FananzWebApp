@@ -90,7 +90,7 @@ class PortfolioTable extends Table {
      * @return boolean
      */
     public function updatePortfolio($portfolioUpdateRequest) {
-        $dbPortfolio = $this->find()
+        $dbPortfolio = $this->getTable()->find()
                 ->where(['PortfolioId' => $portfolioUpdateRequest->portfolioId])
                 ->first();
         //If the portfolio is found and gets updated then return true else false
@@ -109,7 +109,7 @@ class PortfolioTable extends Table {
             if (isset($portfolioUpdateRequest->isActive)) {
                 $dbPortfolio->IsActive = $portfolioUpdateRequest->isActive;
             }
-            if ($this->save($dbPortfolio)) {
+            if ($this->getTable()->save($dbPortfolio)) {
                 return true;
             }
         }
@@ -260,6 +260,67 @@ class PortfolioTable extends Table {
         return $portfolioDetailsResponse;
     }
 
+    public function getPortfolioData($portfolioId) {
+        $this->addTableRelationsForPortfolio();
+        $portfolioDetailsResponse = NULL;
+        $results = $this->getTable()->find()
+                ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])
+                ->where([ 'subscribers.IsSubscribed' => 1,
+                    'portfolio.PortfolioId' => $portfolioId])
+                ->select(['PortfolioId',
+                    'subscribers.SubscriberName',
+                    'portfolio.SubscriberId',
+                    'CategoryId',
+                    'eventcategories.CatName',
+                    'SubcategoryId',
+                    'subcategories.SubCatName',
+                    'MinPrice',
+                    'MaxPrice',
+                    'FacebookLink',
+                    'YoutubeLink',
+                    'AboutPortfolio',
+                    'portfolio.IsActive',
+                    'subscribers.Nickname',
+                    'subscribers.Stype'])
+                ->all();
+        $resultsArray = $results->toArray();
+        foreach ($resultsArray as $resultRecord) {
+            $portfolioDetailsResponse = new \App\Dto\PortfolioUpdateDetailDto();
+            $portfolioDetailsResponse->aboutUs = $resultRecord->AboutPortfolio;
+            $portfolioDetailsResponse->portfolioId = $resultRecord->PortfolioId;
+            $portfolioDetailsResponse->category = $resultRecord->eventcategory->CatName;
+            $portfolioDetailsResponse->subCategory = $resultRecord->subcategory->SubCatName;
+            $portfolioDetailsResponse->categoryId = $resultRecord->CategoryId;
+            $portfolioDetailsResponse->subCategoryId = $resultRecord->SubcategoryId;
+            $portfolioDetailsResponse->minPrice = $resultRecord->MinPrice;
+            $portfolioDetailsResponse->maxPrice = $resultRecord->MaxPrice;
+            $portfolioDetailsResponse->subscriberId = $resultRecord->SubscriberId;
+            $portfolioDetailsResponse->fbLink = $resultRecord->FacebookLink;
+            $portfolioDetailsResponse->youtubeLink = $resultRecord->YoutubeLink;
+            $portfolioDetailsResponse->isActive = $resultRecord->IsActive;
+            //set local variables
+            $nickName = $resultRecord->subscriber->Nickname;
+            $subscriberType = $resultRecord->subscriber->Stype;
+
+            if (isset($nickName) && $subscriberType == 'f') {
+                $portfolioDetailsResponse->subscriberName = $nickName;
+            } else {
+                $portfolioDetailsResponse->subscriberName = $resultRecord->subscriber->SubscriberName;
+            }
+            $photoRecordCounter = 0;
+            //Add phototos to array
+            foreach ($resultRecord->portfolio_photos as $photoRecord) {
+                if ($photoRecord->IsCoverImage == 1) {
+                    $portfolioDetailsResponse->coverImageUrl = $photoRecord->PhotoUrl;
+                } else {
+                    $portfolioDetailsResponse->photos[$photoRecord->PhotoId] = $photoRecord->PhotoUrl;                    
+                }
+            } // End of for photos
+        }
+
+        return $portfolioDetailsResponse;
+    }
+    
     /**
      * Adds new portfolio for subscriber
      * @param \App\Dto\PortfolioAdditionDto $portfolioAddition
@@ -706,4 +767,27 @@ class PortfolioTable extends Table {
         ]);
     }
 
+    private function addTableRelationsForPortfolio() {
+        $this->getTable()->belongsTo('subscribers', [
+            'foreignKey' => 'SubscriberId',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->getTable()->belongsTo('eventcategories', [
+            'bindingKey' => 'CatId',
+            'foreignKey' => 'CategoryId',
+            'joinType' => 'INNER'
+        ]);
+
+        $this->getTable()->belongsTo('subcategories', [
+            'bindingKey' => 'SubCatId',
+            'foreignKey' => 'SubcategoryId',
+            'joinType' => 'LEFT'
+        ]);
+
+        $this->getTable()->hasMany('portfolio_photos', [
+            'foreignKey' => 'PortfolioId',
+            'className' => 'PortfolioPhotos'
+        ]);
+    }
 }

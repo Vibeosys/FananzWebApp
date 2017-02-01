@@ -67,7 +67,7 @@ echo $this->Html->script('/js/portfolio.carousel.js', ['block' => true]);
                                         ?>
                                         <div class="portfolio-file" id="parent3">
                                             <div class="file-upload" id="child1"> 
-                                                <input type="file" class="file"  title="file 1" accept="image/*" id="<?= sprintf('file%d', $fileCounter) ?>">
+                                                <input type="file" class="file"  title="file 1" accept="image/*" id="<?= sprintf('file%d', $fileCounter) ?>" name="<?= sprintf('file%d', $fileCounter) ?>">
                                                 <div id="<?= sprintf('prev_file%d', $fileCounter) ?>" class="preview"><?= $this->Html->image('demoUpload.jpg', ['class' => 'prev_thumb', 'alt' => 'file upload']) ?></div>
                                             </div>
                                             <div class="portfolio-img-btn" id="parent2">

@@ -11,7 +11,6 @@ use App\Controller\AppController;
  */
 class PortfolioPhotosController extends AppController {
 
-
     public function addPhotos() {
         $this->apiInitialize();
         $jsonString = $this->request->data['json'];
@@ -130,6 +129,24 @@ class PortfolioPhotosController extends AppController {
         }
 
         $deleteSuccess = $this->PortfolioPhotos->deletePhoto($photoDeleteRequest->photoId);
+        if ($deleteSuccess) {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(114));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(215));
+        }
+    }
+
+    //Ajax call
+    public function webDeletePhoto($photoId) {
+        if (!$this->sessionManager->isSubscriberLoggedIn()) {
+            $this->redirect('/subscribers/login');
+            return;
+        }
+        
+        $this->apiInitialize();
+        $portfolioPhotosTable = new \App\Model\Table\PortfolioPhotosTable();
+
+        $deleteSuccess = $portfolioPhotosTable->deletePhoto($photoId);
         if ($deleteSuccess) {
             $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(114));
         } else {

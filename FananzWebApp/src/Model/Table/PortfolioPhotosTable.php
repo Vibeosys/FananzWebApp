@@ -37,9 +37,10 @@ class PortfolioPhotosTable extends Table {
         ]);
     }
 
-    private function getTable(){
+    private function getTable() {
         return \Cake\ORM\TableRegistry::get('portfolio_photos');
     }
+
     /**
      * Default validation rules.
      *
@@ -84,6 +85,17 @@ class PortfolioPhotosTable extends Table {
         return 0;
     }
 
+    public function addImage($portfolioId, $imagePath, $isCoverImage) {
+        $subscriberPhoto = $this->getTable()->newEntity();
+        $subscriberPhoto->PortfolioId = $portfolioId;
+        $subscriberPhoto->PhotoUrl = $imagePath;
+        $subscriberPhoto->IsCoverImage = $isCoverImage;
+        if ($this->getTable()->save($subscriberPhoto)) {
+            return $subscriberPhoto->PhotoId;
+        }
+        return 0;
+    }
+
     /**
      * Gets list of photos for given portfolio
      * @param int $portfolioId
@@ -106,6 +118,64 @@ class PortfolioPhotosTable extends Table {
         }
 
         return $serverImageList;
+    }
+
+    /**
+     * Add or update photos
+     * @param \App\Dto\ServerImageResponseDto $serverImages
+     */
+    public function addOrdUpdatePhotos($serverImages, $portfolioId) {
+        $imagesAddedOrUpdated = true;
+        foreach ($serverImages as $serverImage) {
+            //If the image is cover image then next
+            if ($serverImage->photoId == -1) {
+                $dbCoverImage = $this->getTable()->find()
+                        ->where(['PortfolioId' => $portfolioId, 'IsCoverImage' => 1])
+                        ->select(['PhotoId', 'PhotoUrl'])
+                        ->first();
+                if ($dbCoverImage) {
+                    $dbCoverImage->PhotoUrl = $serverImage->photoUrl;
+                    if ($this->getTable()->save($dbCoverImage)) {
+                        $imagesAddedOrUpdated = $imagesAddedOrUpdated & true;
+                    } else {
+                        $imagesAddedOrUpdated = $imagesAddedOrUpdated & false;
+                    }
+                } else {
+                    $result = $this->addImage($portfolioId, $serverImage->photoUrl, 1);
+                    if ($result > 0) {
+                        $imagesAddedOrUpdated = $imagesAddedOrUpdated & true;
+                    }
+                    else{
+                        $imagesAddedOrUpdated = $imagesAddedOrUpdated & false;
+                    }
+                }
+                //If the image is not cover image then
+            } else {
+                $dbImage = $this->getTable()->find()
+                        ->where(['PortfolioId' => $portfolioId, 'PhotoId' => $serverImage->photoId])
+                        ->select(['PhotoId', 'PhotoUrl', 'IsCoverImage'])
+                        ->first();
+                if ($dbImage) {
+                    $dbImage->PhotoUrl = $serverImage->photoUrl;
+                    $dbImage->IsCoverImage = 0;
+                    if ($this->getTable()->save($dbImage)) {
+                        $imagesAddedOrUpdated = $imagesAddedOrUpdated & true;
+                    } else {
+                        $imagesAddedOrUpdated = $imagesAddedOrUpdated & false;
+                    }
+                } else {
+                    $result = $this->addImage($portfolioId, $serverImage->photoUrl, 0);
+                    if ($result > 0) {
+                        $imagesAddedOrUpdated = $imagesAddedOrUpdated & true;
+                    }
+                    else{
+                        $imagesAddedOrUpdated = $imagesAddedOrUpdated & false;
+                    }
+                }
+            }
+        }
+
+        return $imagesAddedOrUpdated;
     }
 
     /**
@@ -133,11 +203,11 @@ class PortfolioPhotosTable extends Table {
      * @return boolean
      */
     public function deletePhoto($photoId) {
-        $dbPhoto = $this->find()
+        $dbPhoto = $this->getTable()->find()
                 ->where(['PhotoId' => $photoId, 'IsCoverImage' => 0])
                 ->first();
         if ($dbPhoto) {
-            if ($this->delete($dbPhoto)) {
+            if ($this->getTable()->delete($dbPhoto)) {
                 return true;
             }
         }
@@ -156,7 +226,7 @@ class PortfolioPhotosTable extends Table {
             $subscriberPhoto = $this->getTable()->newEntity();
             $subscriberPhoto->PortfolioId = $portfolioId;
             $subscriberPhoto->PhotoUrl = $portfolioPhoto->photoUrl;
-            $subscriberPhoto->IsCoverImage = $portfolioPhoto->isCoverImage;            
+            $subscriberPhoto->IsCoverImage = $portfolioPhoto->isCoverImage;
             array_push($portfolioPhotoEntities, $subscriberPhoto);
         }
         if ($this->getTable()->saveMany($portfolioPhotoEntities)) {

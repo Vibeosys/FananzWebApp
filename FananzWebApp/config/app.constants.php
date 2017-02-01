@@ -74,3 +74,7 @@ define('PORTFOLIO_PAGE_BOTTOM_BANNER', 4);
  */
 define('IMAGE_CORPORATE_LIMIT', 6);
 define('IMAGE_FREELANCE_LIMIT', 3);
+/**
+ * Portfolio limit
+ */
+define('FREELANCE_PORTFOLIO_LIMIT', 1);

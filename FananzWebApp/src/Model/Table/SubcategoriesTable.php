@@ -176,7 +176,7 @@ class SubcategoriesTable extends Table {
     public function getSubCategoryList($categoryId) {
         $subCategoryList = [];
         $subCategoryList[0] = 'Select sub category';
-        $dbResult = $this->find()
+        $dbResult = $this->getTable()->find()
                 ->where(['CatId' => $categoryId])
                 ->select(['SubCatId', 'SubCatName'])
                 ->all();
