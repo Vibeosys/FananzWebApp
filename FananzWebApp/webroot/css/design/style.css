@@ -1999,7 +1999,7 @@ select.form-control{
     padding-top: 24px;
 }
 
-.back_btn {
+.back_btn, .white_back_btn {
     background: #fff;
     display: inline-block;
     font-size: 18px;
