@@ -206,24 +206,23 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                          
 
                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                
-                                                    <div class="existing_info">
+                                                <div class="existing_info">
+                                                    <div class="existing_name">
                                                         <div class="form-group">
-                                                        <div class="existing_name">
-                                                            <label>Banner Image: 
-                                                            <input type="text" readonly value="N/A" class="form-control existing_img_nm">
-                                                                </label>
-                                                            <a href="" target="_blank" class="input-icon"><span ><i class="fa fa-link"></i></span></a>
+                                                            <label>Banner Image:
+                                                                <input type="text"  readonly value="N/A" class="form-control existing_img_nm">
+                                                                <a href="" target="_blank" class="input-icon"><i class="fa fa-link"></i></a>
+                                                            </label>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <div class="existing_url">
-                                                            <label>Click URL: 
-                                                            <input type="text" readonly value="N/A" class="form-control link-click-url-id">
-                                                                  </label>
-                                                            <a href="" target="_blank" class="input-icon"><span ><i class="fa fa-link"></i></span></a>
+                                                    <div class="existing_url">
+                                                        <div class="form-group">
+                                                            <label>Click URL:
+                                                                <input type="text"  readonly value="N/A" class="form-control link-click-url-id">
+                                                                <a href="" target="_blank" class="input-icon"><i class="fa fa-link">    </i></a>
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="button-set">

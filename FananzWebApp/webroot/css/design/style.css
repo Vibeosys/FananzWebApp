@@ -2767,7 +2767,7 @@ select.form-control{
 }
 .existing_info  .input-icon {
     position: absolute;
-    margin-top: -2.51em;
+    margin-top: -2.71em;
     height: 38px;
     width: 36px;
     border-right: 1px solid #ccc;
@@ -2775,7 +2775,6 @@ select.form-control{
 }
 .existing_info .existing_name .existing_img_nm, .existing_info .existing_url .link-click-url-id{
     font-weight: 600;
-    display: inline-block;
     max-width: 100%;
     white-space: nowrap;
     text-overflow: ellipsis;
