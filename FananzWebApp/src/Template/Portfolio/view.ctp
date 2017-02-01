@@ -8,9 +8,9 @@ use Cake\Network\Exception\NotFoundException;
 use App\Controller;
 use App\Dto\FindPortfolioDto;
 
-$this->layout = 'home_layout';
+//$this->layout = 'home_layout';
 //$this->layout = 'header';
-echo $this->element('header');
+echo $this->element('header' , array('isUserLoggedIn' => $isUserLoggedIn, 'userName' => $userName));
 
 echo $this->Html->css('design/nouislider.css');
 echo $this->Html->css('design/responsiveslides.css');

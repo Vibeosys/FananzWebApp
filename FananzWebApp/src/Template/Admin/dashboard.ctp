@@ -9,7 +9,7 @@ use App\Controller;
 use App\Dto\FindPortfolioDto;
 use Cake\View\Helper\HtmlHelper;
 
-echo $this->element('header');
+echo $this->element('admin_header', array('isAdminLoggedIn' => $isAdminLoggedIn));
 
 echo $this->Html->css('/css/design/jquery.dataTables.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/bootstrap-fileupload.min.css', ['block' => true]);
@@ -37,15 +37,15 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                         </div>
                     </div>
                     <ul class="nav nav-tabs admin-manage-tab">
-                        <li class="active"><a id="manage_subscriber_tab" data-toggle="tab" href="#manage_user_tab" class="li-mg-right">Manage Subscribers</a></li>
-                        <li><a id="category_add_tab" data-toggle="tab" href="#categ_add" class="li-mg-right">Manage Categories</a></li>
+                        <li class="active"><a id="category_add_tab" data-toggle="tab" href="#categ_add" class="li-mg-right">Manage Categories</a></li>
                         <li><a data-toggle="tab" href="#sub_catg_add" class="li-mg-right">Manage Subcategories</a></li>
+                        <li ><a id="manage_subscriber_tab" data-toggle="tab" href="#manage_user_tab" class="li-mg-right">Manage Subscribers</a></li>
                         <li><a data-toggle="tab" href="#advt_banner" >Advt Banners</a></li>
 
                     </ul>
                     <div class="row border-outer-admindash">
                         <div class="tab-content">
-                            <div id="categ_add" class="tab-pane fade">
+                            <div id="categ_add" class="tab-pane fade in active">
                                 <div class="col-lg-12">
                                     <div class="add-catg">                                        
                                         <p>Add Category</p>
@@ -174,7 +174,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                                 </div>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -187,23 +187,23 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                         <div class="col-lg-12">
                                             <div class="col-lg-6 mg-top-15 col-md-6 col-sm-6">
                                                 <div class="form-group">
-                                                <label for="select-banner-type-id">Select Banner Location
-                                                <?= $this->Form->select('select-banner-type-id', $bannerTypeList, ['class' => 'form-control', 'id' => 'select-banner-type-id']) ?></label>
+                                                    <label for="select-banner-type-id">Select Banner Location
+                                                        <?= $this->Form->select('select-banner-type-id', $bannerTypeList, ['class' => 'form-control', 'id' => 'select-banner-type-id']) ?></label>
                                                 </div>
                                                 <div class="form-group">
                                                     <label > Select Banner Image</label>
-                                                        <input type="file" name="banner-pic-file" id="banner-pic-file" class="inputfile inputfile-2"  accept="image/*"/>
-                                                        <label for="banner-pic-file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span>
+                                                    <input type="file" name="banner-pic-file" id="banner-pic-file" class="inputfile inputfile-2"  accept="image/*"/>
+                                                    <label for="banner-pic-file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span>
                                                     </label>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Provide Click URL
-                                                    <input type="url" id="banner-url-id" class="form-control" name="banner-url-id">
-                                                    <span class="input-icon"><i class="fa fa-link"></i></span>
-                                                        </label>
+                                                        <input type="url" id="banner-url-id" class="form-control" name="banner-url-id">
+                                                        <span class="input-icon"><i class="fa fa-link"></i></span>
+                                                    </label>
                                                 </div>
                                             </div>
-                                         
+
 
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="existing_info">
@@ -241,7 +241,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 
                             </div><!--End Advt Banner -->
                             <!--Start Manage User  --->
-                            <div id="manage_user_tab" class="tab-pane fade in active">
+                            <div id="manage_user_tab" class="tab-pane fade in">
 
                                 <div class="col-lg-12">
                                     <table id="manage_user" class="table table-striped table-bordered dt-responsive nowrap rtl-text-1 manage_user" cellspacing="0" width="100%">
@@ -279,7 +279,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         }
 
         $('.btn-on-hold-user').on('click', function () {
-              swal("Info !", "On hold button clicked", "info");
+            swal("Info !", "On hold button clicked", "info");
         });
     });
 
@@ -358,12 +358,12 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
             dataType: 'json',
             success: function (data, textStatus, jqXHR) {
                 if (data) {
-                     swal("Info !", "Status Changed", "error");
+                    swal("Info !", "Status Changed", "error");
                 }
             }
             ,
             error: function (jqXHR, textStatus, errorThrown) {
-                 swal("Info !", "Some error occurred", "error");
+                swal("Info !", "Some error occurred", "error");
             }
         });
 
@@ -390,7 +390,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 categoryName: categoryName
             },
             success: function (data, textStatus, jqXHR) {
-                 swal("Info !", data.message, "success");
+                swal("Info !", data.message, "success");
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }
@@ -408,8 +408,8 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         //alert(selectedCategoryId)
         //validate category id
         if (selectedCategoryId == 0) {
-              swal("Info !", "Please select a category to update", "error");
-            
+            swal("Info !", "Please select a category to update", "error");
+
             return;
         }
         //validate category
@@ -446,7 +446,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         var subcategoryName = $("#txt-subcat-name-add").val();
         //validate category id 
         if (selectedCategoryId == 0) {
-              swal("Info!", "Please select a category to add subcategory", "error");
+            swal("Info!", "Please select a category to add subcategory", "error");
             return;
         }
         //validate sub category name
@@ -464,7 +464,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 subCategoryName: subcategoryName
             },
             success: function (data, textStatus, jqXHR) {
-               swal("Info !", data.message, "success");
+                swal("Info !", data.message, "success");
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }
@@ -634,7 +634,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
             }
         }); // ajax
     }
-    
+
     /**
      * Deleting an existing banner by selecting the banner location
      */

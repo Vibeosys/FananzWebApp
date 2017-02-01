@@ -17,9 +17,88 @@ use App\Controller\AppController;
  */
 class AdminController extends AppController {
 
+    private $_isAdminLoggedIn = false;
+
+    public function login() {
+        $this->layout = 'home_layout';
+
+        if ($this->request->is('post')) {
+            $requestData = $this->request->data;
+            $email = $requestData['email'];
+            $password = $requestData['password'];
+
+            $isUserVerified = $this->getLoggedInAdmin($email, $password);
+
+            if ($isUserVerified) {
+                $this->redirect('/admin/dashboard');
+            } else {
+                $errorDivClass = 'error-wrapper error-msg-display-block';
+                $errorMessage = \App\Dto\BaseResponseDto::getErrorText(238);
+                $this->set(['errorDivClass' => $errorDivClass,
+                    'errorMsg' => $errorMessage]);
+            }
+        } else {
+            $errorDivClass = 'error-wrapper error-msg-display-none';
+            $this->set(['errorDivClass' => $errorDivClass,
+                'errorMsg' => '']);
+        }
+    }
+
+    private function getLoggedInAdmin($email, $password) {
+        $verifiedCredentials = false;
+        $adminCredential = new \App\Dto\AdminLoginDto();
+        $adminCredential->adminEmail = $email;
+        $adminCredential->adminPassword = $password;
+
+        if (ADMIN_EMAIL == $adminCredential->adminEmail &&
+                ADMIN_PASSWORD == $adminCredential->adminPassword) {
+            $verifiedCredentials = true;
+
+            $this->sessionManager->saveAdminLoginInfo($adminCredential);
+        }
+        return $verifiedCredentials;
+    }
+
+    public function forgotPass() {
+        $this->apiInitialize();
+        $requestData = $this->request->data;
+        $email = $requestData['emailId'];
+        $emailPasswordDto = $this->getAdminInfo($email);
+        if ($emailPasswordDto) {
+            //$emailSuccess = false;
+            try {
+                $emailSuccess = \App\Utils\EmailSenderUtility::sendForgotPasswordEmail
+                                ($email, $emailPasswordDto->name, $emailPasswordDto->password);
+                //$this->redirect('/admin/login');
+            } catch (\Exception $exc) {
+                \Cake\Log\Log::error('Could not send forgot password email ' . $exc->getTraceAsString());
+            }
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(121));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(223));
+        }
+    }
+
+    public function getAdminInfo($emailId) {
+        $emailPassword = null;
+
+        if (ADMIN_EMAIL == $emailId) {
+            $emailPassword = new \App\Dto\AdminEmailPassDto();
+            $emailPassword->name = 'Admin';
+            $emailPassword->password = ADMIN_PASSWORD;
+        }
+        return $emailPassword;
+    }
+
     //put your code here
 
     public function dashboard() {
+        $this->_isAdminLoggedIn = $this->sessionManager->isAdminLoggedIn();
+
+        if (!$this->_isAdminLoggedIn) {
+            $this->redirect('/admin/login');
+            return;
+        }
         $this->layout = 'home_layout';
 
         $eventCategoryTable = new \App\Model\Table\EventcategoriesTable();
@@ -27,7 +106,8 @@ class AdminController extends AppController {
         $bannerTypeList = \App\Utils\BannerTypeUtil::getDefaultTypeList();
 
         $this->set(['categoryList' => $categoryList,
-            'bannerTypeList' => $bannerTypeList]);
+            'bannerTypeList' => $bannerTypeList,
+            'isAdminLoggedIn' => true]);
     }
 
     public function subscriberList() {

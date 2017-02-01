@@ -77,7 +77,9 @@ Router::scope('/', function (RouteBuilder $routes) {
      * Website endpoints
      * 
      */
-    $routes->connect('/', ['controller' => 'HomePage' , 'action' => 'index' ]);
+    $routes->connect('/', ['controller' => 'HomePage', 'action' => 'index']);
+    Router::connect('/HomePage/specialRequest', ['controller' => 'HomePage', 'action' => 'specialRequest']);
+    Router::connect('/policies', ['controller' => 'HomePage', 'action' => 'policies']);
     Router::connect('/portfolio/*', ['controller' => 'Portfolio', 'action' => 'view']);
     Router::connect('/portfolio/add', ['controller' => 'Portfolio', 'action' => 'add']);
     Router::connect('/portfolio/update/*', ['controller' => 'Portfolio', 'action' => 'update']);

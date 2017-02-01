@@ -54,6 +54,114 @@ class UsersController extends AppController {
         }
     }
 
+    //Web method
+    public function customerlogin($errorCode = null) {
+        $this->layout = 'home_layout';
+        if ($this->sessionManager->isUserLoggedIn()) {
+            $this->redirect('/');
+        }
+        //Error message display logic
+        $errorMessage = null;
+        if ($errorCode != null) {
+            $errorMessage = \App\Dto\BaseResponseDto::getErrorText($errorCode);
+            $this->set('errorDivClass', 'error-wrapper error-msg-display-block');
+        } else {
+            $this->set('errorDivClass', 'error-wrapper error-msg-display-none');
+        }
+        $this->set('errorMsg', $errorMessage);
+    }
+
+    /**
+     * for website
+     * @return type
+     */
+    public function register() {
+
+        $this->layout = 'home_layout';
+        
+        $errorMessage = null;
+        $errorDivClass = 'error-wrapper error-msg-display-none';
+        
+        //If user is already logged in then throw the user back
+        if($this->sessionManager->isUserLoggedIn()){
+            $this->redirect('/');
+        }
+
+        if ($this->request->is('post')) {
+            // $resultUserId = 0;
+            $requestData = $this->request->data;
+
+            $userSignupRequest = new \App\Dto\UserSignupRequestDto();
+            $userSignupRequest->firstName = $requestData['firstName'];
+            $userSignupRequest->lastName = $requestData['lastName'];
+            $userSignupRequest->emailId = $requestData['email'];
+            $userSignupRequest->phoneNo = $requestData['mobileNo'];
+            $userSignupRequest->password = $requestData['password'];
+
+            //$userSignUpRequest = new \App\Dto\UserRegisterDto($firstName, $lastName, $email, $password, $mobileNo, $isFacebookLogin);
+            $resultUserId = $this->Users->getUserId($userSignupRequest->emailId);
+
+
+            //If user is sign up with email and if exists then throw error
+            if ($resultUserId) {
+                $errorMessage = \App\Dto\BaseResponseDto::getErrorText(209);
+                $errorDivClass = 'error-wrapper error-msg-display-block';
+                //$this->set('errorMsg', $errorMessage);
+            } else {
+                $resultUserId = $this->Users->registerUser($userSignupRequest);
+                if ($resultUserId) {
+                    //TODO: redirect and check
+                    $this->redirect('/users/customerlogin');
+                } else {
+                    $errorMessage = \App\Dto\BaseResponseDto::getErrorText(210);
+                    $errorDivClass = 'error-wrapper error-msg-display-block';
+                }
+            }
+        }
+        $this->set('errorDivClass', $errorDivClass);
+        $this->set('errorMsg', $errorMessage);
+    }
+
+    public function userlogin() {
+        $requestData = $this->request->data;
+        $email = $requestData['email'];
+        $password = $requestData['password'];
+        $resulLoginResponse = $this->Users->getUserInfoFromCredentials($email, $password);
+        //If the user is authenticated then go ahead
+        if ($resulLoginResponse) {
+            $this->sessionManager->saveUserLoginInfo
+                    ($resulLoginResponse->userId, $resulLoginResponse->firstName . ' ' . $resulLoginResponse->lastName);
+            $this->redirect('/');
+        } else {
+            $this->redirect('/users/customerlogin', 204);
+        }
+    }
+
+    public function loginWithFacebook() {
+        $requestData = $this->request->data;
+
+        $email = $requestData['user_email'];
+        $name = $requestData['name'];
+        $nameSplit = explode(" ", $name);
+
+        $firstName = $nameSplit[0];
+        $lastName = $nameSplit[1];
+
+        $userSignUpRequest = new \App\Dto\UserSignupRequestDto();
+        $userSignUpRequest->emailId = $email;
+        $userSignUpRequest->firstName = $firstName;
+        $userSignUpRequest->lastName = $lastName;
+        $userSignUpRequest->isFacebookLogin = 1;
+
+        $resultUserId = $this->Users->registerUser($userSignUpRequest);
+        if ($resultUserId) {
+            $this->sessionManager->saveUserLoginInfo
+                    ($resultUserId, $firstName . ' ' . $lastName);
+            $this->redirect('/');
+        }
+    }
+
+    //API call
     public function login() {
         $this->apiInitialize();
         $resulLoginResponse = NULL;
@@ -128,6 +236,5 @@ class UsersController extends AppController {
             $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(224));
         }
     }
-
 
 }

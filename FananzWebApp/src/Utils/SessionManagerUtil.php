@@ -22,8 +22,21 @@ class SessionManagerUtil {
     }
 
     public function isUserLoggedIn() {
-        $verifyUserLogin = $this->_session->check('User.Name') && $this->_session->check('User.Id');
-        return $verifyUserLogin;
+        $isUserAuthenticated = false;
+        $userName = $this->_session->read('User.Name');
+        $userId = $this->_session->read('User.Id');
+        if ($userId != '' && $userName != '') {
+            $isUserAuthenticated = true;
+        }
+        return $isUserAuthenticated;
+    }
+
+    public function getUserName() {
+        return $this->_session->read('User.Name');
+    }
+
+    public function getUserId() {
+        return $this->_session->read('User.Id');
     }
 
     public function isSubscriberLoggedIn() {
@@ -34,6 +47,26 @@ class SessionManagerUtil {
     public function isSubscriberSubscribed() {
         $isSubscribed = $this->_session->read('Subscriber.IsSubscribed');
         return $isSubscribed;
+    }
+
+    /**
+     * Stores the admin credentials to session
+     * @param \App\Dto\AdminLoginDto $adminCredential
+     */
+    public function saveAdminLoginInfo($adminCredential) {
+        $this->_session->write('Admin.EmailId', $adminCredential->adminEmail);
+        $this->_session->write('Admin.Password', $adminCredential->adminPassword);
+    }
+
+    public function isAdminLoggedIn() {
+        $adminEmail = $this->_session->read('Admin.EmailId');
+        $adminPassword = $this->_session->read('Admin.Password');
+
+        if ($adminEmail != '' && $adminPassword != '') {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function logout() {
@@ -53,7 +86,7 @@ class SessionManagerUtil {
         $this->_session->write('Subscriber.Name', $subcriberDetails->name);
         $this->_session->write('Subscriber.Id', $subcriberDetails->subscriberId);
         $subscriberType = $subcriberDetails->sType == 'f' ? FREELANCE_SUB_TYPE : CORPORATE_SUB_TYPE;
-        
+
         $this->_session->write('Subscriber.Type', $subscriberType);
         $this->_session->write('Subscriber.IsSubscribed', $subcriberDetails->isSubscribed);
         //$this->_session->write('Subscriber.Email', $subcriberDetails->emailId);

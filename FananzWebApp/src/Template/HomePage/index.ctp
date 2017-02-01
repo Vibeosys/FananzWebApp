@@ -12,9 +12,9 @@ use Cake\Error\Debugger;
 use Cake\Network\Exception\NotFoundException;
 use App\Controller;
 
-$this->layout = 'home_layout';
+//$this->layout = 'home_layout';
 
-echo $this->element('header');
+echo $this->element('header', array('isUserLoggedIn' => $isUserLoggedIn, 'userName' => $userName));
 
 echo $this->Html->script('/js/slider/jquery.themepunch.revolution.min.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/slider/jquery.themepunch.tools.min.js', ['block' => 'scriptTop']);
@@ -43,7 +43,7 @@ echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
                         <div id="rev_slider_4_1" class="rev_slider fullscreenbanner" style="display:none;" data-version="5.1.6">
                             <ul>
                                 <li data-index="rs-16" data-transition="random" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="default"  data-thumb="img/slider-1.jpg"  data-delay="5000"  data-rotate="0"  data-saveperformance="off"  data-title="Slide">
-<?= $this->Html->image('slider-1.jpg', ['class' => 'rev-slidebg', 'alt' => '']) ?>   
+                                    <?= $this->Html->image('slider-1.jpg', ['class' => 'rev-slidebg', 'alt' => '']) ?>   
                                     <div class="tp-caption   tp-resizeme" 
                                          id="slide-16-layer-1" 
                                          data-x="30" 
@@ -374,17 +374,17 @@ echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
             <div class="col-lg-12">
                 <h3>Portfolio</h3>
             </div>
-<?php
-foreach ($portfoioList as $portfolio) {
-    ?>
+            <?php
+            foreach ($portfoioList as $portfolio) {
+                ?>
 
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="layout-figure">
                         <div class="figure-img">
                             <span><?= $portfolio->subcategory ?></span>
-    <?php
-    if ($portfolio->coverImageUrl == "") {
-        ?>
+                            <?php
+                            if ($portfolio->coverImageUrl == "") {
+                                ?>
 
                                 <img src="img/default_img.jpg" alt= " <?= $portfolio->subcategory ?> " class ='img-responsive'/>
                                 <?php
@@ -405,14 +405,15 @@ foreach ($portfoioList as $portfolio) {
                                 <div class="price">AED<span><?= $portfolio->minPrice ?> - <?= $portfolio->maxPrice ?></span></div>
                             </div>
                             <div class="figure-link">
-                                <a href="" >Request Now</a>
+                                <input type="hidden" id="<?= $portfolio->portfolioId ?>"  >
+                                <a href="#request_artists" data-toggle="modal" id="<?= $portfolio->portfolioId ?>" class="home_portfolio_request" > Request Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
-    <?php
-}
-?>
+                <?php
+            }
+            ?>
 
         </div>
     </div>
@@ -470,6 +471,22 @@ foreach ($portfoioList as $portfolio) {
         </div>
     </div>
 </section>
+<div class="request_artists modal fade" id="request_artists" tabindex="-2" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content"><button type="button" class="float-right close-popup-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
+            <div class="header-modal">Request Services For Singer Taylor Swift </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label> Write some text
+                        <textarea rows="5" class="form-control portfolio_home" id="portfolio_msg" ></textarea>
+                    </label>
+                    <input type="hidden" id="" value="" class="home_portfolio_id">
+                </div>
+                <button type="submit" title="Submit" id="portfolio_txt" class="button black_sm center-block" data-dismiss="modal">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 <section class="client-partner">
     <div class="container">
         <div class="row">
@@ -529,5 +546,35 @@ foreach ($portfoioList as $portfolio) {
 
     });
 
+    $('.home_portfolio_request').on('click', function () {
+        var portfolioId = $(this).attr('id');
+
+        // $('.home_portfolio_id').val(portfolio_id);
+        // $('.portfolio_home').val(portfolio_id);
+        $('#portfolio_txt').on('click', function () {
+            var portfolioMag = $('#portfolio_msg').val();
+            // alert(portfolioId);
+            //  formValidation();
+            $.ajax({
+                dataType: 'json',
+                type: 'POST',
+                url: '/FananzWebApp/HomePage/sendPortfolioRequest',
+                data: {
+                    portfolioId: portfolioId,
+                    portfolioMag: portfolioMag
+                },
+                success: function (data, textStatus, jqXHR) {
+                    if (data.errorCode == 0) {
+                        swal('Service requested', data.message, 'success');
+                    }
+                    else {
+                        window.location = '/FananzWebApp/users/customerlogin ';
+                    }
+                }
+
+            });
+        });
+
+    });
 
 </script>

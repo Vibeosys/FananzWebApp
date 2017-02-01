@@ -74,6 +74,10 @@ class UsersTable extends Table {
         return $validator;
     }
 
+    private function getTable() {
+        return \Cake\ORM\TableRegistry::get('users');
+    }
+
     /**
      * Gets user id for email id
      * @param string $emailId
@@ -114,8 +118,8 @@ class UsersTable extends Table {
         //else return 0
         return $userInfo;
     }
-    
-        /**
+
+    /**
      * Gets user id for email id
      * @param string $emailId
      * @return \App\Dto\EmailPasswordDto $userInfo
@@ -129,19 +133,19 @@ class UsersTable extends Table {
         //IF user id is received then return the same
         if ($result) {
             $userInfo = new \App\Dto\EmailPasswordDto();
-            $userInfo->name = $result->FirstName . " ".$result->LastName;
+            $userInfo->name = $result->FirstName . " " . $result->LastName;
             $userInfo->password = $result->Password;
         }
         return $userInfo;
     }
-    
+
     /**
      * Gets information about the user
      * @param int $userId
      * @param string $emailId
      * @return \App\Dto\RequestedUserInfoDto $userInfo
      */
-    public function getRequestedUserInfo($userId, $emailId){
+    public function getRequestedUserInfo($userId, $emailId) {
         $userInfo = NULL;
         $result = $this->find()
                 ->where(['EmailId' => $emailId, 'UserId' => $userId])
@@ -154,7 +158,31 @@ class UsersTable extends Table {
             $userInfo->firstName = $result->FirstName;
             $userInfo->lastName = $result->LastName;
             $userInfo->phoneNo = $result->MobileNo;
-            return $userInfo;
+            //return $userInfo;
+        }
+        //else return null
+        return $userInfo;
+    }
+
+    /**
+     * Gets user information by user id
+     * @param type $userId
+     * @return \App\Dto\RequestedUserInfoDto
+     */
+    public function getRequestedUserInfoById($userId) {
+        $userInfo = NULL;
+        $result = $this->getTable()->find()
+                ->where(['UserId' => $userId])
+                ->select(['UserId', 'FirstName', 'LastName', 'MobileNo'])
+                ->first();
+        //IF user info is received then return the same
+        if ($result) {
+            $userInfo = new \App\Dto\RequestedUserInfoDto();
+            $userInfo->userId = $result->UserId;
+            $userInfo->firstName = $result->FirstName;
+            $userInfo->lastName = $result->LastName;
+            $userInfo->phoneNo = $result->MobileNo;
+            //return $userInfo;
         }
         //else return null
         return $userInfo;
@@ -179,7 +207,7 @@ class UsersTable extends Table {
             $userInfo->userId = $result->UserId;
             $userInfo->firstName = $result->FirstName;
             $userInfo->lastName = $result->LastName;
-            return $userInfo;
+            //return $userInfo;
         }
         //else return user info
         return $userInfo;

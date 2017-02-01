@@ -86,7 +86,9 @@ class BaseResponseDto {
         234 => 'Banner details could not be saved, please try again later',
         235 => 'Banner could not be deleted',
         236 => 'No advt banner found for the requested type',
-        237 => 'Trade certificate is mandatory for the corporate registration, please upload one'
+        237 => 'Trade certificate is mandatory for the corporate registration, please upload one',
+        238 => 'Sorry, wrong credentials, please try again',
+        239 => 'Sorry, you need to login, to request for services'
     ];
     protected $successDictionary = [
         101 => 'List of available portfolios',

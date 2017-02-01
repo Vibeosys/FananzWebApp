@@ -16,6 +16,8 @@ class PortfolioController extends AppController {
      * @param type $categorySubcategoryShortName
      */
     public function view($categorySubcategoryShortName) {
+        $this->layout = 'home_layout';
+        
         $eventCategoriesTable = new \App\Model\Table\EventcategoriesTable();
         $eventCategoryList = $eventCategoriesTable->getCategoriesAndSubcategories();
 
@@ -32,10 +34,15 @@ class PortfolioController extends AppController {
 
         // $categoryWisePortfolioData = $this->paginate($categoryWisePortfolioList);
 
+        if($this->sessionManager->isUserLoggedIn()){
+            $this->set('isUserLoggedIn', true);
+            $this->set('userName', $this->sessionManager->getUserName());
+        }
+        
         $this->set(['eventCategoryList' => $eventCategoryList,
             'categoryId' => $categoryId,
             'subCategoryId' => $subCategoryId,
-            'portfolioDetails' => $categoryWisePortfolioList
+            'portfolioDetails' => $categoryWisePortfolioList            
         ]);
     }
 

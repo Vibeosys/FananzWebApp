@@ -29,27 +29,27 @@
     <body>
         <?= $this->element('header') ?>
         <section class="error-page">
-    <div class="container">
-        <div class="row">
-            <div class="error-wrapper">
-                <div class="error-container">
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                        <div class="error-img">
-                       <img class="img-responsive" src="img/sad.png">
+            <div class="container">
+                <div class="row">
+                    <div class="error-wrapper">
+                        <div class="error-container">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <div class="error-img">
+                                    <?= $this->Html->Image('sad.png', ['alt' => 'Sorry']) ?>
+                                </div>
                             </div>
-                    </div>
-                    <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                        <div class="error-inner-content">
-                            <h1>Ooops!!!</h1>
-                            <h2>Sorry Something went wrong</h2>
-                            <h3>Try that again, and if it still doesn't work let us know.</h3>
+                            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+                                <div class="error-inner-content">
+                                    <h1>Ooops!!!</h1>
+                                    <h2>Sorry Something went wrong</h2>
+                                    <h3>Try that again, and if it still doesn't work let us know.</h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
         <?= $this->element('footer'); ?>
         <?= $this->fetch('scriptBotton'); ?>
     </body>

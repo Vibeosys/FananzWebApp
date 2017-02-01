@@ -9,12 +9,14 @@ use App\Controller;
 use App\Dto\FindCategoriesDto;
 use App\Dto\FindSubcategoryDto;
 
-$this->layout = 'false';
-$this->layout = 'home_layout';
+//$this->layout = 'home_layout';
+echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
 
-echo $this->Html->script('jquery.min.js', ['block' =>'scriptTop']);
-echo $this->Html->script('bootstrap.min.js' , ['block' =>'scriptTop']);
-echo $this->Html->script('custom.js', ['block' =>'scriptTop']);
+echo $this->Html->script('jquery.min.js', ['block' => 'scriptTop']);
+echo $this->Html->script('bootstrap.min.js', ['block' => 'scriptTop']);
+echo $this->Html->script('custom.js', ['block' => 'scriptTop']);
+echo $this->Html->script('formvalidation.js', ['block' => 'scriptTop']);
+echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 ?>
 <header>
     <div class="header-top-w3layouts navbar-fixed-top">
@@ -22,7 +24,7 @@ echo $this->Html->script('custom.js', ['block' =>'scriptTop']);
             <div class="col-md-6 logo-w3">
                 <a href="/">
 
-<?= $this->Html->image('logo-medium.png', array('alt' => 'Fananz Logo')); ?>
+                    <?= $this->Html->image('logo-medium.png', array('alt' => 'Fananz Logo')); ?>
                     <h1 class="no-header">Fananz</h1>
                     <span class="logo-com no-header">.com</span>
                 </a>
@@ -33,56 +35,57 @@ echo $this->Html->script('custom.js', ['block' =>'scriptTop']);
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="col-md-6 header-top-request">
-                <ul>
-                    <li class="border-right"><a href="<?=VIRTUAL_DIR_PATH.'/subscribers/login'?>">Partner With Us</a></li>
-                    <li><a href="login.php">Login</a></li>
-                    <!--				<li><a href="subscriber_login.html">Subscriber Login</a></li>-->
-                </ul>
-            </div>
+            <?php if (isset($isUserLoggedIn) && $isUserLoggedIn) : ?>
+                <div class="col-md-6 header-top-request">
+                    <ul>
+                        <li class="border-right"><a href="<?= VIRTUAL_DIR_PATH . '/subscribers/login' ?>">Partner With Us</a></li>
+                        <li class="border-right"><?= $userName ?></li>
+                        <li><a href="<?= VIRTUAL_DIR_PATH . '/homepage/logout' ?> ">Logout</a></li>
+                    </ul>
+                </div>
+            <?php else: ?>
+                <div class="col-md-6 header-top-request">
+                    <ul>
+                        <li class="border-right"><a href="<?= VIRTUAL_DIR_PATH . '/subscribers/login' ?>">Partner With Us</a></li>
+                        <li><a href="<?= VIRTUAL_DIR_PATH . '/users/customerlogin' ?>">Login</a></li>
+                    </ul>
+                </div>
+            <?php endif; ?>
             <div class="clearfix"></div>
         </div>
         <div class="header-bottom-w3ls">
             <div class="container">
                 <div class="col-md-12 navigation-agileits">
                     <nav class="navbar navbar-default">
-                        <!--
-                           <div class="navbar-header nav_2">
-                              
-                           </div> 
-                        -->
                         <div class="collapse navbar-collapse page-scroll" id="bs-megadropdown-tabs">
                             <ul class="nav navbar-nav width-100">
-                                <!--						<li class=" active">-->
                                 <li>
-
-
                                     <a href="<?= VIRTUAL_DIR_PATH . '/index.php' ?>" class="hyper"  ><span> <?= Home ?></span></a>
                                 </li>
-<?php
-foreach ($eventCategoryList as $category) {
-    // echo($values->category);
-    $isSubcategoryArray = is_array($category->subCategories) && count($category->subCategories) > 0;
-    ?>
+                                <?php
+                                foreach ($eventCategoryList as $category) {
+                                    // echo($values->category);
+                                    $isSubcategoryArray = is_array($category->subCategories) && count($category->subCategories) > 0;
+                                    ?>
 
 
-    <?php
-    if ($isSubcategoryArray) {
-        ?>
+                                    <?php
+                                    if ($isSubcategoryArray) {
+                                        ?>
 
                                         <li  class="dropdown">
-        <?php
-    } else {
-        ?>
+                                            <?php
+                                        } else {
+                                            ?>
                                         <li>
                                             <?php
                                         }
                                         ?>
 
                                         <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName ?>" class="dropdown-toggle  hyper page-scroll"  ><span><?= $category->category ?>
-    <?php
-    if ($isSubcategoryArray) {
-        ?>
+                                                <?php
+                                                if ($isSubcategoryArray) {
+                                                    ?>
                                                     <b class="caret"> </b>
                                                 <?php }
                                                 ?>
@@ -93,24 +96,24 @@ foreach ($eventCategoryList as $category) {
                                         <ul class="dropdown-menu multi">
                                             <div class="row">
                                                 <div class="col-sm-4"> 
-    <?php
-    foreach ($category->subCategories as $subCategories) {
-        ?>
+                                                    <?php
+                                                    foreach ($category->subCategories as $subCategories) {
+                                                        ?>
 
 
-        <?php
-        $subCategoryValue = count($subCategories->subCategoryId);
-        if ($subCategories->subCategoryId % 2 != 0) {
-            ?>     
+                                                        <?php
+                                                        $subCategoryValue = count($subCategories->subCategoryId);
+                                                        if ($subCategories->subCategoryId % 2 != 0) {
+                                                            ?>     
 
 
                                                             <ul class="multi-column-dropdown">
                                                                 <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" ><?= $subCategories->subCategory ?></a></li>
                                                             </ul>
 
-            <?php
-        } else {
-            ?>
+                                                            <?php
+                                                        } else {
+                                                            ?>
 
 
                                                             <ul class="multi-column-dropdown">
@@ -118,16 +121,16 @@ foreach ($eventCategoryList as $category) {
                                                             </ul>
 
 
-            <?php
-        }
-    }
-    // }
-    ?>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    // }
+                                                    ?>
                                                 </div>
                                                 <div class="col-sm-4 w3l">
 
 
-    <?= $this->Html->image('menu1.jpg', array('alt' => '', 'class' => 'img-responsive')); ?>
+                                                    <?= $this->Html->image('menu1.jpg', array('alt' => '', 'class' => 'img-responsive')); ?>
                                                 </div>
 
                                                 <div class="clearfix"></div>
@@ -135,65 +138,71 @@ foreach ($eventCategoryList as $category) {
 
                                         </ul>
                                     </li>
-<?php } ?>
+                                <?php } ?>
                                 <li class="float-right dropdown no-request">
                                     <a href="" class="dropdown-toggle hyper" data-toggle="dropdown"><span>Special Requests<b class="caret"></b></span></a>
                                     <ul class="dropdown-menu multi multi1 spec_request">
                                         <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="spec_email">Name
-                                                        <input type="text" id="spec_email" class="form-control" name="name">
-                                                        <span class="input-icon"><i class="fa fa-user"></i></span>
-                                                    </label>
+                                            <form id="spec_form">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group"  >
+                                                        <label for="spec_email">Name <span id="Name_msg" class="error_red valid_Name_msg" style="display: none">
+                                                                Please Enter Your Name
+                                                            </span>
+                                                            <span id="name_ptn" class="error_red valid_name_ptn" style="display: none">
+                                                                Please Enter Valid Name
+                                                            </span>
+
+                                                            <input type="text" id="name" class="form-control valid_name" name="name" required>
+                                                            <span class="input-icon"><i class="fa fa-user"></i></span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="spec_eventl">Event
-                                                        <input type="text" id="spec_eventl" class="form-control" name="name">
-                                                        <span class="input-icon"><i class="fa fa-magic"></i></span>
-                                                    </label>
+                                                <div class="col-lg-12" >
+                                                    <div class="form-group">
+                                                        <label for="user_email">Email
+                                                            <span id="Email_msg" class="error_red valid_Email_msg" style="display: none">
+                                                                Please Enter Your Email Id
+                                                            </span>
+                                                            <span id="Email_ptn" class="error_red valid_Email_ptn" style="display: none">
+                                                                Please Enter Valid Email Id
+                                                            </span>
+                                                            <input type="email" id="email" class="form-control valid_email" name="email" required>
+                                                            <span class="input-icon"><i class="fa fa-envelope"></i></span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label for="spec_date">Date
-                                                        <input type="date" id="spec_date" class="form-control" name="name">
-                                                        <span class="input-icon"><i class="fa fa-calendar"></i></span>
-                                                    </label>
+                                                <div class="col-lg-12" >
+                                                    <div class="form-group">
+                                                        <label for="user_email">Mobile No
+                                                            <span id="mobNo_msg" class="error_red valid_mobNo_msg" style="display: none">
+                                                                Please Enter Your Mobile no
+                                                            </span>
+                                                            <input type="number" id="mobNo" class="form-control valid_mobNo" name="name" required="9">
+                                                            <span class="input-icon"><i class="fa fa-mobile fa-1-5x"></i></span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="user_email">Email
-                                                        <input type="email" id="spec_email" class="form-control" name="name">
-                                                        <span class="input-icon"><i class="fa fa-envelope"></i></span>
-                                                    </label>
+                                                <div class="col-lg-12" >
+                                                    <div class="form-group">
+                                                        <label for="user_email">Write your request
+                                                            <span id="req_msg" class="error_red valid_req_msg" style="display: none">
+                                                                Please Enter Your Request Message
+                                                            </span>
+                                                            <textarea id="spec_msg" class="form-control valid_spec_msg" name="name" rows=3 required></textarea>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-group text-center">
+                                                        <button type="button" title="Submit" id="special_request" name="special_request" class="button black_sm center-block">Submit</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="user_email">Mobile No
-                                                        <input type="tel" id="spec_email" class="form-control" name="name">
-                                                        <span class="input-icon"><i class="fa fa-mobile fa-1-5x"></i></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label for="user_email">Write your request
-                                                        <textarea id="spec_msg" class="form-control" name="name" rows=3></textarea>
-                                                    </label>
-                                                </div>
-                                                <div class="form-group text-center">
-                                                    <button type="submit" title="Submit" class="button black_sm center-block">Submit</button>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
+                                                <div class="clearfix"></div>
+                                            </form>
                                         </div>
                                     </ul>
                                 </li>
+
+
                             </ul>
                         </div>
                     </nav>
@@ -202,3 +211,35 @@ foreach ($eventCategoryList as $category) {
         </div>
     </div>
 </header>
+<script>
+    $(document).ready(function () {
+        $('#special_request').on('click', function () {
+            //formValidation();
+            //alert('I am here');
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var mobNo = $('#mobNo').val();
+            var yourRequest = $('#spec_msg').val();
+
+            $.ajax({
+                url: '/FananzWebApp/HomePage/specialRequest',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    name: name,
+                    email: email,
+                    mobNo: mobNo,
+                    yourRequest: yourRequest
+                },
+                success: function (result, jqXHR) {
+                    if (result)
+                    {
+                        swal('Special request', 'Email has been sent, we will contact you soon', 'success');
+                        //alert('done');
+                    }
+                }
+
+            });
+        });
+    });
+</script>

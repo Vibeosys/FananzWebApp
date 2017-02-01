@@ -78,3 +78,9 @@ define('IMAGE_FREELANCE_LIMIT', 3);
  * Portfolio limit
  */
 define('FREELANCE_PORTFOLIO_LIMIT', 1);
+/**
+ * Admin credentials
+ * 
+ */
+define('ADMIN_EMAIL', 'admin@fananz.com');
+define('ADMIN_PASSWORD', 'ADSSSUU');
