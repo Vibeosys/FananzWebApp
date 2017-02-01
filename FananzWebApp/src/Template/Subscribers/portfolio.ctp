@@ -21,8 +21,11 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 <section class="header-portfolio" id="main">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <h2>My Portfolio</h2>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                   <h1 class="portfolio-res-nm"><?= $subscriberDetails->name ?></h1>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <h1 class="portfolio-header"><?= $this->Html->image('my-portfolio.png', ['class' => 'my-portfolio-img', 'alt' => 'my portfolio']) ?>   My Portfolio</h1>
             </div>
         </div>
     </div>

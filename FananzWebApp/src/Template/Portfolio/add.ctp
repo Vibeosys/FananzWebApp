@@ -15,7 +15,6 @@ echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
 echo $this->Html->css('/css/design/slick-theme.css', ['block' => true]);
 
 echo $this->Html->script('/js/jquery.custom-file-input.js', ['block' => 'scriptTop']);
-
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
 echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
@@ -41,14 +40,12 @@ echo $this->Html->script('/js/portfolio.carousel.js', ['block' => true]);
                                 ?>
                             </label>
                         </div>
-                        <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="first_name">Sub Category
                                     <select id="select-subcat-id" class="form-control" name="select-subcat-id" >                                                    
                                     </select>
                                 </label>
                             </div>
-                        </div>
                         <div class="form-group">
                             <label>
                                 Cover Photo <span class="required_field"> *</span><span class="img-size">size 500 x 400</span>
@@ -118,7 +115,7 @@ echo $this->Html->script('/js/portfolio.carousel.js', ['block' => true]);
                         <div class="form-group">
                             <div class="button-set">
                                 <button type="submit" title="Update" class="button black_sm">Add</button>
-                                <a href="<?= VIRTUAL_DIR_PATH . '/subscribers/portfolio' ?>">Cancel</a>     
+                                <a href="<?= VIRTUAL_DIR_PATH . '/subscribers/portfolio' ?>" class="back_btn">Cancel</a>     
                             </div>
                         </div>
                         <?= $this->Form->end() ?>

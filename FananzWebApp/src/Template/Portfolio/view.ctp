@@ -338,17 +338,6 @@ echo $this->Html->script('Pagination.js');
         });
     }
 
-    $(window).load(function () {
-        $("#slider1").responsiveSlides({
-            auto: true,
-            pager: true,
-            nav: true,
-            speed: 500,
-            maxwidth: 800,
-            namespace: "centered-btns"
-        });
-    });
-
     /**
      * Shows portfolio details of the provided portfolio and opens up modal dialog
      * @param {type} input
@@ -393,13 +382,20 @@ echo $this->Html->script('Pagination.js');
                         //alert(obj);
                         liList += "<li><img src='" + obj + "'></li>";
                     });
-                    alert(liList);
+                    //alert(liList);
                     $("#slider1").html(liList);
                 }// if data photos not null
                 else {
                     $("#slider1").html("<li><img src='/FananzWebApp/img/default_img.jpg'></li>");
                 }
-
+                 $("#slider1").responsiveSlides({
+                    auto: true,
+                    pager: true,
+                    nav: true,
+                    speed: 500,
+                    maxwidth: 800,
+                    namespace: "centered-btns"
+                });
                 $('#detail_artists').modal('show');
             },
         });
