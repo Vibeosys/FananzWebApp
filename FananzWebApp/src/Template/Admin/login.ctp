@@ -7,6 +7,7 @@
 
 echo $this->element('admin_header');
 echo $this->Html->css('/css/sweetalert.css');
+echo $this->Html->script('/js/pages/admin-login.js', ['block' => true]);
 ?>
 
 <section class="login">
@@ -105,85 +106,4 @@ echo $this->Html->css('/css/sweetalert.css');
 </div>
 
 
-<?php
-echo $this->element('footer');
-?>
-
-<script>
-
-    $("#frmForgotPassword").submit(function (e) {
-        e.preventDefault();
-
-        var emailId = $('#forgot_email').val();
-        $.ajax({
-            url: '/FananzWebApp/admin/forgotPass',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                emailId: emailId
-            },
-            success: function (data, textStatus, jqXHR) {
-                if (data.errorCode === 0) {
-                    swal("Email sent!", data.message, "success");
-                } else {
-                    swal("Error occurred!", data.message, "error");
-                }
-            }
-        });//end of ajax
-    });
-
-
-//    $(document).ready(function () {
-//        $('#login_sub').on('click', function () {
-//            var email = $('#admin_email').val();
-//            var password = $('#admin_pwd').val();
-//         //  alert(password);
-//            var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
-//           
-//            if (email === '') {
-//                $('#Email_msg').css('display', 'inline-block');
-//            }
-//            else {
-//                $('#Email_msg').hide();
-//
-//                if (!pattern.test(email)) {
-//                    $('#Email_ptn').css('display', 'inline-block');
-//                }
-//                else {
-//                    $('#Email_ptn').hide();
-//                }
-//            }
-//
-//            if (password === '') {
-//                $('#pass_msg').css('display', 'inline-block');
-//            }
-//            else {
-//                $('#pass_msg').hide();
-//            }
-//
-//
-//
-//            $.ajax({
-//               
-//                type: 'POST',
-//                url: '/FananzWebApp/admin/login',
-//                data: {
-//                    
-//                    email: email,
-//                    password: password
-//                    
-//                },
-//                dataType: 'json',
-//                success: function (result, jqXHR) {
-//                    if (result)
-//                    {
-//                          alert('here');
-//                    }
-//                }
-//
-//            });
-//        });
-//    });
-
-</script>
 

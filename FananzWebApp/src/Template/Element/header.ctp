@@ -17,6 +17,7 @@ echo $this->Html->script('bootstrap.min.js', ['block' => 'scriptTop']);
 echo $this->Html->script('custom.js', ['block' => 'scriptTop']);
 echo $this->Html->script('formvalidation.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
+echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
 ?>
 <header>
     <div class="header-top-w3layouts navbar-fixed-top">
@@ -221,35 +222,3 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         </div>
     </div>
 </header>
-<script>
-    $(document).ready(function () {
-        $('#special_request').on('click', function () {
-            //formValidation();
-            //alert('I am here');
-            var name = $('#name').val();
-            var email = $('#email').val();
-            var mobNo = $('#mobNo').val();
-            var yourRequest = $('#spec_msg').val();
-
-            $.ajax({
-                url: '/FananzWebApp/HomePage/specialRequest',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    name: name,
-                    email: email,
-                    mobNo: mobNo,
-                    yourRequest: yourRequest
-                },
-                success: function (result, jqXHR) {
-                    if (result)
-                    {
-                        swal('Special request', 'Email has been sent, we will contact you soon', 'success');
-                        //alert('done');
-                    }
-                }
-
-            });
-        });
-    });
-</script>

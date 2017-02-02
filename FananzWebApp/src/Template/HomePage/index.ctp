@@ -24,6 +24,7 @@ echo $this->Html->script('/js/slider/revolution.extension.navigation.min.js', ['
 echo $this->Html->script('/js/slider/revolution.extension.slideanims.min.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/slider/slider.config.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
+echo $this->Html->script('/js/pages/home-index.js', ['block' => true]);
 ?>
 
 <div id="main">
@@ -489,63 +490,3 @@ echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
     </div>    
 </section> 
 
-
-<script>
-    $(window).load(function () {
-        $("#flexiselDemo1").flexisel({
-            visibleItems: 4,
-            animationSpeed: 1000,
-            autoPlay: false,
-            autoPlaySpeed: 3000,
-            pauseOnHover: true,
-            enableResponsiveBreakpoints: true,
-            responsiveBreakpoints: {
-                portrait: {
-                    changePoint: 480,
-                    visibleItems: 1
-                },
-                landscape: {
-                    changePoint: 640,
-                    visibleItems: 2
-                },
-                tablet: {
-                    changePoint: 768,
-                    visibleItems: 3
-                }
-            }
-        });
-
-    });
-
-    $('.home_portfolio_request').on('click', function () {
-        var portfolioId = $(this).attr('id');
-
-        // $('.home_portfolio_id').val(portfolio_id);
-        // $('.portfolio_home').val(portfolio_id);
-        $('#portfolio_txt').on('click', function () {
-            var portfolioMag = $('#portfolio_msg').val();
-            // alert(portfolioId);
-            //  formValidation();
-            $.ajax({
-                dataType: 'json',
-                type: 'POST',
-                url: '/FananzWebApp/HomePage/sendPortfolioRequest',
-                data: {
-                    portfolioId: portfolioId,
-                    portfolioMag: portfolioMag
-                },
-                success: function (data, textStatus, jqXHR) {
-                    if (data.errorCode == 0) {
-                        swal('Service requested', data.message, 'success');
-                    }
-                    else {
-                        window.location = '/FananzWebApp/users/customerlogin ';
-                    }
-                }
-
-            });
-        });
-
-    });
-
-</script>

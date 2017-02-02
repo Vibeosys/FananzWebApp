@@ -93,7 +93,7 @@ echo $this->element('admin_header');
                             <div class="form-group">
                                 <div class="button-set">
                                     <button type="submit" title="Submit" id="register" name="register" class="button black_sm">Submit</button>
-                                    <a href="/FananzWebApp/users/customerlogin" class="white_back_btn">Back</a>     
+                                    <a href="<?= VIRTUAL_DIR_PATH . '/users/customerlogin' ?>" class="white_back_btn">Back</a>     
                                 </div>
                             </div>
                         </div>
@@ -127,9 +127,6 @@ echo $this->element('admin_header');
 
 
 
-<?php
-echo $this->element('footer');
-?>
 
 <script>
 
@@ -138,24 +135,6 @@ echo $this->element('footer');
             //   alert('here');
             formValidation();
 
-//            $.ajax({
-//                type: 'POST',
-//                url: '/FananzWebApp/HomePage/specialRequest',
-//                data: {
-//                    name: name,
-//                    email: email,
-//                    mobNo: mobNo,
-//                    yourRequest: yourRequest
-//                },
-//                dataType: 'json',
-//                success: function (result, jqXHR) {
-//                    if (result)
-//                    {
-//
-//                    }
-//                }
-//
-//            });
         });
     });
 

@@ -13,6 +13,7 @@ echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => tr
 echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
 
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
+echo $this->Html->script('/js/pages/subscriber-login.js', ['block' => true]);
 ?>
 <section class="corporate-register">
     <div class="container">
@@ -116,25 +117,3 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         </div>
     </div>
 </div>
-<script>
-    $("#frmForgotPassword").submit(function (e) {
-        e.preventDefault();
-
-        var emailId = $('#emailId').val();
-        $.ajax({
-            url: '/FananzWebApp/subscribers/forgotPassword',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                emailId: emailId
-            },
-            success: function (data, textStatus, jqXHR) {
-                if (data.errorCode == 0) {
-                    swal("Email sent!", data.message, "success");
-                } else {
-                    swal("Error occurred!", data.message, "error");
-                }
-            }
-        });//end of ajax
-    });
-</script>
