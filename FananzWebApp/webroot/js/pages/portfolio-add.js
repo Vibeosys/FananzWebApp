@@ -29,19 +29,21 @@ $(document).ready(function () {
  * When category changes then populate the sub category
  * @param void param     
  * */
-$("#select-cat-id").change(function () {
-    var categoryId = $(this).find('option:selected').val();
-    //clear the subcategory list first
-    $('#select-subcat-id').empty();
-    //Post ajax to bind the sub categories
-    $.ajax({
-        url: '/FananzWebApp/subcategories/getSubCategoryList/' + categoryId,
-        type: 'GET',
-        dataType: 'json',
-        success: function (data, textStatus, jqXHR) {
-            $.each(data, function (key, value) {
-                $('#select-subcat-id').append($('<option></option>').val(key).html(value));
-            }); // each
-        } // success
-    }); // ajax
+$(document).ready(function () {
+    $("#select-cat-id").change(function () {
+        var categoryId = $(this).find('option:selected').val();
+        //clear the subcategory list first
+        $('#select-subcat-id').empty();
+        //Post ajax to bind the sub categories
+        $.ajax({
+            url: WEBSITE_VIRTUAL_DIR_NAME + '/subcategories/getSubCategoryList/' + categoryId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                $.each(data, function (key, value) {
+                    $('#select-subcat-id').append($('<option></option>').val(key).html(value));
+                }); // each
+            } // success
+        }); // ajax
+    });
 });

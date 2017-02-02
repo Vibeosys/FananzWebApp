@@ -31,36 +31,3 @@ $(window).load(function () {
 
 });
 
-/**
- * Portfolio request to be sent to stakeholders
- * @param {type} param1
- * @param {type} param2
- */
-$('.home_portfolio_request').on('click', function () {
-    var portfolioId = $(this).attr('id');
-
-    $('#portfolio_txt').on('click', function () {
-        var portfolioMag = $('#portfolio_msg').val();
-        formValidation();
-        
-        $.ajax({
-            dataType: 'json',
-            type: 'POST',
-            url: '/FananzWebApp/HomePage/sendPortfolioRequest',
-            data: {
-                portfolioId: portfolioId,
-                portfolioMag: portfolioMag
-            },
-            success: function (data, textStatus, jqXHR) {
-                if (data.errorCode == 0) {
-                    swal('Service requested', data.message, 'success');
-                }
-                else {
-                    window.location = '/FananzWebApp/users/customerlogin ';
-                }
-            }
-
-        });
-    });
-
-});

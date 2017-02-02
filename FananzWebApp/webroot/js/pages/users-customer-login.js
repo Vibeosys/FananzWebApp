@@ -10,7 +10,7 @@ $("#frmForgotPassword").submit(function (e) {
 
     var emailId = $('#forgot_email').val();
     $.ajax({
-        url: '/FananzWebApp/users/forgotPassword',
+        url: WEBSITE_VIRTUAL_DIR_NAME + '/users/forgotPassword',
         type: 'POST',
         dataType: 'json',
         data: {
@@ -100,7 +100,7 @@ function facebookLogin() {
         id = response.id;
 
         $.ajax({
-            url: '/FananzWebApp/users/loginWithFacebook',
+            url: WEBSITE_VIRTUAL_DIR_NAME + '/users/loginWithFacebook',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -109,7 +109,7 @@ function facebookLogin() {
                 id: id
             },
             success: function (data, textStatus, jqXHR) {
-                window.location = '/FananzWebApp/index.php ';
+                window.location = WEBSITE_VIRTUAL_DIR_NAME + '/index.php ';
             }
         });//end of ajax
 

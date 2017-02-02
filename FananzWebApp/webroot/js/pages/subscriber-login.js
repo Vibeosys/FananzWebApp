@@ -10,7 +10,7 @@ $("#frmForgotPassword").submit(function (e) {
 
     var emailId = $('#emailId').val();
     $.ajax({
-        url: '/FananzWebApp/subscribers/forgotPassword',
+        url: WEBSITE_VIRTUAL_DIR_NAME + '/subscribers/forgotPassword',
         type: 'POST',
         dataType: 'json',
         data: {

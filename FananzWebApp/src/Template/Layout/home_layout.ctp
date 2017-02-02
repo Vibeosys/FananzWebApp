@@ -21,12 +21,17 @@
         <!-- font -->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900,900i" rel="stylesheet">
         <!-- //font -->
+
+        <?= $this->Html->scriptStart(); ?>
+        <?= 'var WEBSITE_VIRTUAL_DIR_NAME = \'' . VIRTUAL_DIR_PATH . '\';' ?>
+        <?= $this->Html->scriptEnd(); ?>
         <?= $this->fetch('scriptTop'); ?>
         <?= $this->fetch('script'); ?>
     </head>
     <body>
         <?= $this->fetch('content'); ?>
         <?= $this->element('footer'); ?>
+        <?= $this->fetch('requestServicePopup'); ?>
         <?= $this->fetch('scriptBotton'); ?>
     </body>
 </html>

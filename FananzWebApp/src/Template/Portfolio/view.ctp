@@ -18,6 +18,7 @@ echo $this->element('header', array('isUserLoggedIn' => $isUserLoggedIn,
 echo $this->Html->css('design/nouislider.css');
 echo $this->Html->css('design/responsiveslides.css');
 echo $this->Html->script('/js/pages/portfolio-view.js', ['block' => true]);
+echo $this->Html->script('/js/pages/request-service.js', ['block' => true]);
 ?>
 
 <?php if ($topBannerDetails != null) : ?>
@@ -28,7 +29,7 @@ echo $this->Html->script('/js/pages/portfolio-view.js', ['block' => true]);
                     <div class="banner-img">
                         <a href="<?= $topBannerDetails->clickUrl ?>"> 
                             <?= $this->Html->image($topBannerDetails->imageUrl); ?>
-
+                        </a>
                     </div>
                 </div>
             </div>
@@ -169,7 +170,7 @@ if (count($portfolioDetails) > 0) {
                                             <a href="#" data-toggle="modal" class="detail_artists" onclick="showDetails(<?= $portfolio->portfolioId ?>)">Details</a>    
                                         </div>
                                         <div class="request-artists">
-                                            <a href="#request_artists" data-toggle="modal">Request Now</a>    
+                                            <a href="#" data-toggle="modal" onclick="<?= sprintf('requestService(%d, \'%s\')', $portfolio->portfolioId, $portfolio->subscriberName) ?>">Request Now</a>    
                                         </div>
                                     </div>
                                 </div>
@@ -272,22 +273,26 @@ if (count($portfolioDetails) > 0) {
         </div>
     </div>
 </div>
-<div class="request_artists modal fade" id="request_artists" tabindex="-2" role="dialog">
+
+<?= $this->Html->start('requestServicePopup') ?>
+<div class="request_artists modal fade" id="service_request_div-id" tabindex="-2" role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <button type="button" class="float-right close-popup-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
-            <div class="header-modal">Request Services For Singer Taylor Swift </div>
+        <div class="modal-content"><button type="button" class="float-right close-popup-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
+            <div class="header-modal" id="request-service-sub-id">Request Services For Singer Taylor Swift </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label> Write some text
-                        <textarea rows="5" class="form-control"></textarea>
+                        <textarea rows="5" class="form-control portfolio_home" id="portfolio_msg" ></textarea>
                     </label>
+                    <input type="hidden" id="hdnRsPortfolioId" value="" class="home_portfolio_id">
                 </div>
-                <button type="submit" title="Submit" class="button black_sm center-block" data-dismiss="modal">Submit</button>
+                <button type="button" id="portfolio_txt" class="button black_sm center-block" onclick="submitRequest()">Submit</button>
             </div>
         </div>
     </div>
 </div>
+<?= $this->Html->end() ?>
+
 <input type="text" id="categoryId" value="<?= $categoryId ?>" hidden="hidden">
 <input type="text" id="subCategoryId" value="<?= $subCategoryId ?>" hidden="hidden">
 

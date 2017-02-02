@@ -4,32 +4,34 @@
  * and open the template in the editor.
  */
 
+$(document).ready(function () {
+    $('#special_request').on('click', function () {
+        formValidation();
+        //alert('I am here');
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var mobNo = $('#mobNo').val();
+        var yourRequest = $('#spec_msg').val();
 
-$('#special_request').on('click', function () {
-    formValidation();
-    //alert('I am here');
-    var name = $('#name').val();
-    var email = $('#email').val();
-    var mobNo = $('#mobNo').val();
-    var yourRequest = $('#spec_msg').val();
-
-    $.ajax({
-        url: '/FananzWebApp/HomePage/specialRequest',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            name: name,
-            email: email,
-            mobNo: mobNo,
-            yourRequest: yourRequest
-        },
-        success: function (result, jqXHR) {
-            if (result)
-            {
-                swal('Special request', 'Email has been sent, we will contact you soon', 'success');
-                //alert('done');
+        $.ajax({
+            url: WEBSITE_VIRTUAL_DIR_NAME + '/HomePage/specialRequest',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                name: name,
+                email: email,
+                mobNo: mobNo,
+                yourRequest: yourRequest
+            },
+            success: function (result, jqXHR) {
+                if (result)
+                {
+                    swal('Special request', 'Email has been sent, we will contact you soon', 'success');
+                    //alert('done');
+                }
             }
-        }
 
+        });
     });
-});
+
+}); //document on ready

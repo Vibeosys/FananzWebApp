@@ -82,4 +82,4 @@
     
     })(jQuery);
     
-    var WEBSITE_VIRTUAL_DIR_NAME = '/FananzWebApp';
+    

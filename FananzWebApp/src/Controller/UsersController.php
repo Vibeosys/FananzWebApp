@@ -78,12 +78,12 @@ class UsersController extends AppController {
     public function register() {
 
         $this->layout = 'home_layout';
-        
+
         $errorMessage = null;
         $errorDivClass = 'error-wrapper error-msg-display-none';
-        
+
         //If user is already logged in then throw the user back
-        if($this->sessionManager->isUserLoggedIn()){
+        if ($this->sessionManager->isUserLoggedIn()) {
             $this->redirect('/');
         }
 
@@ -235,6 +235,12 @@ class UsersController extends AppController {
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(224));
         }
+    }
+
+    public function isUserLoggedIn() {
+        $this->apiInitialize();
+        $loggedInStatus = $this->sessionManager->isUserLoggedIn();
+        $this->response->body(json_encode($loggedInStatus));
     }
 
 }

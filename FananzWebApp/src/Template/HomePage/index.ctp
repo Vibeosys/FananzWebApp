@@ -25,6 +25,7 @@ echo $this->Html->script('/js/slider/revolution.extension.slideanims.min.js', ['
 echo $this->Html->script('/js/slider/slider.config.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/pages/home-index.js', ['block' => true]);
+echo $this->Html->script('/js/pages/request-service.js', ['block' => true]);
 ?>
 
 <div id="main">
@@ -364,17 +365,24 @@ echo $this->Html->script('/js/pages/home-index.js', ['block' => true]);
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="layout-figure">
                         <div class="figure-img">
-                            <span><?= $portfolio->subcategory ?></span>
+                            <?php
+                            $textToDisplayOnOverlay = '';
+                            if ($portfolio->subcategory == null) {
+                                $textToDisplayOnOverlay = $portfolio->category;
+                            } else {
+                                $textToDisplayOnOverlay = $portfolio->subcategory;
+                            }
+                            ?>
+                            <span><?= $textToDisplayOnOverlay ?></span>
                             <?php
                             if ($portfolio->coverImageUrl == "") {
                                 ?>
-
-                                <img src="img/default_img.jpg" alt= " <?= $portfolio->subcategory ?> " class ='img-responsive'/>
+                                <img src="img/default_img.jpg" alt= " <?= $textToDisplayOnOverlay ?> " class ='img-responsive'/>
                                 <?php
                             } else {
                                 ?>
 
-                                <?= $this->Html->image($portfolio->coverImageUrl, ['class' => 'img-responsive', 'alt' => $portfolio->subcategory]) ?>
+                                <?= $this->Html->image($portfolio->coverImageUrl, ['class' => 'img-responsive', 'alt' => $textToDisplayOnOverlay]) ?>
                                 <?php
                             }
                             ?>
@@ -389,7 +397,7 @@ echo $this->Html->script('/js/pages/home-index.js', ['block' => true]);
                             </div>
                             <div class="figure-link">
                                 <input type="hidden" id="<?= $portfolio->portfolioId ?>"  >
-                                <a href="#request_artists" data-toggle="modal" id="<?= $portfolio->portfolioId ?>" class="home_portfolio_request" > Request Now</a>
+                                <a href="#" data-toggle="modal" class="home_portfolio_request" onclick="<?= sprintf('requestService(%d, \'%s\')', $portfolio->portfolioId, $portfolio->subscriberName) ?>"> Request Now</a>
                             </div>
                         </div>
                     </div>
@@ -443,22 +451,26 @@ echo $this->Html->script('/js/pages/home-index.js', ['block' => true]);
         </div>
     </section>
 <?php endif; ?>
-<div class="request_artists modal fade" id="request_artists" tabindex="-2" role="dialog">
+
+<?= $this->Html->start('requestServicePopup') ?>
+<div class="request_artists modal fade" id="service_request_div-id" tabindex="-2" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content"><button type="button" class="float-right close-popup-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
-            <div class="header-modal">Request Services For Singer Taylor Swift </div>
+            <div class="header-modal" id="request-service-sub-id">Request Services For Singer Taylor Swift </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label> Write some text
                         <textarea rows="5" class="form-control portfolio_home" id="portfolio_msg" ></textarea>
                     </label>
-                    <input type="hidden" id="" value="" class="home_portfolio_id">
+                    <input type="hidden" id="hdnRsPortfolioId" value="" class="home_portfolio_id">
                 </div>
-                <button type="submit" title="Submit" id="portfolio_txt" class="button black_sm center-block" data-dismiss="modal">Submit</button>
+                <button type="button" id="portfolio_txt" class="button black_sm center-block" onclick="submitRequest()">Submit</button>
             </div>
         </div>
     </div>
 </div>
+<?= $this->Html->end() ?>
+
 <section class="client-partner">
     <div class="container">
         <div class="row">
