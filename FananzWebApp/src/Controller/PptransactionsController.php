@@ -222,8 +222,9 @@ class PptransactionsController extends AppController {
         $apiContext = new \PayPal\Rest\ApiContext($credentials);
         $paypalPayment = new \PayPal\Api\Payment();
         $redirectUrls = new \PayPal\Api\RedirectUrls();
-        $redirectUrls->setReturnUrl('http://localhost:9090/FananzWebApp/pptransactions/paypal');
-        $redirectUrls->setCancelUrl('http://localhost:9090/FananzWebApp/pptransactions/paypal');
+        $wwwUrl = $this->_getWebrootDir();
+        $redirectUrls->setReturnUrl($wwwUrl.'pptransactions/paypal');
+        $redirectUrls->setCancelUrl($wwwUrl.'pptransactions/paypal');
         $paypalPayment->setRedirectUrls($redirectUrls);
         $payer = new \PayPal\Api\Payer();
         $payer->setPaymentMethod('paypal');

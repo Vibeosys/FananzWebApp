@@ -192,6 +192,7 @@ class SubscribersTable extends Table {
                     'TelephoneNo',
                     'MobileNo',
                     'WebsiteUrl',
+                    'BusinessContactPerson',
                     'CountryOfResidence'])
                 ->first();
 
@@ -209,6 +210,7 @@ class SubscribersTable extends Table {
             $subscriberDetails->subscriptionDate = $result->SubscriptionDate;
             $subscriberDetails->emailId = $result->EmailId;
             $subscriberDetails->password = $result->Password;
+            $subscriberDetails->contactPerson = $result->BusinessContactPerson;
         }
         return $subscriberDetails;
     }

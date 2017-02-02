@@ -33,6 +33,7 @@ class SubscribersController extends AppController {
 
     //Web method
     public function checkLogin() {
+        $this->layout= 'home_layout';
         $subscriberUserDto = new \App\Dto\SubscriberUserDto();
         $subscriberUserDto->emailId = $this->request->data['name'];
         $subscriberUserDto->password = $this->request->data['password'];
@@ -230,6 +231,7 @@ class SubscribersController extends AppController {
 
     //Web method
     public function signup($errorCode = null, $subType = null) {
+        $this->layout= 'home_layout';
         if($this->sessionManager->isSubscriberLoggedIn()){
             $this->redirect('/subscribers/portfolio');
             return;
@@ -259,10 +261,12 @@ class SubscribersController extends AppController {
     }
 
     public function paysubscription($errorCode = null) {
+        $this->layout= 'home_layout';
         $subscriberType = $this->sessionManager->getSubscriberType();
         $amount = 0;
+        
         $currency = PAYMENT_CURRENCY;
-        if ($subscriberType == FREELANCE_PAYMENT) {
+        if ($subscriberType == FREELANCE_SUB_TYPE) {
             $amount = FREELANCE_PAYMENT;
         } else {
             $amount = CORPORATE_PAYMENT;

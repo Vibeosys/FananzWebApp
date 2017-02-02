@@ -17,4 +17,5 @@ class SubscriberDetailedInfo extends SubscriberPostSigninDetailsDto{
     //put your code here
     public $emailId;
     public $password;
+    public $contactPerson;
 }

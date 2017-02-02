@@ -95,8 +95,13 @@ class SessionManagerUtil {
     public function saveSubscriberLoginInfo($subcriberDetails) {
         $this->_session->write('Subscriber.Name', $subcriberDetails->name);
         $this->_session->write('Subscriber.Id', $subcriberDetails->subscriberId);
-        $subscriberType = $subcriberDetails->sType == 'f' ? FREELANCE_SUB_TYPE : CORPORATE_SUB_TYPE;
 
+        $subscriptionArray = [CORPORATE_SUB_TYPE, FREELANCE_SUB_TYPE];
+        if (in_array($subcriberDetails->sType, $subscriptionArray)) {
+            $subscriberType = $subcriberDetails->sType;
+        } else {
+            $subscriberType = $subcriberDetails->sType == 'f' ? FREELANCE_SUB_TYPE : CORPORATE_SUB_TYPE;
+        }
         $this->_session->write('Subscriber.Type', $subscriberType);
         $this->_session->write('Subscriber.IsSubscribed', $subcriberDetails->isSubscribed);
         //$this->_session->write('Subscriber.Email', $subcriberDetails->emailId);

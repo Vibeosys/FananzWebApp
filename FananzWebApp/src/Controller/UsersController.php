@@ -97,7 +97,7 @@ class UsersController extends AppController {
             $userSignupRequest->emailId = $requestData['email'];
             $userSignupRequest->phoneNo = $requestData['mobileNo'];
             $userSignupRequest->password = $requestData['password'];
-
+            $userSignupRequest->isFacebookLogin = 0;
             //$userSignUpRequest = new \App\Dto\UserRegisterDto($firstName, $lastName, $email, $password, $mobileNo, $isFacebookLogin);
             $resultUserId = $this->Users->getUserId($userSignupRequest->emailId);
 
@@ -138,6 +138,7 @@ class UsersController extends AppController {
     }
 
     public function loginWithFacebook() {
+        $this->apiInitialize();
         $requestData = $this->request->data;
 
         $email = $requestData['user_email'];
@@ -150,14 +151,14 @@ class UsersController extends AppController {
         $userSignUpRequest = new \App\Dto\UserSignupRequestDto();
         $userSignUpRequest->emailId = $email;
         $userSignUpRequest->firstName = $firstName;
-        $userSignUpRequest->lastName = $lastName;
+        $userSignUpRequest->lastName = $lastName;        
         $userSignUpRequest->isFacebookLogin = 1;
 
         $resultUserId = $this->Users->registerUser($userSignUpRequest);
         if ($resultUserId) {
             $this->sessionManager->saveUserLoginInfo
                     ($resultUserId, $firstName . ' ' . $lastName);
-            $this->redirect('/');
+            //$this->redirect('/');
         }
     }
 

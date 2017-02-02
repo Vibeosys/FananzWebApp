@@ -75,6 +75,7 @@ window.fbAsyncInit = function () {
         // statusChangeCallback(response);
 
         if (response.status === 'connected') {
+            statusChangeCallback(response);
             console.log(response.authResponse.accessToken);
         }
     });
@@ -109,7 +110,7 @@ function facebookLogin() {
                 id: id
             },
             success: function (data, textStatus, jqXHR) {
-                window.location = WEBSITE_VIRTUAL_DIR_NAME + '/index.php ';
+                window.location = WEBSITE_VIRTUAL_DIR_NAME + '/ ';
             }
         });//end of ajax
 

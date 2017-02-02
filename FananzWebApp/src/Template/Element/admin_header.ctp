@@ -9,7 +9,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => 'scriptTop']);
     <div class="header-top-w3layouts navbar-fixed-top">
         <div class="container">
             <div class="col-md-6 logo-w3">
-                <a href="index.php">
+                <a href="<?= VIRTUAL_DIR_PATH . '/' ?>">
 
                     <?= $this->Html->image('logo-medium.png', array('alt' => 'Fananz Logo')); ?>
                     <h1 class="no-header">Fananz</h1>
@@ -30,7 +30,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => 'scriptTop']);
                     <ul>
                         <li class="border-right"><a href="<?= VIRTUAL_DIR_PATH . '/subscribers/portfolio' ?>">My Portfolio</a></li>
                         <li class="border-right"><?= $subscriberName ?></li>
-                        <li><a href="<?= VIRTUAL_DIR_PATH . '/homepage/logout' ?> ">Logout</a></li>
+                        <li><a href="<?= VIRTUAL_DIR_PATH . '/HomePage/logout' ?> ">Logout</a></li>
                     </ul>
                 </div>
                 <?php
@@ -39,7 +39,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => 'scriptTop']);
                 <div class="col-md-6 header-top-request">
                     <ul>
                         <li class="border-right">Logged in Admin</li>
-                        <li><a href="<?= VIRTUAL_DIR_PATH . '/homepage/logout' ?>">Logout</a></li>
+                        <li><a href="<?= VIRTUAL_DIR_PATH . '/HomePage/logout' ?>">Logout</a></li>
                     </ul>
                 </div>
                 <?php
@@ -55,7 +55,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => 'scriptTop']);
                         <div class="collapse navbar-collapse page-scroll" id="bs-megadropdown-tabs">
                             <ul class="nav navbar-nav width-100">
                                 <li>
-                                    <a href="<?= VIRTUAL_DIR_PATH ?>" class="hyper"  ><span> <?= Home ?></span></a>
+                                    <a href="<?= VIRTUAL_DIR_PATH . '/' ?>" class="hyper"  ><span> <?= Home ?></span></a>
                                 </li>
 
 
