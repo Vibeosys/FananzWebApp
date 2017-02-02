@@ -41,6 +41,11 @@ class HomePageController extends AppController {
             $this->set('userName', $this->sessionManager->getUserName());
         }
 
+        if ($this->sessionManager->isSubscriberLoggedIn()) {
+            $this->set('isSubscriberLoggedIn', true);
+            $this->set('subscriberName', $this->sessionManager->getSubscriberName());
+        }
+
         $this->set(['eventCategoryList' => $eventCategoryList,
             'portfolioList' => $portfolioList,
             'topBannerDetails' => $topBannerDetails,

@@ -126,12 +126,17 @@ class UsersController extends AppController {
         $requestData = $this->request->data;
         $email = $requestData['email'];
         $password = $requestData['password'];
-        $resulLoginResponse = $this->Users->getUserInfoFromCredentials($email, $password);
+        $resulLoginResponse = $this->Users->getUserDetails($email, $password);
+
         //If the user is authenticated then go ahead
         if ($resulLoginResponse) {
-            $this->sessionManager->saveUserLoginInfo
-                    ($resulLoginResponse->userId, $resulLoginResponse->firstName . ' ' . $resulLoginResponse->lastName);
-            $this->redirect('/');
+            if ($resulLoginResponse->isFacebookUser == 0) {
+                $this->sessionManager->saveUserLoginInfo
+                        ($resulLoginResponse->userId, $resulLoginResponse->firstName . ' ' . $resulLoginResponse->lastName);
+                $this->redirect('/');
+            } else {
+                $this->redirect('/users/customerlogin', 204);
+            }
         } else {
             $this->redirect('/users/customerlogin', 204);
         }
@@ -148,18 +153,27 @@ class UsersController extends AppController {
         $firstName = $nameSplit[0];
         $lastName = $nameSplit[1];
 
+
         $userSignUpRequest = new \App\Dto\UserSignupRequestDto();
         $userSignUpRequest->emailId = $email;
         $userSignUpRequest->firstName = $firstName;
-        $userSignUpRequest->lastName = $lastName;        
+        $userSignUpRequest->lastName = $lastName;
         $userSignUpRequest->isFacebookLogin = 1;
 
-        $resultUserId = $this->Users->registerUser($userSignUpRequest);
+        //Check if user exists
+        $resultUserId = $this->Users->getUserId($email);
+        if (!$resultUserId) {
+            //if user id does not exist then register the user
+            $resultUserId = $this->Users->registerUser($userSignUpRequest);
+        }
+        
+        //If result user id then save it to session
         if ($resultUserId) {
             $this->sessionManager->saveUserLoginInfo
                     ($resultUserId, $firstName . ' ' . $lastName);
-            //$this->redirect('/');
         }
+
+        $this->response->body(json_encode(true));
     }
 
     //API call

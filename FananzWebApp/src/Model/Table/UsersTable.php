@@ -212,6 +212,26 @@ class UsersTable extends Table {
         //else return user info
         return $userInfo;
     }
+    
+    public function getUserDetails($emailId, $password) {
+        $userInfo = NULL;
+        $result = $this->find()
+                ->where(['EmailId' => $emailId, 'Password' => $password])
+                ->select(['UserId', 'FirstName', 'LastName', 'IsFacebookUser'])
+                ->first();
+
+        //IF user id is received then return the same
+        if ($result) {
+            $userInfo = new \App\Dto\UserLoginDetailsDto();
+            $userInfo->userId = $result->UserId;
+            $userInfo->firstName = $result->FirstName;
+            $userInfo->lastName = $result->LastName;
+            $userInfo->isFacebookUser = $result->IsFacebookUser;
+            //return $userInfo;
+        }
+        //else return user info
+        return $userInfo;
+    }
 
     /**
      * Registers user and returns user id
