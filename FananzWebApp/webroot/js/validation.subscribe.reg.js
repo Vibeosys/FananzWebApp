@@ -184,6 +184,81 @@ $(document).ready(function() {
 				}             
 			}
 		});
+        $("#spec_form").validate({
+			rules: {
+				spec_name: {
+					required: true,
+					minlength: 3
+				},
+                spec_email: {
+					required: true,
+					email: true
+				},
+                spec_mobile: {
+					required: true,
+					minlength: 10,
+                    maxlength: 10
+				},
+				spec_msg: {
+					required: true,
+					minlength: 5
+				}
+			},
+			messages: {
+				spec_name: {
+					required: "Please enter a first name",
+					minlength: "Your username must consist of at least 5 characters"
+				},
+				spec_email: {
+                    required: "Please enter a email",
+                    email: "Please enter a valid email address"
+                },
+                spec_mobile: {
+					required: "Please enter a mobile no",
+					minlength: "Your mobile must consist of at least 10 digits"
+				},
+				spec_msg: {
+					required: "Please enter a message",
+					minlength: "Your message must be at least 5 characters long"
+				},             
+			},
+             submitHandler: function(form) {
+            // your ajax would go here
+           // alert('simulated ajax submit');
+                 var name = $('#name').val();
+                 var email = $('#email').val();
+                 var mobNo = $('#mobNo').val();
+                 var yourRequest = $('#spec_msg').val();
+                 alert(name);
+                 alert(email);
+                 alert(mobNo);
+                 alert(yourRequest);
+                $.ajax({
+                    url: WEBSITE_VIRTUAL_DIR_NAME + '/HomePage/specialRequest',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        name: name,
+                        email: email,
+                        mobNo: mobNo,
+                        yourRequest: yourRequest
+                    },
+                    success: function (result, jqXHR) {
+                        if (result)
+                        {
+                            swal('Special request', 'Email has been sent, we will contact you soon', 'success');
+                            //alert('done');
+                        }
+                        $('#name').val() = '';
+                        $('#email').val() = '';
+                        $('#mobNo').val() = '';
+                        $('#spec_msg').val() = '';
+                    }
+
+                });
+            return false;  // blocks regular submit since you have ajax
+             }
+		  });
     
     
         $('.cor_submit').attr('disabled','disabled');

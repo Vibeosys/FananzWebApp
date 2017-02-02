@@ -2024,6 +2024,11 @@ select.form-control{
     vertical-align: bottom;
     color: #2b2b2b;
 }
+#frmCorporateRegistration .button-set a, #frmFreelanceRegistration .button-set a{
+    float: right;
+    position: relative;
+    top: 10px;
+}
 .header-modal{
     font-size: 20px;
     padding: 10px;

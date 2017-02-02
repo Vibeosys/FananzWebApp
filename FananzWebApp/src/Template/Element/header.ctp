@@ -157,14 +157,8 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                                                 <form id="spec_form">
                                                     <div class="col-lg-12">
                                                         <div class="form-group"  >
-                                                            <label for="spec_email">Name <span class="required_field">*</span><span id="Name_msg" class="error_red valid_Name_msg" style="display: none">
-                                                                    Please Enter Your Name
-                                                                </span>
-                                                                <span id="name_ptn" class="error_red valid_name_ptn" style="display: none">
-                                                                    Please Enter Valid Name
-                                                                </span>
-
-                                                                <input type="text" id="name" class="form-control valid_name" name="name" required>
+                                                            <label for="spec_email">Name <span class="required_field">*</span>
+                                                                <input type="text" id="name" class="form-control valid_name" name="spec_name" required>
                                                                 <span class="input-icon"><i class="fa fa-user"></i></span>
                                                             </label>
                                                         </div>
@@ -172,24 +166,15 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                                                     <div class="col-lg-12" >
                                                         <div class="form-group">
                                                             <label for="user_email">Email<span class="required_field">*</span>
-                                                                <span id="Email_msg" class="error_red valid_Email_msg" style="display: none">
-                                                                    Please Enter Your Email Id
-                                                                </span>
-                                                                <span id="Email_ptn" class="error_red valid_Email_ptn" style="display: none">
-                                                                    Please Enter Valid Email Id
-                                                                </span>
-                                                                <input type="email" id="email" class="form-control valid_email" name="email" required>
+                                                                <input type="email" id="email" class="form-control valid_email" name="spec_email" required>
                                                                 <span class="input-icon"><i class="fa fa-envelope"></i></span>
                                                             </label>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12" >
                                                         <div class="form-group">
-                                                            <label for="user_email">Mobile No<span class="required_field">*</span>
-                                                                <span id="mobNo_msg" class="error_red valid_mobNo_msg" style="display: none">
-                                                                    Please Enter Your Mobile no
-                                                                </span>
-                                                                <input type="number" id="mobNo" class="form-control valid_mobNo" name="name" required="9">
+                                                            <label for="mobNo">Mobile No<span class="required_field">*</span>
+                                                                <input type="number" id="mobNo" class="form-control valid_mobNo" name="spec_mobile" required="10">
                                                                 <span class="input-icon"><i class="fa fa-mobile fa-1-5x"></i></span>
                                                             </label>
                                                         </div>
@@ -197,10 +182,7 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                                                     <div class="col-lg-12" >
                                                         <div class="form-group">
                                                             <label for="user_email">Write your request<span class="required_field">*</span>
-                                                                <span id="req_msg" class="error_red valid_req_msg" style="display: none">
-                                                                    Please Enter Your Request Message
-                                                                </span>
-                                                                <textarea id="spec_msg" class="form-control valid_spec_msg" name="name" rows=3 required></textarea>
+                                                                <textarea id="spec_msg" class="form-control valid_spec_msg" name="spec_msg" rows=3 required></textarea>
                                                             </label>
                                                         </div>
                                                         <div class="form-group text-center">
