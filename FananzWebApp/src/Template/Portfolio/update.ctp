@@ -24,7 +24,8 @@ echo $this->Html->script('/js/jquery.file.upload.js', ['block' => true]);
 echo $this->Html->script('/js/slick.min.js', ['block' => true]);
 echo $this->Html->script('/js/portfolio.carousel.js', ['block' => true]);
 echo $this->Html->script('/js/pages/portfolio-update.js', ['block' => true]);
-?>    
+?>
+<div class="loading-img"></div>
 <section class="add-corp-portfolio" id="main">
     <div class="container">
         <div class="row">

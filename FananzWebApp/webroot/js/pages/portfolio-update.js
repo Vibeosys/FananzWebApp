@@ -33,6 +33,11 @@ $(document).ready(function () {
             url: WEBSITE_VIRTUAL_DIR_NAME + '/portfoliophotos/webDeletePhoto/' + photoId,
             type: 'GET',
             dataType: 'json',
+                 $('.loading-img').show();
+            },
+            complete: function () {
+                $('.loading-img').hide();
+            },
             success: function (data, textStatus, jqXHR) {
                 if (data.errorCode == 0) {
                     var val1 = $('#' + delete_id).find('.prev_thumb').attr('src', '/FananzWebApp/img/demoUpload.jpg');
@@ -64,6 +69,11 @@ $(document).ready(function () {
             url: WEBSITE_VIRTUAL_DIR_NAME + '/subcategories/getSubCategoryList/' + categoryId,
             type: 'GET',
             dataType: 'json',
+                 $('.loading-img').show();
+            },
+            complete: function () {
+                $('.loading-img').hide();
+            },
             success: function (data, textStatus, jqXHR) {
                 $.each(data, function (key, value) {
                     $('#select-subcat-id').append($('<option></option>').val(key).html(value));

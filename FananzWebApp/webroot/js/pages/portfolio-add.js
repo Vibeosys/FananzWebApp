@@ -39,6 +39,12 @@ $(document).ready(function () {
             url: WEBSITE_VIRTUAL_DIR_NAME + '/subcategories/getSubCategoryList/' + categoryId,
             type: 'GET',
             dataType: 'json',
+            beforeSend: function () {
+                $('.loading-img').show();
+             },
+            complete: function () {
+                $('.loading-img').hide();
+            },
             success: function (data, textStatus, jqXHR) {
                 $.each(data, function (key, value) {
                     $('#select-subcat-id').append($('<option></option>').val(key).html(value));
