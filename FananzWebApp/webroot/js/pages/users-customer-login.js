@@ -11,7 +11,7 @@ $(document).ready(function () {
 
         var emailId = $('#forgot_email').val();
         $.ajax({
-            url: WEBSITE_VIRTUAL_DIR_NAME + '/users/forgotPassword',
+            url: WEBSITE_VIRTUAL_DIR_NAME + '/users/customerForgotPassword',
             type: 'POST',
             dataType: 'json',
             data: {

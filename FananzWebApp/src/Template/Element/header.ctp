@@ -70,7 +70,7 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                         <div class="collapse navbar-collapse page-scroll" id="bs-megadropdown-tabs">
                             <ul class="nav navbar-nav width-100">
                                 <li>
-                                    <a href="<?= VIRTUAL_DIR_PATH . '/' ?>" class="hyper"  ><span> <?= Home ?></span></a>
+                                    <a href="<?= VIRTUAL_DIR_PATH . '/' ?>" class="hyper"  ><span>Home</span></a>
                                 </li>
                                 <?php
                                 if ($eventCategoryList != null) {

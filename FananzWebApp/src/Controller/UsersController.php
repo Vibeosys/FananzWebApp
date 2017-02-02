@@ -54,6 +54,26 @@ class UsersController extends AppController {
         }
     }
 
+    public function customerForgotPassword() {
+        $this->apiInitialize();
+        //$forgotPasswordRequest = \App\Dto\ForgotPasswordRequestDto::Deserialize($this->postedData);
+        $emailId = $this->request->data['emailId'];
+        $emailPasswordDto = $this->Users->getUserPasswordInfo($emailId);
+        if ($emailPasswordDto) {
+            //$emailSuccess = false;
+            try {
+                $emailSuccess = \App\Utils\EmailSenderUtility::sendForgotPasswordEmail(
+                                $emailId, $emailPasswordDto->name, $emailPasswordDto->password);
+                //$emailSuccess = $this->sendForgotPasswordEmail();
+            } catch (\Exception $exc) {
+                \Cake\Log\Log::error('Could not send forgot password email ' . $exc->getTraceAsString());
+            }
+            $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(121));
+        } else {
+            $this->response->body(\App\Dto\BaseResponseDto::prepareError(223));
+        }
+    }
+
     //Web method
     public function customerlogin($errorCode = null) {
         $this->layout = 'home_layout';
