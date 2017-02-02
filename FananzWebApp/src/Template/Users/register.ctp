@@ -2,6 +2,8 @@
 <?php
 //$this->layout = 'home_layout';
 echo $this->element('admin_header');
+echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
+echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 ?>
 
 <section class="corporate-register">
@@ -123,21 +125,3 @@ echo $this->element('admin_header');
         </div>
     </div>
 </div>
-
-
-
-
-
-<script>
-
-    $(document).ready(function () {
-        $('#register').on('click', function () {
-            //   alert('here');
-            formValidation();
-
-        });
-    });
-
-
-
-</script>

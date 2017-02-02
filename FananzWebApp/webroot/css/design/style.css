@@ -1,6 +1,5 @@
 body {
     padding: 0;
-    padding-top: 104px;
     margin: 0;
     background: #FFF;
     font-family: 'Lato', Helvetica, Arial, sans-serif;
@@ -47,9 +46,8 @@ label.error , .error-check{
     float: right;
 }
 .post-text{
+        color: #ababab;
     font-size: 12px;
-    color: #afafaf;
-    font-style: italic;
     padding-left: 15px;
 }
 input[type="button"], input[type="submit"] {
@@ -172,11 +170,9 @@ img {
     top: 2px;
     left: -35px;
 }
-/*
 #main, .corporate-register, .login{
     margin-top: 103px;
 }
-*/
 .logo-w3 a h1 span ,.footer a h3 span {
     color: #999;
     font-size: 15px;
@@ -647,6 +643,15 @@ p.copy-right a:hover{
         margin-top: -8em;   
     }
 }
+.about-w3ls-row {
+    background:#D9910C;
+    margin-right: 5em;
+    padding:1.5em;
+}
+.biseller-column img {
+    width: 100%;
+}
+
 /*--top-brands--*/		
 #flexiselDemo1{		
     display: none;		
@@ -1919,7 +1924,7 @@ select.form-control{
     z-index: -1;
 }
 
-.inputfile + label {
+.inputfile + label, .inputfile + label + label {
     max-width: 100%;
     font-size: 14px;
     /* 20px */
@@ -1933,12 +1938,12 @@ select.form-control{
     /* 10px 20px */
 }
 
-.no-js .inputfile + label {
+.no-js .inputfile + label , .no-js .inputfile + label + label {
     display: none;
 }
 
 .inputfile:focus + label,
-.inputfile.has-focus + label {
+.inputfile.has-focus + label, .inputfile:focus + label + label {
     outline: 1px dotted #000;
     outline: -webkit-focus-ring-color auto 5px;
 }
@@ -1948,7 +1953,7 @@ select.form-control{
     /* in case of FastClick lib use */
 }
 
-.inputfile + label svg {
+.inputfile + label svg, inputfile + label + label {
     width: 1em;
     height: 1em;
     vertical-align: middle;
@@ -1959,7 +1964,7 @@ select.form-control{
     /* 4px */
 }
 
-.inputfile-2 + label {
+.inputfile-2 + label, .inputfile + label + label {
     color: #ccc;
     border: 1px solid currentColor;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
@@ -2039,12 +2044,31 @@ select.form-control{
 }
 .flagstrap button .caret{
     float: right;
-    position: relative;
-    top: 8px;
+    position: absolute;
+    top: 15px;
+    right: 16px;
 }
 .flagstrap  ul{
     background-color: #fff;
 }
+#trade_certificate-error.error{
+    position: absolute;
+    bottom: 0;
+    left: 17px;
+    max-width: 100%!important;
+    font-size: 14px!important;
+    font-weight: 300!important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+    overflow: hidden;
+    padding: 0!important;
+    display: inline!important;
+    color:red!important;
+    border: none!important;
+    box-shadow: none!important;
+}
+
 /************** Forgot Password ***************/
 #fogotpasswordModal .modal-content{
     border-radius: 0;
@@ -2463,11 +2487,9 @@ select.form-control{
 .holder span{
     margin: 0 5px;
 }
-/*
 .mg-top-140{
     margin-top: 140px;
 }
-*/
 .filter-categ .fliter-wrapper{
     padding: 5px 10px;
     border-top: 1px solid #dcdada;
@@ -3216,7 +3238,6 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
    font-size: 12px;
     color: #afafaf;
     font-style: italic;
-    padding-left: 15px;
 }
 
 .portfolio-img-btn .edit-portfolio .delete-pf-btn button{
@@ -3280,8 +3301,8 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
 }
 @media screen and (min-width:1201px){
     .add-portfolio {
-        max-height: 392px;
-        height: 392px;
+        max-height: 373px;
+        height: 373px;
         text-align: center;
     }
 }

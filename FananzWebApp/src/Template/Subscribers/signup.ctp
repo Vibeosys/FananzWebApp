@@ -74,7 +74,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="com_name">Business Name <span class="required_field">*</span>
-                                                <input type="text" id="com_name" class="form-control" name="cor_business_name">
+                                                <input type="text" id="com_name" class="form-control" name="cor_business_name" required>
                                                 <span class="input-icon"><i class="fa fa-address-book-o"></i></span>
                                             </label>
                                         </div>
@@ -82,7 +82,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="represent_name">Name of Representative <span class="required_field">*</span>
-                                                <input type="text" id="represent_name" class="form-control" name="cor_represent_name">
+                                                <input type="text" id="represent_name" class="form-control" name="cor_represent_name" required>
                                                 <span class="input-icon"><i class="fa fa-address-card-o"></i></span>
                                             </label>
                                         </div>
@@ -90,7 +90,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="cor_email">Email<span class="required_field">*</span>
-                                                <input type="email" id="cor_email" class="form-control" name="cor_email">
+                                                <input type="email" id="cor_email" class="form-control" name="cor_email" required>
                                                 <span class="input-icon"><i class="fa fa-envelope-open-o"></i></span>
                                             </label>
                                         </div>
@@ -98,7 +98,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="cor_password">Password<span class="required_field">*</span>
-                                                <input type="password" id="cor_password" class="form-control" name="cor_password">
+                                                <input type="password" id="cor_password" class="form-control" name="cor_password" required>
                                                 <button type="button" id="show_pwd">  <i class="fa fa-eye" id="show_icon"></i></button>
                                                 <span class="input-icon"><i class="fa fa-lock"></i></span>
                                             </label>
@@ -115,7 +115,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="cor_mob_no">Mobile No<span class="required_field">*</span>
-                                                <input type="tel" id="cor_mob_no" class="form-control" name="cor_mob_no">
+                                                <input type="tel" id="cor_mob_no" class="form-control" name="cor_mob_no" required>
                                                 <span class="input-icon"><i class="fa fa-mobile"></i></span>
                                             </label>
                                         </div>
@@ -123,7 +123,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="cor_website_name">Website URL<span class="required_field">*</span>
-                                                <input type="text" id="cor_website_name" class="form-control" name="cor_website_name">
+                                                <input type="text" id="cor_website_name" class="form-control" name="cor_website_name" required>
                                                 <span class="input-icon"><i class="fa fa-tv"></i></span>
                                             </label>
                                         </div>
@@ -197,7 +197,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="name">Name<span class="required_field">*</span>
-                                                    <input type="text" id="name" class="form-control" name="fl_name">
+                                                    <input type="text" id="name" class="form-control" name="fl_name" required>
                                                     <span class="input-icon"><i class="fa fa-user"></i></span>
                                                 </label>
                                             </div>
@@ -206,7 +206,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="nick_name">Nick Name<span class="required_field">*</span>
-                                                    <input type="text" id="nick_name" class="form-control" name="nick_name">
+                                                    <input type="text" id="nick_name" class="form-control" name="nick_name" required>
                                                     <span class="input-icon"><i class="fa fa-user"></i></span>
                                                 </label>
                                             </div>
@@ -215,7 +215,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="fl_email">Email<span class="required_field">*</span>
-                                                    <input type="email" id="fl_email" class="form-control" name="fl_email">
+                                                    <input type="email" id="fl_email" class="form-control" name="fl_email" required>
                                                     <span class="input-icon"><i class="fa fa-envelope-open-o"></i></span>
                                                 </label>
                                             </div>
@@ -223,7 +223,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="fl_password">Password<span class="required_field">*</span>
-                                                    <input type="password" id="fl_password" class="form-control" name="fl_password">
+                                                    <input type="password" id="fl_password" class="form-control" name="fl_password" required>
                                                     <button type="button" id="show_pwd_fl">  <i class="fa fa-eye" id="show_icon_fl"></i></button>
                                                     <span class="input-icon"><i class="fa fa-lock"></i></span>
                                                 </label>
@@ -241,7 +241,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="fl_mob_no">Mobile No<span class="required_field">*</span>
-                                                    <input type="tel" id="fl_mob_no" class="form-control" name="fl_mob_no">
+                                                    <input type="tel" id="fl_mob_no" class="form-control" name="fl_mob_no" required>
                                                     <span class="input-icon"><i class="fa fa-mobile"></i></span>
                                                 </label>
                                             </div>
@@ -249,7 +249,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="fl_website_name">Website URL<span class="required_field">*</span>
-                                                    <input type="text" id="fl_website_name" class="form-control" name="fl_website_name">
+                                                    <input type="text" id="fl_website_name" class="form-control" name="fl_website_name" required>
                                                     <span class="input-icon"><i class="fa fa-tv"></i></span>
                                                 </label>
                                             </div>

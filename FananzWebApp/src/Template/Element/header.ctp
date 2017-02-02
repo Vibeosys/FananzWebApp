@@ -157,7 +157,7 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                                                 <form id="spec_form">
                                                     <div class="col-lg-12">
                                                         <div class="form-group"  >
-                                                            <label for="spec_email">Name <span id="Name_msg" class="error_red valid_Name_msg" style="display: none">
+                                                            <label for="spec_email">Name <span class="required_field">*</span><span id="Name_msg" class="error_red valid_Name_msg" style="display: none">
                                                                     Please Enter Your Name
                                                                 </span>
                                                                 <span id="name_ptn" class="error_red valid_name_ptn" style="display: none">
@@ -171,7 +171,7 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                                                     </div>
                                                     <div class="col-lg-12" >
                                                         <div class="form-group">
-                                                            <label for="user_email">Email
+                                                            <label for="user_email">Email<span class="required_field">*</span>
                                                                 <span id="Email_msg" class="error_red valid_Email_msg" style="display: none">
                                                                     Please Enter Your Email Id
                                                                 </span>
@@ -185,7 +185,7 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                                                     </div>
                                                     <div class="col-lg-12" >
                                                         <div class="form-group">
-                                                            <label for="user_email">Mobile No
+                                                            <label for="user_email">Mobile No<span class="required_field">*</span>
                                                                 <span id="mobNo_msg" class="error_red valid_mobNo_msg" style="display: none">
                                                                     Please Enter Your Mobile no
                                                                 </span>
@@ -196,7 +196,7 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                                                     </div>
                                                     <div class="col-lg-12" >
                                                         <div class="form-group">
-                                                            <label for="user_email">Write your request
+                                                            <label for="user_email">Write your request<span class="required_field">*</span>
                                                                 <span id="req_msg" class="error_red valid_req_msg" style="display: none">
                                                                     Please Enter Your Request Message
                                                                 </span>
