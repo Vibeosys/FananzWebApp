@@ -23,7 +23,7 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
     <div class="header-top-w3layouts navbar-fixed-top">
         <div class="container">
             <div class="col-md-6 logo-w3">
-                <a href="/">
+                <a href="<?= VIRTUAL_DIR_PATH . '/index.php' ?>">
 
                     <?= $this->Html->image('logo-medium.png', array('alt' => 'Fananz Logo')); ?>
                     <h1 class="no-header">Fananz</h1>

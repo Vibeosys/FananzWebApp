@@ -139,6 +139,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                             <div class="form-group">
                                 <label for="cor_password">Password
                                     <input type="password" id="cor_password" class="form-control" name="cor_password" value="<?= $subscriberDetails->password ?>">
+                                    <button type="button" id="show_pwd">  <i class="fa fa-eye" id="show_icon"></i></button>
                                     <span class="input-icon"><i class="fa fa-envelope-open-o"></i></span>
                                 </label>
                             </div>
@@ -178,7 +179,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <div class="button-set">
-                                    <button  type="submit" title="Update"  class="white_back_btn">Update</button>     
+                                    <button  type="submit" title="Update"  class="button black_sm">Update</button>     
                                 </div>
                             </div>
                         </div>
@@ -213,7 +214,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <div class="button-set">
-                                    <button  type="submit" title="Update"  class="white_back_btn">Update</button>     
+                                    <button  type="submit" title="Update"  class="button black_sm">Update</button>     
                                 </div>
                             </div>
                         </div>

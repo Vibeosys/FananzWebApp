@@ -1999,6 +1999,7 @@ select.form-control{
 .button-set button.button:hover {
     background-color: #fff;   
     color: #f0c101;
+    box-shadow: 1px 1px 7px #a0a0a0;
 }
 
 .button-set{
@@ -2351,7 +2352,7 @@ select.form-control{
     position: absolute;
     width: 100%;
     height: 50px;
-}
+}   
 
 .category_artist .figure-caption .cate-link .detail-artists{
     display: block;
@@ -3009,7 +3010,8 @@ input[type=search] {
     margin-bottom: 20px;
 }
 .portfolio .button-set .button{
-    margin-bottom: 20px;
+     margin-bottom: 0px;
+    width: 230px;
 }
 .portfolio .button-set  .white_back_btn {
     margin-bottom: 20px;
@@ -3068,6 +3070,9 @@ input[type=search] {
     background: #15142E;
     transition: background .6s ease-in-out;
 }
+.portfolio.category_artist .figure-caption .cate-link .edit-artists a:hover {
+    box-shadow: 2px 2px 5px #15142e;
+}
 .portfolio.category_artist .figure-caption .cate-link .delete-artists a {
     padding: 12px;
     width: 100%;
@@ -3081,8 +3086,12 @@ input[type=search] {
 }
 .portfolio.category_artist .figure-caption .cate-link .edit-artists {
     display: block;
-    width: 50%;
+    width: 100%;
     position: relative;
+
+}
+.portfolio.category_artist .figure-caption .cate-link{ 
+    padding: 5px 34px 0px 34px;
 }
 .portfolio.category_artist .figure-caption .cate-link .delete-artists {
     display: block;
@@ -3398,6 +3407,14 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
     text-align: left;
     font-weight: 300;
     padding-top: 10px;
+}
+.error-container .error-404-content h1{
+    font-size: 70px;
+    text-align: center;
+}
+.error-container .page-not-found h2{
+    font-size: 70px;
+    text-align: left;
 }
 
 /******************** Privacy Terms ***************/

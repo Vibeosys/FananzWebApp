@@ -8,7 +8,7 @@ use Cake\Network\Exception\NotFoundException;
 use App\Controller;
 
 echo $this->element('header');
-
+$this->layout = ('home_layout');
 echo $this->Html->css('/css/design/bootstrap-fileupload.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
 echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
