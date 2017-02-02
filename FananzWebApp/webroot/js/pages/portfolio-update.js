@@ -33,6 +33,7 @@ $(document).ready(function () {
             url: WEBSITE_VIRTUAL_DIR_NAME + '/portfoliophotos/webDeletePhoto/' + photoId,
             type: 'GET',
             dataType: 'json',
+            beforeSend: function () {
                  $('.loading-img').show();
             },
             complete: function () {
@@ -69,6 +70,7 @@ $(document).ready(function () {
             url: WEBSITE_VIRTUAL_DIR_NAME + '/subcategories/getSubCategoryList/' + categoryId,
             type: 'GET',
             dataType: 'json',
+            beforeSend: function () {
                  $('.loading-img').show();
             },
             complete: function () {

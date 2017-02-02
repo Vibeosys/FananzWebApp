@@ -56,7 +56,7 @@
             </ul>
         </div>
         <div class = "clearfix"></div>
-        <p class = "copy-right">© 2016 Fananz . All rights reserved | Design by <a href = "http://vibeosys.com" target = "_blank"> Vibeosys</a></p>
+        <p class = "copy-right">© 2016 Fananz . All rights reserved | Design by <a href = "http://www.vibeosys.com" target = "_blank"> Vibeosys</a></p>
     </div>
 </footer>
 
