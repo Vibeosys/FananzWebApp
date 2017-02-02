@@ -92,12 +92,13 @@ class SubscribersController extends AppController {
         $subscriberDetails = new \App\Dto\SubscriberRegistrationDto();
         $subscriberDetails->emailId = $requestData['fl_email'];
         $subscriberDetails->password = $requestData['fl_password'];
-        $subscriberDetails->country = $requestData['fl_country'];
+        $subscriberDetails->country = $requestData['NewBuyer_country'];
         $subscriberDetails->mobileNo = $requestData['fl_mob_no'];
         $subscriberDetails->telNo = $requestData['fl_tel_no'];
         $subscriberDetails->nickName = $requestData['nick_name'];
         $subscriberDetails->websiteUrl = $requestData['fl_website_name'];
         $subscriberDetails->name = $requestData['fl_name'];
+        
         $subscriberDetails->subScrType = FREELANCE_SUB_TYPE;
         return $subscriberDetails;
     }
@@ -148,7 +149,7 @@ class SubscribersController extends AppController {
         $subscriberDetails = new \App\Dto\SubscriberRegistrationDto();
         $subscriberDetails->emailId = $requestData['cor_email'];
         $subscriberDetails->password = $requestData['cor_password'];
-        $subscriberDetails->country = $requestData['cor_country'];
+        $subscriberDetails->country = $requestData['NewBuyer_country'];
         $subscriberDetails->mobileNo = $requestData['cor_mob_no'];
         $subscriberDetails->telNo = $requestData['cor_tel_no'];
         //$subscriberDetails->nickName = $requestData['nick_name'];
@@ -301,7 +302,7 @@ class SubscribersController extends AppController {
         } catch (\Exception $ex) {
             \Cake\Log\Log::error('Could not send pay later email ' . $ex->getTraceAsString());
         }
-        $this->redirect('/subscribers/login');
+        $this->redirect('/');
     }
 
     //API call

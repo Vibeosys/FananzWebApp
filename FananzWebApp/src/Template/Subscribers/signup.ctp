@@ -131,10 +131,6 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="cor_country">Country of Residence<span class="required_field">*</span>
-<!--
-                                                <input type="text" id="cor_country" class="form-control" name="cor_country">
-                                                <span class="input-icon"><i class="fa fa-globe"></i></span>
--->
                                                 <div class="flagstrap" id="select_cor_country" data-input-name="NewBuyer_country" data-selected-country=""></div>
                                             </label>
                                         </div>

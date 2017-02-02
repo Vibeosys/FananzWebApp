@@ -57,15 +57,16 @@ class UsersController extends AppController {
     //Web method
     public function customerlogin($errorCode = null) {
         $this->layout = 'home_layout';
-        if ($this->sessionManager->isUserLoggedIn()) {
-            $this->redirect('/');
-        }
+
         //Error message display logic
         $errorMessage = null;
         if ($errorCode != null) {
             $errorMessage = \App\Dto\BaseResponseDto::getErrorText($errorCode);
             $this->set('errorDivClass', 'error-wrapper error-msg-display-block');
         } else {
+            if ($this->sessionManager->isUserLoggedIn()) {
+                $this->redirect('/');
+            }
             $this->set('errorDivClass', 'error-wrapper error-msg-display-none');
         }
         $this->set('errorMsg', $errorMessage);
@@ -135,10 +136,10 @@ class UsersController extends AppController {
                         ($resulLoginResponse->userId, $resulLoginResponse->firstName . ' ' . $resulLoginResponse->lastName);
                 $this->redirect('/');
             } else {
-                $this->redirect('/users/customerlogin', 204);
+                $this->redirect('/users/customerlogin/204');
             }
         } else {
-            $this->redirect('/users/customerlogin', 204);
+            $this->redirect('/users/customerlogin/204');
         }
     }
 
@@ -166,7 +167,7 @@ class UsersController extends AppController {
             //if user id does not exist then register the user
             $resultUserId = $this->Users->registerUser($userSignUpRequest);
         }
-        
+
         //If result user id then save it to session
         if ($resultUserId) {
             $this->sessionManager->saveUserLoginInfo

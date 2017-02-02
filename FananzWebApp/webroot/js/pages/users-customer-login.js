@@ -5,28 +5,29 @@
  */
 
 
-$("#frmForgotPassword").submit(function (e) {
-    e.preventDefault();
+$(document).ready(function () {
+    $("#frmForgotPassword").submit(function (e) {
+        e.preventDefault();
 
-    var emailId = $('#forgot_email').val();
-    $.ajax({
-        url: WEBSITE_VIRTUAL_DIR_NAME + '/users/forgotPassword',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            emailId: emailId
-        },
-        success: function (data, textStatus, jqXHR) {
-            if (data.errorCode === 0) {
+        var emailId = $('#forgot_email').val();
+        $.ajax({
+            url: WEBSITE_VIRTUAL_DIR_NAME + '/users/forgotPassword',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                emailId: emailId
+            },
+            success: function (data, textStatus, jqXHR) {
+                if (data.errorCode === 0) {
 
-                swal("Email sent!", data.message, "success");
-            } else {
-                swal("Error occurred!", data.message, "error");
+                    swal("Email sent!", data.message, "success");
+                } else {
+                    swal("Error occurred!", data.message, "error");
+                }
             }
-        }
-    });//end of ajax
+        });//end of ajax
+    });
 });
-
 //for facebook integration
 
 function statusChangeCallback(response) {

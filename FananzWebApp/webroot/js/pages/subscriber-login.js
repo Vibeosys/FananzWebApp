@@ -4,24 +4,25 @@
  * and open the template in the editor.
  */
 
+$(document).ready(function () {
+    $("#frmForgotPassword").submit(function (e) {
+        e.preventDefault();
 
-$("#frmForgotPassword").submit(function (e) {
-    e.preventDefault();
-
-    var emailId = $('#emailId').val();
-    $.ajax({
-        url: WEBSITE_VIRTUAL_DIR_NAME + '/subscribers/forgotPassword',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            emailId: emailId
-        },
-        success: function (data, textStatus, jqXHR) {
-            if (data.errorCode == 0) {
-                swal("Email sent!", data.message, "success");
-            } else {
-                swal("Error occurred!", data.message, "error");
+        var emailId = $('#emailId').val();
+        $.ajax({
+            url: WEBSITE_VIRTUAL_DIR_NAME + '/subscribers/forgotPassword',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                emailId: emailId
+            },
+            success: function (data, textStatus, jqXHR) {
+                if (data.errorCode == 0) {
+                    swal("Email sent!", data.message, "success");
+                } else {
+                    swal("Error occurred!", data.message, "error");
+                }
             }
-        }
-    });//end of ajax
+        });//end of ajax
+    });
 });

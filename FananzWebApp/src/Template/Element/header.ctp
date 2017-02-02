@@ -73,82 +73,88 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                                     <a href="<?= VIRTUAL_DIR_PATH . '/' ?>" class="hyper"  ><span> <?= Home ?></span></a>
                                 </li>
                                 <?php
-                                foreach ($eventCategoryList as $category) {
-                                    // echo($values->category);
-                                    $isSubcategoryArray = is_array($category->subCategories) && count($category->subCategories) > 0;
-                                    ?>
-
-
-                                    <?php
-                                    if ($isSubcategoryArray) {
+                                if ($eventCategoryList != null) {
+                                    foreach ($eventCategoryList as $category) {
+                                        // echo($values->category);
+                                        $isSubcategoryArray = is_array($category->subCategories) && count($category->subCategories) > 0;
                                         ?>
 
-                                        <li  class="dropdown">
-                                            <?php
-                                        } else {
+
+                                        <?php
+                                        if ($isSubcategoryArray) {
                                             ?>
-                                        <li>
-                                            <?php
-                                        }
-                                        ?>
 
-                                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName ?>" class="dropdown-toggle  hyper page-scroll"  ><span><?= $category->category ?>
+                                            <li  class="dropdown">
                                                 <?php
-                                                if ($isSubcategoryArray) {
-                                                    ?>
-                                                    <b class="caret"> </b>
-                                                <?php }
+                                            } else {
                                                 ?>
-                                            </span></a>
+                                            <li>
+                                                <?php
+                                            }
+                                            ?>
 
-
-
-                                        <ul class="dropdown-menu multi">
-                                            <div class="row">
-                                                <div class="col-sm-4"> 
+                                            <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName ?>" class="dropdown-toggle  hyper page-scroll"  ><span><?= $category->category ?>
                                                     <?php
-                                                    foreach ($category->subCategories as $subCategories) {
+                                                    if ($isSubcategoryArray) {
                                                         ?>
-
-
-                                                        <?php
-                                                        $subCategoryValue = count($subCategories->subCategoryId);
-                                                        if ($subCategories->subCategoryId % 2 != 0) {
-                                                            ?>     
-
-
-                                                            <ul class="multi-column-dropdown">
-                                                                <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" ><?= $subCategories->subCategory ?></a></li>
-                                                            </ul>
-
-                                                            <?php
-                                                        } else {
-                                                            ?>
-
-
-                                                            <ul class="multi-column-dropdown">
-                                                                <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" > <?= $subCategories->subCategory ?></a></li>
-                                                            </ul>
-
-
-                                                            <?php
-                                                        }
-                                                    }
-                                                    // }
+                                                        <b class="caret"> </b>
+                                                    <?php }
                                                     ?>
+                                                </span></a>
+
+
+
+                                            <ul class="dropdown-menu multi">
+                                                <div class="row">
+                                                    <div class="col-sm-4"> 
+                                                        <?php
+                                                        if ($category->subCategories != null) {
+                                                            foreach ($category->subCategories as $subCategories) {
+                                                                ?>
+
+
+                                                                <?php
+                                                                $subCategoryValue = count($subCategories->subCategoryId);
+                                                                if ($subCategories->subCategoryId % 2 != 0) {
+                                                                    ?>     
+
+
+                                                                    <ul class="multi-column-dropdown">
+                                                                        <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" ><?= $subCategories->subCategory ?></a></li>
+                                                                    </ul>
+
+                                                                    <?php
+                                                                } else {
+                                                                    ?>
+
+
+                                                                    <ul class="multi-column-dropdown">
+                                                                        <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" > <?= $subCategories->subCategory ?></a></li>
+                                                                    </ul>
+
+
+                                                                    <?php
+                                                                }
+                                                            }
+                                                        }
+                                                        // }
+                                                        ?>
+                                                    </div>
+                                                    <div class="col-sm-4 w3l">
+
+
+                                                        <?= $this->Html->image('menu1.jpg', array('alt' => '', 'class' => 'img-responsive')); ?>
+                                                    </div>
+
+                                                    <div class="clearfix"></div>
                                                 </div>
-                                                <div class="col-sm-4 w3l">
 
-
-                                                    <?= $this->Html->image('menu1.jpg', array('alt' => '', 'class' => 'img-responsive')); ?>
-                                                </div>
-
-                                                <div class="clearfix"></div>
-                                            </div>
-
-                                        </ul>
-                                    </li>
-                                <?php } ?>
+                                            </ul>
+                                        </li>
+                                        <?php
+                                    }
+                                }
+                                ?>
                                 <?php if (!$isSubscriberLoggedIn && !$isAdminLoggedIn) : ?>
                                     <li class="float-right dropdown no-request">
                                         <a href="" class="dropdown-toggle hyper" data-toggle="dropdown"><span>Special Requests<b class="caret"></b></span></a>

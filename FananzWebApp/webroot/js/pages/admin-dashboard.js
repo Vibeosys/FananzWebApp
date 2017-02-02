@@ -77,50 +77,7 @@ $(document).ready(function () {
 
     });//end of on click
 
-    /**
-     * When the status button gets clicked, then this event gets fired
-     * @param int statusId
-     * @param int subscriberId
-     * @returns void */
-    function clicked(statusId, subscriberId) {
-        $.ajax({
-            url: WEBSITE_VIRTUAL_DIR_NAME + '/subscribers/changeStatus',
-            type: 'POST',
-            data: {
-                statusId: statusId,
-                subscriberId: subscriberId
-            },
-            dataType: 'json',
-            beforeSend: function () {
-                $('.loading-img').show();
-            },
-            complete: function () {
-                $('.loading-img').hide();
-            },
-            success: function (data, textStatus, jqXHR) {
-                if (data) {
-                    // swal("Info !", "Status Changed", "error");
-                    swal({
-                        title: "Info !",
-                        text: "Status Changed",
-                        type: "success",
-                        showCancelButton: false,
-                        showConfirmButton: true,
-                        confirmButtonColor: "#AEDEF4",
-                    },
-                            function (isConfirm) {
-                                if (isConfirm) {
-                                    $('#manage_user').DataTable().ajax.reload();
-                                }
-                            });
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                swal("Info !", "Some error occurred", "error");
-            }
-        });
 
-    }
 
     /**
      * Add a new category
@@ -410,35 +367,7 @@ $(document).ready(function () {
      */
     $("#select-banner-type-id").change(getBannerDetails);
 
-    /**
-     * Gets banner details for selected banner type
-     * @returns void */
-    function getBannerDetails() {
-        var bannerLocation = $("#select-banner-type-id").find('option:selected').val();
 
-        $("#txt-banner-image-url-id").val('N/A');
-        $("#link-banner-image-url-id").attr('href', '#');
-        $("#txt-banner-click-url-id").val('N/A');
-        $("#link-banner-click-url-id").attr('href', '#');
-        $('#banner-url-id').val('');
-
-        $.ajax({
-            url: WEBSITE_VIRTUAL_DIR_NAME + '/advtbanner/bannerDetails/' + bannerLocation,
-            type: 'GET',
-            dataType: 'json',
-            success: function (data, textStatus, jqXHR) {
-                if (data.errorCode == 0) {
-                    var bannerDetails = JSON.parse(data.data);
-                    //alert(bannerDetails.imageUrl);
-                    $("#txt-banner-image-url-id").val(bannerDetails.imageUrl);
-                    $("#link-banner-image-url-id").attr('href', bannerDetails.imageUrl);
-                    $("#txt-banner-click-url-id").val(bannerDetails.clickUrl);
-                    $("#link-banner-click-url-id").attr('href', bannerDetails.clickUrl);
-
-                }
-            }
-        }); // ajax
-    }
 
     /**
      * Deleting an existing banner by selecting the banner location
@@ -480,3 +409,78 @@ $(document).ready(function () {
     });
 
 });// document ready
+
+/**
+ * When the status button gets clicked, then this event gets fired
+ * @param int statusId
+ * @param int subscriberId
+ * @returns void */
+function clicked(statusId, subscriberId) {
+    $.ajax({
+        url: WEBSITE_VIRTUAL_DIR_NAME + '/subscribers/changeStatus',
+        type: 'POST',
+        data: {
+            statusId: statusId,
+            subscriberId: subscriberId
+        },
+        dataType: 'json',
+        beforeSend: function () {
+            $('.loading-img').show();
+        },
+        complete: function () {
+            $('.loading-img').hide();
+        },
+        success: function (data, textStatus, jqXHR) {
+            if (data) {
+                // swal("Info !", "Status Changed", "error");
+                swal({
+                    title: "Info !",
+                    text: "Status Changed",
+                    type: "success",
+                    showCancelButton: false,
+                    showConfirmButton: true,
+                    confirmButtonColor: "#AEDEF4",
+                },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $('#manage_user').DataTable().ajax.reload();
+                            }
+                        });
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            swal("Info !", "Some error occurred", "error");
+        }
+    });
+
+}
+
+/**
+ * Gets banner details for selected banner type
+ * @returns void */
+function getBannerDetails() {
+    var bannerLocation = $("#select-banner-type-id").find('option:selected').val();
+
+    $("#txt-banner-image-url-id").val('N/A');
+    $("#link-banner-image-url-id").attr('href', '#');
+    $("#txt-banner-click-url-id").val('N/A');
+    $("#link-banner-click-url-id").attr('href', '#');
+    $('#banner-url-id').val('');
+
+    $.ajax({
+        url: WEBSITE_VIRTUAL_DIR_NAME + '/advtbanner/bannerDetails/' + bannerLocation,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            if (data.errorCode == 0) {
+                var bannerDetails = JSON.parse(data.data);
+                //alert(bannerDetails.imageUrl);
+                $("#txt-banner-image-url-id").val(bannerDetails.imageUrl);
+                $("#link-banner-image-url-id").attr('href', bannerDetails.imageUrl);
+                $("#txt-banner-click-url-id").val(bannerDetails.clickUrl);
+                $("#link-banner-click-url-id").attr('href', bannerDetails.clickUrl);
+
+            }
+        }
+    }); // ajax
+}
