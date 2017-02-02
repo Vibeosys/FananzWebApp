@@ -15,6 +15,10 @@ class SubscribersController extends AppController {
     public function login($errorCode = null) {
         $this->layout = 'home_layout';
 
+        if($this->sessionManager->isSubscriberLoggedIn()){
+            $this->redirect('/subscribers/portfolio');
+            return;
+        }
         //Error message display logic
         $errorMessage = null;
         if ($errorCode != null) {
@@ -156,10 +160,15 @@ class SubscribersController extends AppController {
 
     //Web method
     public function portfolio() {
+        $this->layout = 'home_layout';
         $isSubscribed = $this->sessionManager->isSubscriberSubscribed();
         if (!$isSubscribed) {
             $this->redirect('/subscribers/login');
             return;
+        }
+        if ($this->sessionManager->isSubscriberLoggedIn()) {
+            $this->set('isSubscriberLoggedIn', true);
+            $this->set('subscriberName', $this->sessionManager->getSubscriberName());
         }
         $subscriberId = $this->sessionManager->getSubscriberId();
         $portfolioTable = new \App\Model\Table\PortfolioTable();
@@ -175,13 +184,16 @@ class SubscribersController extends AppController {
 
     //Web method
     public function saveBasicInfo() {
-
         if (!$this->sessionManager->isSubscriberLoggedIn()) {
             $this->redirect('/subscribers/login');
             return;
         }
+        if ($this->sessionManager->isSubscriberLoggedIn()) {
+            $this->set('isSubscriberLoggedIn', true);
+            $this->set('subscriberName', $this->sessionManager->getSubscriberName());
+        }
         $subscriberId = $this->sessionManager->getSubscriberId();
-        
+
         $requestData = $this->request->data;
         $subscriberInfo = new \App\Dto\SubscriberProfileUpdateRequestDto();
         $subscriberInfo->name = $requestData['com_name'];
@@ -195,7 +207,7 @@ class SubscribersController extends AppController {
         $subscriberInfo->country = $requestData['cor_country'];
 
         $this->Subscribers->updateSubscriberProfile($subscriberInfo, $subscriberId);
-        
+
         $this->redirect('/subscribers/portfolio');
     }
 
@@ -218,6 +230,10 @@ class SubscribersController extends AppController {
 
     //Web method
     public function signup($errorCode = null, $subType = null) {
+        if($this->sessionManager->isSubscriberLoggedIn()){
+            $this->redirect('/subscribers/portfolio');
+            return;
+        }
         $activeTab = CORPORATE_SUB_TYPE;
         //Error message display logic
         $errorMessage = null;

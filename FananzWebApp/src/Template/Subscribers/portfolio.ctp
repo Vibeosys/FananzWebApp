@@ -7,7 +7,8 @@ use Cake\Error\Debugger;
 use Cake\Network\Exception\NotFoundException;
 use App\Controller;
 
-echo $this->element('header');
+echo $this->element('header', array('isSubscriberLoggedIn' => $isSubscriberLoggedIn,
+    'subscriberName' => $subscriberName));
 
 echo $this->Html->css('/css/design/bootstrap-fileupload.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);

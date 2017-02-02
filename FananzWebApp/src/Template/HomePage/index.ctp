@@ -12,9 +12,10 @@ use Cake\Error\Debugger;
 use Cake\Network\Exception\NotFoundException;
 use App\Controller;
 
-//$this->layout = 'home_layout';
-
-echo $this->element('header', array('isUserLoggedIn' => $isUserLoggedIn, 'userName' => $userName));
+echo $this->element('header', array('isUserLoggedIn' => $isUserLoggedIn,
+    'userName' => $userName,
+    'isSubscriberLoggedIn' => $isSubscriberLoggedIn,
+    'subscriberName' => $subscriberName));
 
 echo $this->Html->script('/js/slider/jquery.themepunch.revolution.min.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/slider/jquery.themepunch.tools.min.js', ['block' => 'scriptTop']);
@@ -23,14 +24,6 @@ echo $this->Html->script('/js/slider/revolution.extension.navigation.min.js', ['
 echo $this->Html->script('/js/slider/revolution.extension.slideanims.min.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/slider/slider.config.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
-// $this->layout = 'header';
-//<script src="js/slider/jquery.themepunch.revolution.min.js"></script>
-//<script src="js/slider/jquery.themepunch.tools.min.js"></script>
-//<script src="js/slider/revolution.extension.layeranimation.min.js"></script>
-//<script src="js/slider/revolution.extension.navigation.min.js"></script>
-//<script src="js/slider/revolution.extension.slideanims.min.js"></script>
-//<script src = "js/slider/slider.config.js"></script>
-//<script type="text/javascript" src="js/jquery.flexisel.js"></script>
 ?>
 
 <div id="main">
@@ -342,32 +335,21 @@ echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
         </div>
     </div>
 </section>
-<section class="banner">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="banner-img">
-                    <a href=""> <img class="img-responsive" src="img/banner/banner1.jpg"></a>
+<?php if ($topBannerDetails != null): ?>
+    <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="banner-img">
+                        <a href="<?= $topBannerDetails->clickUrl ?>"> 
+                            <?= $this->Html->image($topBannerDetails->imageUrl, ['class' => 'img-responsive']); ?>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <!--
-               <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-                   <div class="banner-wrapper">
-                       <div class="banner-title">
-                           <h3>Learn to Belly Dance</h3>
-                       </div>
-                       <div class="banner-line">
-                           <p>...one of the oldest social dances<br>inword history</p>
-                       </div>
-                       <div class="banner-btn">
-                           <a href="">Contact Now</a>
-                       </div>
-                   </div>
-               </div>
-            -->
         </div>
-    </div>
-</section>
+    </section>
+<?php endif; ?>
 <section class="request_artist">
     <div class="container">
         <div class="row">
@@ -375,7 +357,7 @@ echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
                 <h3>Portfolio</h3>
             </div>
             <?php
-            foreach ($portfoioList as $portfolio) {
+            foreach ($portfolioList as $portfolio) {
                 ?>
 
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -445,32 +427,21 @@ echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
         <div class="clearfix"></div>
     </div>
 </div>
-<section class="banner">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="banner-img">
-                    <a href=""> <img class="img-responsive" src="img/banner/banner2.jpg"></a>
-                </div>
+<?php if ($bottomBannerDetails != null): ?>
+    <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="banner-img">
+                        <a href="<?= $bottomBannerDetails->clickUrl ?>"> 
+                            <?= $this->Html->image($bottomBannerDetails->imageUrl, ['class' => 'img-responsive']); ?>
+                        </a>
+                    </div>
+                </div>           
             </div>
-            <!--
-               <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-                   <div class="banner-wrapper">
-                       <div class="banner-title">
-                           <h3>Learn to Belly Dance</h3>
-                       </div>
-                       <div class="banner-line">
-                           <p>...one of the oldest social dances<br>inword history</p>
-                       </div>
-                       <div class="banner-btn">
-                           <a href="">Contact Now</a>
-                       </div>
-                   </div>
-               </div>
-            -->
         </div>
-    </div>
-</section>
+    </section>
+<?php endif; ?>
 <div class="request_artists modal fade" id="request_artists" tabindex="-2" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content"><button type="button" class="float-right close-popup-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>

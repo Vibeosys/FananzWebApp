@@ -25,17 +25,25 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => 'scriptTop']);
             <div class="col-md-6 header-top-request">
 
             </div>
-
-            <?php
-            if ($isAdminLoggedIn) {
+            <?php if (isset($isSubscriberLoggedIn) && $isSubscriberLoggedIn) : ?>
+                <div class="col-md-6 header-top-request">
+                    <ul>
+                        <li class="border-right"><a href="<?= VIRTUAL_DIR_PATH . '/subscribers/portfolio' ?>">My Portfolio</a></li>
+                        <li class="border-right"><?= $subscriberName ?></li>
+                        <li><a href="<?= VIRTUAL_DIR_PATH . '/homepage/logout' ?> ">Logout</a></li>
+                    </ul>
+                </div>
+                <?php
+            elseif ($isAdminLoggedIn) :
                 ?>
                 <div class="col-md-6 header-top-request">
                     <ul>
+                        <li class="border-right">Logged in Admin</li>
                         <li><a href="<?= VIRTUAL_DIR_PATH . '/homepage/logout' ?>">Logout</a></li>
                     </ul>
                 </div>
                 <?php
-            }
+            endif;
             ?>
 
             <div class="clearfix"></div>

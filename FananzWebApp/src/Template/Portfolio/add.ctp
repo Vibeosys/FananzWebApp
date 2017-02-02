@@ -7,7 +7,8 @@ use Cake\Error\Debugger;
 use Cake\Network\Exception\NotFoundException;
 use App\Controller;
 
-echo $this->element('header');
+echo $this->element('header', array('isSubscriberLoggedIn' => $isSubscriberLoggedIn,
+    'subscriberName' => $subscriberName));
 
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/slick.css', ['block' => true]);
@@ -40,12 +41,12 @@ echo $this->Html->script('/js/portfolio.carousel.js', ['block' => true]);
                                 ?>
                             </label>
                         </div>
-                            <div class="form-group">
-                                <label for="first_name">Sub Category
-                                    <select id="select-subcat-id" class="form-control" name="select-subcat-id" >                                                    
-                                    </select>
-                                </label>
-                            </div>
+                        <div class="form-group">
+                            <label for="first_name">Sub Category
+                                <select id="select-subcat-id" class="form-control" name="select-subcat-id" >                                                    
+                                </select>
+                            </label>
+                        </div>
                         <div class="form-group">
                             <label>
                                 Cover Photo <span class="required_field"> *</span><span class="img-size">size 500 x 400</span>

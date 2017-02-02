@@ -40,8 +40,18 @@ class SessionManagerUtil {
     }
 
     public function isSubscriberLoggedIn() {
-        $verifySubscriberLogin = $this->_session->check('Subscriber.Name') && $this->_session->check('Subscriber.Id');
-        return $verifySubscriberLogin;
+        $subscriberName = $this->_session->read('Subscriber.Name');
+        $subscriberId = $this->_session->read('Subscriber.Id');
+
+        if ($subscriberName != '' && $subscriberId != '') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getSubscriberName() {
+        return $this->_session->read('Subscriber.Name');
     }
 
     public function isSubscriberSubscribed() {

@@ -35,7 +35,15 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <?php if (isset($isUserLoggedIn) && $isUserLoggedIn) : ?>
+            <?php if (isset($isSubscriberLoggedIn) && $isSubscriberLoggedIn) : ?>
+                <div class="col-md-6 header-top-request">
+                    <ul>
+                        <li class="border-right"><a href="<?= VIRTUAL_DIR_PATH . '/subscribers/portfolio' ?>">My Portfolio</a></li>
+                        <li class="border-right"><?= $subscriberName ?></li>
+                        <li><a href="<?= VIRTUAL_DIR_PATH . '/homepage/logout' ?> ">Logout</a></li>
+                    </ul>
+                </div>
+            <?php elseif (isset($isUserLoggedIn) && $isUserLoggedIn) : ?>
                 <div class="col-md-6 header-top-request">
                     <ul>
                         <li class="border-right"><a href="<?= VIRTUAL_DIR_PATH . '/subscribers/login' ?>">Partner With Us</a></li>
@@ -51,6 +59,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                     </ul>
                 </div>
             <?php endif; ?>
+
             <div class="clearfix"></div>
         </div>
         <div class="header-bottom-w3ls">
@@ -139,69 +148,70 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                         </ul>
                                     </li>
                                 <?php } ?>
-                                <li class="float-right dropdown no-request">
-                                    <a href="" class="dropdown-toggle hyper" data-toggle="dropdown"><span>Special Requests<b class="caret"></b></span></a>
-                                    <ul class="dropdown-menu multi multi1 spec_request">
-                                        <div class="row">
-                                            <form id="spec_form">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group"  >
-                                                        <label for="spec_email">Name <span id="Name_msg" class="error_red valid_Name_msg" style="display: none">
-                                                                Please Enter Your Name
-                                                            </span>
-                                                            <span id="name_ptn" class="error_red valid_name_ptn" style="display: none">
-                                                                Please Enter Valid Name
-                                                            </span>
+                                <?php if (!$isSubscriberLoggedIn && !$isAdminLoggedIn) : ?>
+                                    <li class="float-right dropdown no-request">
+                                        <a href="" class="dropdown-toggle hyper" data-toggle="dropdown"><span>Special Requests<b class="caret"></b></span></a>
+                                        <ul class="dropdown-menu multi multi1 spec_request">
+                                            <div class="row">
+                                                <form id="spec_form">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group"  >
+                                                            <label for="spec_email">Name <span id="Name_msg" class="error_red valid_Name_msg" style="display: none">
+                                                                    Please Enter Your Name
+                                                                </span>
+                                                                <span id="name_ptn" class="error_red valid_name_ptn" style="display: none">
+                                                                    Please Enter Valid Name
+                                                                </span>
 
-                                                            <input type="text" id="name" class="form-control valid_name" name="name" required>
-                                                            <span class="input-icon"><i class="fa fa-user"></i></span>
-                                                        </label>
+                                                                <input type="text" id="name" class="form-control valid_name" name="name" required>
+                                                                <span class="input-icon"><i class="fa fa-user"></i></span>
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-12" >
-                                                    <div class="form-group">
-                                                        <label for="user_email">Email
-                                                            <span id="Email_msg" class="error_red valid_Email_msg" style="display: none">
-                                                                Please Enter Your Email Id
-                                                            </span>
-                                                            <span id="Email_ptn" class="error_red valid_Email_ptn" style="display: none">
-                                                                Please Enter Valid Email Id
-                                                            </span>
-                                                            <input type="email" id="email" class="form-control valid_email" name="email" required>
-                                                            <span class="input-icon"><i class="fa fa-envelope"></i></span>
-                                                        </label>
+                                                    <div class="col-lg-12" >
+                                                        <div class="form-group">
+                                                            <label for="user_email">Email
+                                                                <span id="Email_msg" class="error_red valid_Email_msg" style="display: none">
+                                                                    Please Enter Your Email Id
+                                                                </span>
+                                                                <span id="Email_ptn" class="error_red valid_Email_ptn" style="display: none">
+                                                                    Please Enter Valid Email Id
+                                                                </span>
+                                                                <input type="email" id="email" class="form-control valid_email" name="email" required>
+                                                                <span class="input-icon"><i class="fa fa-envelope"></i></span>
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-12" >
-                                                    <div class="form-group">
-                                                        <label for="user_email">Mobile No
-                                                            <span id="mobNo_msg" class="error_red valid_mobNo_msg" style="display: none">
-                                                                Please Enter Your Mobile no
-                                                            </span>
-                                                            <input type="number" id="mobNo" class="form-control valid_mobNo" name="name" required="9">
-                                                            <span class="input-icon"><i class="fa fa-mobile fa-1-5x"></i></span>
-                                                        </label>
+                                                    <div class="col-lg-12" >
+                                                        <div class="form-group">
+                                                            <label for="user_email">Mobile No
+                                                                <span id="mobNo_msg" class="error_red valid_mobNo_msg" style="display: none">
+                                                                    Please Enter Your Mobile no
+                                                                </span>
+                                                                <input type="number" id="mobNo" class="form-control valid_mobNo" name="name" required="9">
+                                                                <span class="input-icon"><i class="fa fa-mobile fa-1-5x"></i></span>
+                                                            </label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-12" >
-                                                    <div class="form-group">
-                                                        <label for="user_email">Write your request
-                                                            <span id="req_msg" class="error_red valid_req_msg" style="display: none">
-                                                                Please Enter Your Request Message
-                                                            </span>
-                                                            <textarea id="spec_msg" class="form-control valid_spec_msg" name="name" rows=3 required></textarea>
-                                                        </label>
+                                                    <div class="col-lg-12" >
+                                                        <div class="form-group">
+                                                            <label for="user_email">Write your request
+                                                                <span id="req_msg" class="error_red valid_req_msg" style="display: none">
+                                                                    Please Enter Your Request Message
+                                                                </span>
+                                                                <textarea id="spec_msg" class="form-control valid_spec_msg" name="name" rows=3 required></textarea>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-group text-center">
+                                                            <button type="button" title="Submit" id="special_request" name="special_request" class="button black_sm center-block">Submit</button>
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group text-center">
-                                                        <button type="button" title="Submit" id="special_request" name="special_request" class="button black_sm center-block">Submit</button>
-                                                    </div>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </form>
-                                        </div>
-                                    </ul>
-                                </li>
-
+                                                    <div class="clearfix"></div>
+                                                </form>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                <?php endif; ?>
 
                             </ul>
                         </div>

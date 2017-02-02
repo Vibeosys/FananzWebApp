@@ -203,23 +203,21 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                                     </label>
                                                 </div>
                                             </div>
-
-
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="existing_info">
                                                     <div class="existing_name">
                                                         <div class="form-group">
                                                             <label>Banner Image:
-                                                                <input type="text"  readonly value="N/A" class="form-control existing_img_nm">
-                                                                <a href="" target="_blank" class="input-icon"><i class="fa fa-link"></i></a>
+                                                                <input type="text"  readonly value="N/A" class="form-control existing_img_nm" id="txt-banner-image-url-id">
+                                                                <a href="" target="_blank" class="input-icon" id="link-banner-image-url-id"><i class="fa fa-link"></i></a>
                                                             </label>
                                                         </div>
                                                     </div>
                                                     <div class="existing_url">
                                                         <div class="form-group">
                                                             <label>Click URL:
-                                                                <input type="text"  readonly value="N/A" class="form-control link-click-url-id">
-                                                                <a href="" target="_blank" class="input-icon"><i class="fa fa-link">    </i></a>
+                                                                <input type="text"  readonly value="N/A" class="form-control link-click-url-id" id="txt-banner-click-url-id">
+                                                                <a href="" target="_blank" class="input-icon" id="link-banner-click-url-id"><i class="fa fa-link">    </i></a>
                                                             </label>
                                                         </div>
                                                     </div>
@@ -614,6 +612,12 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
     function getBannerDetails() {
         var bannerLocation = $("#select-banner-type-id").find('option:selected').val();
 
+        $("#txt-banner-image-url-id").val('N/A');
+        $("#link-banner-image-url-id").attr('href', '#');
+        $("#txt-banner-click-url-id").val('N/A');
+        $("#link-banner-click-url-id").attr('href', '#');
+        $('#banner-url-id').val('');
+
         $.ajax({
             url: '/FananzWebApp/advtbanner/bannerDetails/' + bannerLocation,
             type: 'GET',
@@ -622,14 +626,11 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 if (data.errorCode == 0) {
                     var bannerDetails = JSON.parse(data.data);
                     //alert(bannerDetails.imageUrl);
-                    $(".existing_img_nm").html(bannerDetails.imageUrl);
-                    $("#link-click-url-id").html(bannerDetails.clickUrl);
-                    $("#link-click-url-id").attr('href', bannerDetails.clickUrl);
-                }
-                else {
-                    $(".existing_img_nm").html("N/A");
-                    $("#link-click-url-id").html("N/A");
-                    $("#link-click-url-id").attr('href', '#');
+                    $("#txt-banner-image-url-id").val(bannerDetails.imageUrl);
+                    $("#link-banner-image-url-id").attr('href', bannerDetails.imageUrl);
+                    $("#txt-banner-click-url-id").val(bannerDetails.clickUrl);
+                    $("#link-banner-click-url-id").attr('href', bannerDetails.clickUrl);
+
                 }
             }
         }); // ajax
@@ -662,9 +663,11 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 if (data.errorCode == 0) {
                     swal("Advt Banner Deletion!", data.message, "success");
                     //Clean up
-                    $(".existing_img_nm").html("N/A");
-                    $("#link-click-url-id").html("N/A");
-                    $("#link-click-url-id").attr('href', '#');
+                    $("#txt-banner-image-url-id").val('N/A');
+                    $("#link-banner-image-url-id").attr('href', '#');
+                    $("#txt-banner-click-url-id").val('N/A');
+                    $("#link-banner-click-url-id").attr('href', '#');
+                    $('#banner-url-id').val('');
                 } else {
                     swal("Advt Banner Deletion!", data.message, "error");
                 }

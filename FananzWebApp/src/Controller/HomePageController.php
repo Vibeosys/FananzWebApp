@@ -29,15 +29,23 @@ class HomePageController extends AppController {
         $eventCategoryList = $eventCategoriesTable->getCategoriesAndSubcategories();
 
         $portfolioTable = new \App\Model\Table\PortfolioTable();
-        $portfoioList = $portfolioTable->getSelectedPortfolioList();
+        $portfolioList = $portfolioTable->getSelectedPortfolioList();
+
+        $advtBannerTable = new \App\Model\Table\AdvtbannerTable();
+        $topBannerDetails = $advtBannerTable->getDetails(HOME_PAGE_TOP_BANNER);
+        $bottomBannerDetails = $advtBannerTable->getDetails(HOME_PAGE_BOTTOM_BANNER);
+
 
         if ($this->sessionManager->isUserLoggedIn()) {
             $this->set('isUserLoggedIn', true);
             $this->set('userName', $this->sessionManager->getUserName());
         }
 
-        $this->set(['eventCategoryList' => $eventCategoryList]);
-        $this->set(['portfoioList' => $portfoioList]);
+        $this->set(['eventCategoryList' => $eventCategoryList,
+            'portfolioList' => $portfolioList,
+            'topBannerDetails' => $topBannerDetails,
+            'bottomBannerDetails' => $bottomBannerDetails
+        ]);
     }
 
     //Ajax call
@@ -112,7 +120,7 @@ class HomePageController extends AppController {
     }
 
     public function policies() {
-        $this->layout =false;     
+        $this->layout = false;
     }
 
 }

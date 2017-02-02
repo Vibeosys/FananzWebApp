@@ -17,7 +17,7 @@ class PortfolioController extends AppController {
      */
     public function view($categorySubcategoryShortName) {
         $this->layout = 'home_layout';
-        
+
         $eventCategoriesTable = new \App\Model\Table\EventcategoriesTable();
         $eventCategoryList = $eventCategoriesTable->getCategoriesAndSubcategories();
 
@@ -32,22 +32,35 @@ class PortfolioController extends AppController {
 
         $categoryWisePortfolioList = $this->Portfolio->getCategoryWisePortfolioList($categoryId, $subCategoryId);
 
-        // $categoryWisePortfolioData = $this->paginate($categoryWisePortfolioList);
+        $advtBannerTable = new \App\Model\Table\AdvtbannerTable();
+        $topBannerDetails = $advtBannerTable->getDetails(PORTFOLIO_PAGE_TOP_BANNER);
+        $bottomBannerDetails = $advtBannerTable->getDetails(PORTFOLIO_PAGE_BOTTOM_BANNER);
 
-        if($this->sessionManager->isUserLoggedIn()){
+        if ($this->sessionManager->isUserLoggedIn()) {
             $this->set('isUserLoggedIn', true);
             $this->set('userName', $this->sessionManager->getUserName());
         }
-        
+        if ($this->sessionManager->isSubscriberLoggedIn()) {
+            $this->set('isSubscriberLoggedIn', true);
+            $this->set('subscriberName', $this->sessionManager->getSubscriberName());
+        }
+
         $this->set(['eventCategoryList' => $eventCategoryList,
             'categoryId' => $categoryId,
             'subCategoryId' => $subCategoryId,
-            'portfolioDetails' => $categoryWisePortfolioList            
+            'portfolioDetails' => $categoryWisePortfolioList,
+            'topBannerDetails' => $topBannerDetails,
+            'bottomBannerDetails' => $bottomBannerDetails
         ]);
     }
 
     public function add() {
         $this->layout = 'home_layout';
+
+        if (!$this->sessionManager->isSubscriberSubscribed()) {
+            $this->redirect('/subscribers/login');
+            return;
+        }
 
         $subscriberType = $this->sessionManager->getSubscriberType();
         $allowedImageCount = $this->_getAllowedImageCount($subscriberType);
@@ -55,15 +68,32 @@ class PortfolioController extends AppController {
         $eventCategoryTable = new \App\Model\Table\EventcategoriesTable();
         $categoryList = $eventCategoryTable->getCategories();
 
+        if ($this->sessionManager->isSubscriberLoggedIn()) {
+            $this->set('isSubscriberLoggedIn', true);
+            $this->set('subscriberName', $this->sessionManager->getSubscriberName());
+        }
+
         $this->set([
             'allowedImageCount' => $allowedImageCount,
             'categoryList' => $categoryList
         ]);
     }
 
-    public function update($portfolioId, $errorCode = null) {
+    public function update($portfolioId = null, $errorCode = null) {
+        $this->layout = 'home_layout';
+
         $errorDivClass = '';
         $errorMsg = '';
+
+        if (!$this->sessionManager->isSubscriberSubscribed()) {
+            $this->redirect('/subscribers/login');
+            return;
+        }
+
+        if ($this->sessionManager->isSubscriberLoggedIn()) {
+            $this->set('isSubscriberLoggedIn', true);
+            $this->set('subscriberName', $this->sessionManager->getSubscriberName());
+        }
 
         if ($errorCode != null) {
             $errorMsg = \App\Dto\BaseResponseDto::getErrorText($errorCode);

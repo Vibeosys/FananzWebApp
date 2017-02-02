@@ -10,26 +10,30 @@ use App\Dto\FindPortfolioDto;
 
 //$this->layout = 'home_layout';
 //$this->layout = 'header';
-echo $this->element('header' , array('isUserLoggedIn' => $isUserLoggedIn, 'userName' => $userName));
+echo $this->element('header', array('isUserLoggedIn' => $isUserLoggedIn,
+    'userName' => $userName,
+    'isSubscriberLoggedIn' => $isSubscriberLoggedIn,
+    'subscriberName' => $subscriberName));
 
 echo $this->Html->css('design/nouislider.css');
 echo $this->Html->css('design/responsiveslides.css');
 ?>
 
+<?php if ($topBannerDetails != null) : ?>
+    <section class="banner mg-top-140">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="banner-img">
+                        <a href="<?= $topBannerDetails->clickUrl ?>"> 
+                            <?= $this->Html->image($topBannerDetails->imageUrl); ?>
 
-<section class="banner mg-top-140">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="banner-img">
-
-                    <?= $this->Html->image('banner/banner2.jpg', array('alt' => 'Fananz Logo', 'class' => 'img-responsive')); ?>
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+<?php endif; ?>
 <?php
 if (count($portfolioDetails) > 0) {
     ?>
@@ -197,19 +201,21 @@ if (count($portfolioDetails) > 0) {
         </div>
     </div>
 </section>
-<section class="banner">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="banner-img">
-                    <a href=""> 
-                        <?= $this->Html->image('banner/banner1.jpg', array('alt' => 'Fananz Logo', 'class' => 'img-responsive')); ?>
-                    </a>
+<?php if ($bottomBannerDetails != null) : ?>
+    <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="banner-img">
+                        <a href="<?= $bottomBannerDetails->clickUrl ?>"> 
+                            <?= $this->Html->image($bottomBannerDetails->imageUrl); ?>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+<?php endif; ?>
 <div class="detail_artists modal fade" id="detail_artists" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -367,15 +373,15 @@ echo $this->Html->script('Pagination.js');
                 } else {
                     $("#portfolio-cat-id").html(portfolioData.category);
                 }
-                if(portfolioData.fbLink != null){
+                if (portfolioData.fbLink != null) {
                     $("#txtFbId").val(portfolioData.fbLink);
                     $("#link-portfolio-fb").attr('href', portfolioData.fbLink);
                 }
-                if(portfolioData.youtubeLink != null){
+                if (portfolioData.youtubeLink != null) {
                     $("#txtYtubeId").val(portfolioData.youtubeLink);
                     $("#link-portfolio-yt").attr('href', portfolioData.youtubeLink);
                 }
-                $("#portfolio-desc-id").html(portfolioData.aboutUs);                
+                $("#portfolio-desc-id").html(portfolioData.aboutUs);
                 if (portfolioData.photos != null) {
                     var liList = '';
                     $.each(portfolioData.photos, function (id, obj) {
@@ -388,7 +394,7 @@ echo $this->Html->script('Pagination.js');
                 else {
                     $("#slider1").html("<li><img src='/FananzWebApp/img/default_img.jpg'></li>");
                 }
-                 $("#slider1").responsiveSlides({
+                $("#slider1").responsiveSlides({
                     auto: true,
                     pager: true,
                     nav: true,

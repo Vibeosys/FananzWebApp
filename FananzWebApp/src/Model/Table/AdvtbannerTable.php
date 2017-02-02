@@ -64,6 +64,9 @@ class AdvtbannerTable extends Table {
         return $validator;
     }
 
+    private function getTable(){
+        return \Cake\ORM\TableRegistry::get('advtbanner');
+    }
     /**
      * Saves data for banner
      * @param \App\Dto\AdvtBannerSaveRequestDto $advtBannerSaveRequest
@@ -109,12 +112,12 @@ class AdvtbannerTable extends Table {
 
     /**
      * Gets the details for the banner location
-     * @param type $bannerLocation
+     * @param int $bannerLocation
      * @return \App\Dto\BannerDetailsResponseDto
      */
     public function getDetails($bannerLocation) {
         $bannerDetails = null;
-        $dbBanner = $this->find()
+        $dbBanner = $this->getTable()->find()
                 ->where(['BannerType' => $bannerLocation])
                 ->select(['BannerId', 'BannerPicUrl', 'BannerRedirectUrl'])
                 ->first();
