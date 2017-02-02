@@ -63,13 +63,14 @@ class HomePageController extends AppController {
 
         $contactUs = $this->_buildContactInfo($name, $email, $mobNo, $yourRequest);
 
-        if ($contactUs) {
 
-            try {
-                $emailSuccess = \App\Utils\EmailSenderUtility::sendContactUsEmail($contactUs);
-            } catch (\Exception $exc) {
-                \Cake\Log\Log::error('Could not send Special Request email ' . $exc->getTraceAsString());
-            }
+        try {
+            $emailSuccess = \App\Utils\EmailSenderUtility::sendContactUsEmail($contactUs);
+        } catch (\Exception $exc) {
+            \Cake\Log\Log::error('Could not send Special Request email ' . $exc->getTraceAsString());
+        }
+        
+        if ($emailSuccess) {
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(121));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(223));
