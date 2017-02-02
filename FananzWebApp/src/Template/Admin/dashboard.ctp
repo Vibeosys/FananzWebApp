@@ -25,7 +25,7 @@ echo $this->Html->script('/js/datatables/dataTables.responsive.min.js', ['block'
 echo $this->Html->script('/js/datatables/responsive.bootstrap.min.js', ['block' => true]);
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 ?>
-
+<div class="loading-img"></div>
 <section class="admin-dash" id="main">
     <div class="container">
         <div class="row">
@@ -191,7 +191,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                                                         <?= $this->Form->select('select-banner-type-id', $bannerTypeList, ['class' => 'form-control', 'id' => 'select-banner-type-id']) ?></label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label > Select Banner Image</label>
+                                                    <label > Select Banner Image <span class="post-text">image size 768 x 90</span></label>
                                                     <input type="file" name="banner-pic-file" id="banner-pic-file" class="inputfile inputfile-2"  accept="image/*"/>
                                                     <label for="banner-pic-file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span class="file-name">Choose a banner...</span>
                                                     </label>
@@ -354,12 +354,30 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 subscriberId: subscriberId
             },
             dataType: 'json',
+             beforeSend: function(){
+                $('.loading-img').show();
+            },
+            complete: function(){
+                $('.loading-img').hide();
+            },
             success: function (data, textStatus, jqXHR) {
                 if (data) {
-                    swal("Info !", "Status Changed", "error");
+                   // swal("Info !", "Status Changed", "error");
+                    swal({
+                        title: "Info !",
+                        text: "Status Changed",
+                        type: "success",
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonColor: "#AEDEF4",
+                    },
+                         function(isConfirm){
+                          if (isConfirm) {
+                              $('#manage_user').DataTable().ajax.reload();
+                          }
+                    });
                 }
-            }
-            ,
+            },
             error: function (jqXHR, textStatus, errorThrown) {
                 swal("Info !", "Some error occurred", "error");
             }
@@ -386,6 +404,12 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
             dataType: 'json',
             data: {
                 categoryName: categoryName
+            },
+             beforeSend: function(){
+                $('.loading-img').show();
+            },
+            complete: function(){
+                $('.loading-img').hide();
             },
             success: function (data, textStatus, jqXHR) {
                 swal("Info !", data.message, "success");
@@ -424,8 +448,27 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 selectedCategoryId: selectedCategoryId,
                 categoryNameToUpdate: categoryNameToUpdate
             },
+             beforeSend: function(){
+                $('.loading-img').show();
+            },
+            complete: function(){
+                $('.loading-img').hide();
+            },
             success: function (data, textStatus, jqXHR) {
-                swal("Info !", data.message, "success");
+               // swal("Info !", data.message, "success");
+                 swal({
+                        title: "Info !",
+                        text: data.message,
+                        type: "success",
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonColor: "#AEDEF4",
+                    },
+                         function(isConfirm){
+                          if (isConfirm) {
+                          //    $('#select-cat-id').ajax.reload();
+                          }
+                    });
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }
@@ -461,6 +504,12 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                 categoryId: selectedCategoryId,
                 subCategoryName: subcategoryName
             },
+             beforeSend: function(){
+                $('.loading-img').show();
+            },
+            complete: function(){
+                $('.loading-img').hide();
+            },
             success: function (data, textStatus, jqXHR) {
                 swal("Info !", data.message, "success");
             },
@@ -485,6 +534,12 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
             url: '/FananzWebApp/subcategories/getSubCategoryList/' + categoryId,
             type: 'GET',
             dataType: 'json',
+             beforeSend: function(){
+                $('.loading-img').show();
+            },
+            complete: function(){
+                $('.loading-img').hide();
+            },
             success: function (data, textStatus, jqXHR) {
                 $.each(data, function (key, value) {
                     $('#select-subcat-update-id').append($('<option></option>').val(key).html(value));
@@ -528,6 +583,12 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
             data: {
                 subCategoryId: selectedSubCategoryId,
                 subCategoryName: subcategoryName
+            },
+             beforeSend: function(){
+                $('.loading-img').show();
+            },
+            complete: function(){
+                $('.loading-img').hide();
             },
             success: function (data, textStatus, jqXHR) {
                 swal("Update !", data.message, "success");
@@ -584,6 +645,12 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
             contentType: false,
             processData: false,
             dataType: 'text json',
+             beforeSend: function(){
+                $('.loading-img').show();
+            },
+            complete: function(){
+                $('.loading-img').hide();
+            },
             success: function (data, textStatus, jqXHR) {
                 if (data.errorCode == 0) {
                     swal("Advt Banner Upload !", data.message, "success");
