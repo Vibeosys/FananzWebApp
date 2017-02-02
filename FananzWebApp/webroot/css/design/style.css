@@ -1,5 +1,6 @@
 body {
     padding: 0;
+    padding-top: 104px;
     margin: 0;
     background: #FFF;
     font-family: 'Lato', Helvetica, Arial, sans-serif;
@@ -46,8 +47,9 @@ label.error , .error-check{
     float: right;
 }
 .post-text{
-        color: #ababab;
     font-size: 12px;
+    color: #afafaf;
+    font-style: italic;
     padding-left: 15px;
 }
 input[type="button"], input[type="submit"] {
@@ -170,9 +172,11 @@ img {
     top: 2px;
     left: -35px;
 }
+/*
 #main, .corporate-register, .login{
     margin-top: 103px;
 }
+*/
 .logo-w3 a h1 span ,.footer a h3 span {
     color: #999;
     font-size: 15px;
@@ -643,15 +647,6 @@ p.copy-right a:hover{
         margin-top: -8em;   
     }
 }
-.about-w3ls-row {
-    background:#D9910C;
-    margin-right: 5em;
-    padding:1.5em;
-}
-.biseller-column img {
-    width: 100%;
-}
-
 /*--top-brands--*/		
 #flexiselDemo1{		
     display: none;		
@@ -2468,9 +2463,11 @@ select.form-control{
 .holder span{
     margin: 0 5px;
 }
+/*
 .mg-top-140{
     margin-top: 140px;
 }
+*/
 .filter-categ .fliter-wrapper{
     padding: 5px 10px;
     border-top: 1px solid #dcdada;
@@ -3219,6 +3216,7 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
    font-size: 12px;
     color: #afafaf;
     font-style: italic;
+    padding-left: 15px;
 }
 
 .portfolio-img-btn .edit-portfolio .delete-pf-btn button{
@@ -3282,8 +3280,8 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
 }
 @media screen and (min-width:1201px){
     .add-portfolio {
-        max-height: 373px;
-        height: 373px;
+        max-height: 392px;
+        height: 392px;
         text-align: center;
     }
 }
