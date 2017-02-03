@@ -3,6 +3,7 @@ body {
     margin: 0;
     background: #FFF;
     font-family: 'Lato', Helvetica, Arial, sans-serif;
+    padding-top: 104px;
 }
 body a {
     transition: 0.5s all;
@@ -36,10 +37,20 @@ body a:focus, a:hover {
 label.error , .error-check{
     margin-left: 10px;
     width: auto;
-    display: inline;
+    display: initial;
     color: red;
     font-style: italic;
 }
+#file-error{
+position: absolute;
+    bottom: -27px;
+    left: -70px;
+}
+/*
+#mini_price-error.error, #max_price-error.error{
+    display: inline-block!important;
+}
+*/
 .error_red{
     color:red;
     padding-left: 5px;
@@ -170,9 +181,11 @@ img {
     top: 2px;
     left: -35px;
 }
+/*
 #main, .corporate-register, .login{
     margin-top: 103px;
 }
+*/
 .logo-w3 a h1 span ,.footer a h3 span {
     color: #999;
     font-size: 15px;
@@ -380,6 +393,10 @@ button:focus, button:active{
 }
 .banner{
     margin: 30px 0px;   
+}
+.banner .banner-img a img{
+    max-width: 100%;
+    max-height: 100px;
 }
 .banner-fananz h2{
     font-size: 34px;
@@ -635,7 +652,7 @@ p.copy-right a:hover{
 
 /*-- about-gallery --*/
 .service{
-    margin-top: -10em;
+    margin-top: -11em;
     background-color: #f9f9f9;
 }
 @media screen and (max-width:767px){
@@ -3145,6 +3162,9 @@ input[type=search] {
 .header-portfolio .portfolio-header .my-portfolio-img{
     width: 50px;
 }
+.cover-photo-wrapper{
+    margin-bottom: 8px;
+}
 .cover-photo-wrapper .prev_thumb{
     max-width: 300px;
     max-height: 200px;
@@ -3306,8 +3326,8 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
 }
 @media screen and (min-width:1201px){
     .add-portfolio {
-        max-height: 373px;
-        height: 373px;
+        max-height: 391px;
+        height: 391px;
         text-align: center;
     }
 }

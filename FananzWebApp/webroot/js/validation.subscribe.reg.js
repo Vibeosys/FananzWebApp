@@ -37,9 +37,6 @@ $(document).ready(function () {
             trade_certificate: {
                 required: true,
             }
-//				cor_check: {
-//                    required : true
-//                }
         },
         messages: {
             cor_business_name: {
@@ -68,7 +65,6 @@ $(document).ready(function () {
             cor_website_name: "Please enter a website name",
             cor_country: "Please enter a country",
             trade_certificate: "Please Select Trade Certificate"
-                    //cor_check: "Please agree our Terms & Conditions"                
         }
     });
     $("#frmFreelanceRegistration").validate({
@@ -223,8 +219,6 @@ $(document).ready(function () {
             },
         },
         submitHandler: function (form) {
-            // your ajax would go here
-            // alert('simulated ajax submit');
             var name = $('#name').val();
             var email = $('#email').val();
             var mobNo = $('#mobNo').val();
@@ -253,7 +247,52 @@ $(document).ready(function () {
             return false;  // blocks regular submit since you have ajax
         }
     });
-
+    $("#frmAddPortfolio").validate({
+			rules: {
+				min_price: {
+					required: true,
+					number: true
+				},
+                max_price: {
+					required: true,
+					number: true
+				},
+                corpo_self:{
+                    required: true,
+                },
+                select_cat: {
+					min: 1
+                    // valueNotEquals: "Please select Categories"
+				},
+                coverImage :{
+                    required: true,
+                   // accept: "image/*"
+                }
+			},
+			messages: {
+				min_price: {
+					required: "Please enter a minimum price"
+				},
+				max_price: {
+                    required: "Please enter a maximum price"
+                },
+				corpo_self: {
+					required: "Please enter a message",
+				},
+                select_cat:{
+                    min: "Please select Categories"
+                    //valueNotEquals: "Select Category"
+                },
+                coverImage :{
+                    required: "Please select cover image",
+                   // accept: "Please select only image"
+                }
+            }
+//             submitHandler: function(form) {
+//                 
+//                return;  // blocks regular submit since you have ajax
+//             }
+		  });
 
     $('.cor_submit').attr('disabled', 'disabled');
     $('.cor_submit').css('cursor', 'not-allowed');
@@ -295,40 +334,3 @@ $(document).ready(function () {
         }
     });
 });
-
-
-
-
-//    $('.cor_submit').on('click', function(){
-//        if ($('#cor_check').is(':checked')){
-//        $(".error-check.cor-error").text('');  // checked 
-//    }    
-//    else{
-//         $(".error-check.cor-error").text('Please agree our Terms & Conditions'); 
-//    }
-//});
-//    
-//    $('#cor_check').bind('change', function () {
-//   if ($(this).is(':checked'))
-//    $(".error-check.cor-error").text('');
-//   else
-//     $(".error-check.cor-error").text('Please agree our Terms & Conditions'); 
-//    });
-//    
-//    $('.fl_submit').on('click', function(){
-//        if ($('#freelance_check').is(':checked')){
-//        $(".error-check.fl-error").text('');  // checked 
-//    }    
-//    else{
-//         $(".error-check.fl-error").text('Please agree our Terms & Conditions'); 
-//    }
-//});
-//    
-//    $('#freelance_check').bind('change', function () {
-//   if ($(this).is(':checked'))
-//    $(".error-check.fl-error").text('');
-//   else
-//     $(".error-check.fl-error").text('Please agree our Terms & Conditions'); 
-//    });
-//    
-//});

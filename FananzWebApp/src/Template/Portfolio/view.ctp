@@ -27,7 +27,7 @@ echo $this->Html->script('/js/pages/request-service.js', ['block' => true]);
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="banner-img">
-                        <a href="<?= $topBannerDetails->clickUrl ?>"> 
+                        <a href="<?= $topBannerDetails->clickUrl ?>" target="_blank"> 
                             <?= $this->Html->image($topBannerDetails->imageUrl); ?>
                         </a>
                     </div>
@@ -209,7 +209,7 @@ if (count($portfolioDetails) > 0) {
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="banner-img">
-                        <a href="<?= $bottomBannerDetails->clickUrl ?>"> 
+                        <a href="<?= $bottomBannerDetails->clickUrl ?>" target="_blank"> 
                             <?= $this->Html->image($bottomBannerDetails->imageUrl); ?>
                         </a>
                     </div>
