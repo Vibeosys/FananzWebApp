@@ -106,44 +106,44 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
 
                                             <ul class="dropdown-menu multi">
                                                 <div class="row">
-                                                    <div class="col-sm-4"> 
-                                                        <?php
-                                                        if ($category->subCategories != null) {
-                                                            foreach ($category->subCategories as $subCategories) {
-                                                                ?>
 
+                                                    <?php
+                                                    if ($category->subCategories != null) {
+                                                        $totalSubcategoryCount = count($category->subCategories);
+                                                        for ($subCategoryCounter = 0; $subCategoryCounter < $totalSubcategoryCount; $subCategoryCounter++) {
 
-                                                                <?php
-                                                                $subCategoryValue = count($subCategories->subCategoryId);
-                                                                if ($subCategories->subCategoryId % 2 != 0) {
-                                                                    ?>     
+                                                            $subCategories = $category->subCategories[$subCategoryCounter];
 
-
-                                                                    <ul class="multi-column-dropdown">
-                                                                        <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" ><?= $subCategories->subCategory ?></a></li>
-                                                                    </ul>
-
-                                                                    <?php
-                                                                } else {
-                                                                    ?>
-
-
-                                                                    <ul class="multi-column-dropdown">
-                                                                        <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" > <?= $subCategories->subCategory ?></a></li>
-                                                                    </ul>
-
-
-                                                                    <?php
+                                                            if ($subCategoryCounter % 4 == 0) {
+                                                                if ($subCategoryCounter != 0) {
+                                                                    echo "</ul>";
+                                                                    echo "</div >";
                                                                 }
+
+                                                                echo "<div class=\"col-sm-4\">";
+                                                                echo "<ul class=\"multi-column-dropdown\">";
+                                                            }
+
+                                                            if ($subCategoryCounter % 2 != 0) {
+                                                                ?>     
+                                                                <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" ><?= $subCategories->subCategory ?></a></li>
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <li><a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName . '--' . $subCategories->subCategoryShortName ?>" > <?= $subCategories->subCategory ?></a></li>
+                                                                <?php
                                                             }
                                                         }
-                                                        // }
-                                                        ?>
-                                                    </div>
+                                                        echo "</ul>";
+                                                        echo "</div >";
+                                                    }
+                                                    // }
+                                                    ?>
+
                                                     <div class="col-sm-4 w3l">
 
 
-                                                        <?= $this->Html->image('menu1.jpg', array('alt' => '', 'class' => 'img-responsive')); ?>
+        <?= $this->Html->image('menu1.jpg', array('alt' => '', 'class' => 'img-responsive')); ?>
                                                     </div>
 
                                                     <div class="clearfix"></div>
@@ -151,10 +151,10 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
 
                                             </ul>
                                         </li>
-                                        <?php
-                                    }
-                                }
-                                ?>
+        <?php
+    }
+}
+?>
                                 <?php if (!$isSubscriberLoggedIn && !$isAdminLoggedIn) : ?>
                                     <li class="float-right dropdown no-request">
                                         <a href="" class="dropdown-toggle hyper" data-toggle="dropdown"><span>Special Requests<b class="caret"></b></span></a>
@@ -200,7 +200,7 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
                                             </div>
                                         </ul>
                                     </li>
-                                <?php endif; ?>
+<?php endif; ?>
 
                             </ul>
                         </div>

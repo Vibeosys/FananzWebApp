@@ -76,7 +76,7 @@ window.fbAsyncInit = function () {
         // statusChangeCallback(response);
 
         if (response.status === 'connected') {
-            statusChangeCallback(response);
+            //statusChangeCallback(response);
             console.log(response.authResponse.accessToken);
         }
     });

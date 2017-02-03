@@ -460,7 +460,7 @@ echo $this->Html->script('/js/pages/request-service.js', ['block' => true]);
 <div class="request_artists modal fade" id="service_request_div-id" tabindex="-2" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content"><button type="button" class="float-right close-popup-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
-            <div class="header-modal" id="request-service-sub-id">Request Services For Singer Taylor Swift </div>
+            <div class="header-modal" id="request-service-sub-id"> </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label> Write some text

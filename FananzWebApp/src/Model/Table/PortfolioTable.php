@@ -357,7 +357,7 @@ class PortfolioTable extends Table {
     public function getPortfoliosBySubscriber($subscriberId) {
         $this->addRelations();
         $portfolioList = null;
-        $results = $this->getTable()->find()
+        $results = $this->find()
                 ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])
                 ->where(['subscribers.IsSubscribed' => 1,
                     'Portfolio.SubscriberId' => $subscriberId])
@@ -546,7 +546,7 @@ class PortfolioTable extends Table {
         $portfoioList = null;
         $resultsObject = $this->find()
                 ->contain(['subscribers', 'eventcategories', 'subcategories', 'portfolio_photos'])
-                ->where(['subscribers.IsSubscribed' => 1])
+                ->where(['subscribers.IsSubscribed' => 1, 'Portfolio.IsActive' => 1])
                 ->select(['PortfolioId',
             'subscribers.SubscriberName',
             'eventcategories.CatName',

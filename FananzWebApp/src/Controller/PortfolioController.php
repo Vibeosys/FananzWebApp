@@ -189,7 +189,7 @@ class PortfolioController extends AppController {
 
     private function _buildPortfolio($requestData) {
         $portfolio = new \App\Dto\PortfolioAdditionDto();
-        $portfolio->categoryId = $requestData['select-cat-id'];
+        $portfolio->categoryId = $requestData['select_cat'];
         $portfolio->subCategoryId = $requestData['select-subcat-id'];
         $portfolio->fbLink = $requestData['cor_fb_link'];
         $portfolio->youtubeLink = $requestData['cor_yt_link'];
@@ -201,7 +201,7 @@ class PortfolioController extends AppController {
 
     private function _buildPortfolioForUpdate($requestData) {
         $portfolio = new \App\Dto\PortfolioUpdateRequestDto();
-        $portfolio->categoryId = $requestData['select-cat-id'];
+        $portfolio->categoryId = $requestData['select_cat'];
         $portfolio->subCategoryId = $requestData['select-subcat-id'];
         $portfolio->fbLink = $requestData['cor_fb_link'];
         $portfolio->youtubeLink = $requestData['cor_yt_link'];

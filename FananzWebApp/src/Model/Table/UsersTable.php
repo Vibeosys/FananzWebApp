@@ -86,11 +86,11 @@ class UsersTable extends Table {
     public function getUserId($emailId) {
         $result = $this->find()
                 ->where(['EmailId' => $emailId])
-                ->select('UserId')
+                ->select(['UserId'])
                 ->first();
         //IF user id is received then return the same
         if ($result) {
-            return $result;
+            return $result->UserId;
         }
         //else return 0
         return 0;
