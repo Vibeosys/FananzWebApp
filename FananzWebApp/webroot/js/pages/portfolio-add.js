@@ -52,4 +52,7 @@ $(document).ready(function () {
             } // success
         }); // ajax
     });
+    $("#btnAddPortfolio").click(function () {
+        $('#frmAddPortfolio').submit();
+    });
 });
