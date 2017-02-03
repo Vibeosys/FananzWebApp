@@ -175,6 +175,7 @@ img {
     left: -39px;
     background: #171717;
     border-radius: 14px;
+        z-index: 1024;
 }
 .footer{
     background: #171717;
