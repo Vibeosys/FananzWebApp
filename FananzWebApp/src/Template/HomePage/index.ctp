@@ -361,6 +361,25 @@ echo $this->Html->script('/js/pages/request-service.js', ['block' => true]);
             <div class="col-lg-12">
                 <h3>Portfolio</h3>
             </div>
+            <?php if (count($portfolioList) == 0): ?>
+                <div class="col-lg-12">
+                    <div class="no-pf-container">
+                        <div class="no-pf-wrapper">
+                            <div class="no-pf-inner">
+                                <div class="no-pf-header">
+                                    <h4>No Portfolio At Movement</h4>
+                                </div>
+                                <div class="no-pf-content">
+                                    <p>We are waiting for your portfolio</p>
+                                </div>
+                                <div class="no-pf-link">
+                                    <a href="http://fananz.com/subscribers/login">Please Add One</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
             <?php
             foreach ($portfolioList as $portfolio) {
                 ?>
