@@ -131,7 +131,7 @@
                                                             © 2017 Fananz . All rights reserved 
                                                         </td>
                                                         <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 8px; vertical-align: top; margin: 0; color: #fff;text-align: right;" valign="top">
-                                                            Design by <a href="http://vibeosys.com" target="_blank" style="color: #fff;text-decoration:none;"> Vibeosys</a> 
+                                                            Design by <a href="http://www.vibeosys.com" target="_blank" style="color: #fff;text-decoration:none;"> Vibeosys</a> 
                                                         </td>
                                                     </tr>
                                                 </table>

@@ -29,7 +29,6 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 
 echo $this->Html->script('/js/pages/home-index.js', ['block' => true]);
 echo $this->Html->script('/js/pages/request-service.js', ['block' => true]);
-
 ?>
 
 <div id="main">
@@ -298,42 +297,42 @@ echo $this->Html->script('/js/pages/request-service.js', ['block' => true]);
                         <div class="sliderfig-img">
                             <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/artists' ?>"><img src="img/1.png" alt="Artists" class="img-responsive" /></a>
                         </div>
-                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/artists' ?>" class="dropdown-toggle  hyper page-scroll"><span>Artists</span> 
+                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/artists' ?>" class="dropdown-toggle  hyper page-scroll"><span>Artists</span> </a>
 
                     </li>
                     <li>
                         <div class="sliderfig-img">
                             <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/media' ?>"><img src="img/2.png" alt="Media" class="img-responsive" /></a>
                         </div>
-                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/media' ?>" class="dropdown-toggle  hyper page-scroll"><span>Media</span> 
+                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/media' ?>" class="dropdown-toggle  hyper page-scroll"><span>Media</span> </a>
 
                     </li>
                     <li>
                         <div class="sliderfig-img">
                             <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/event-facilities' ?>"><img src="img/3.png" alt="Event" class="img-responsive" /></a>
                         </div>
-                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/event-facilities' ?>" class="dropdown-toggle  hyper page-scroll"><span>Event Facilities</span> 
+                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/event-facilities' ?>" class="dropdown-toggle  hyper page-scroll"><span>Event Facilities</span> </a>
 
                     </li>
                     <li>
                         <div class="sliderfig-img">
                             <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/models' ?>"><img src="img/4.png" alt="Models" class="img-responsive" /></a>
                         </div>
-                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/models' ?>" class="dropdown-toggle  hyper page-scroll"><span>Models</span> 
+                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/models' ?>" class="dropdown-toggle  hyper page-scroll"><span>Models</span> </a>
 
                     </li>
                     <li>
                         <div class="sliderfig-img">
                             <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/birthdays' ?>"><img src="img/5.png" alt="Birthdays" class="img-responsive" /></a>
                         </div>
-                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/birthdays' ?>" class="dropdown-toggle  hyper page-scroll"><span>Birthdays</span> 
+                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/birthdays' ?>" class="dropdown-toggle  hyper page-scroll"><span>Birthdays</span> </a>
 
                     </li>
                     <li>
                         <div class="sliderfig-img">
                             <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/nightlife' ?>"><img src="img/6.png" alt="Night Life" class="img-responsive" /></a>
                         </div>
-                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/nightlife' ?>" class="dropdown-toggle  hyper page-scroll"><span>Night Life</span> 
+                        <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/nightlife' ?>" class="dropdown-toggle  hyper page-scroll"><span>Night Life</span> </a>
 
                     </li>
                 </ul>
