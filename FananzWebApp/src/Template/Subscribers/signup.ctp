@@ -12,7 +12,7 @@ $this->layout = ('home_layout');
 echo $this->Html->css('/css/design/bootstrap-fileupload.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
 echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
-echo $this->Html->css('/css/design/flag.css', ['block' => true]);
+echo $this->Html->css('/css/design/countrySelect.css', ['block' => true]);
 
 echo $this->Html->script('/js/jquery.custom-file-input.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/bootstrap-fileupload.js', ['block' => 'scriptTop']);
@@ -20,7 +20,7 @@ echo $this->Html->script('/js/bootstrap-fileupload.js', ['block' => 'scriptTop']
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
 echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
-echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
+echo $this->Html->script('/js/countrySelect.js', ['block' => true]);
 ?>
 <section class="corporate-register">
     <div class="container">
@@ -131,7 +131,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="cor_country">Country of Residence<span class="required_field">*</span>
-                                                <div class="flagstrap" id="select_cor_country" data-input-name="NewBuyer_country" data-selected-country=""></div>
+                                                <input id="cor_country_selector" type="text" name="cor_country_selector">
                                             </label>
                                         </div>
                                     </div>
@@ -253,11 +253,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="fl_country">Country of Residence<span class="required_field">*</span>
-<!--
-                                                    <input type="text" id="fl_country" class="form-control" name="fl_country">
-                                                    <span class="input-icon"><i class="fa fa-globe"></i></span>
--->
-                                                    <div class="flagstrap" id="select_freelance_country" data-input-name="NewBuyer_country" data-selected-country=""></div>
+                                                    <input id="fl_country_selector" type="text" name="fl_country_selector">
                                                 </label>
                                             </div>
                                         </div>
@@ -288,8 +284,15 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
         
         <script>
 $(document).ready(function () {
-    //$('#select_country').attr('data-selected-country','CN');
-    $('#select_cor_country').flagStrap(); 
-    $('#select_freelance_country').flagStrap();
+    $("#cor_country_selector").countrySelect({
+        defaultCountry: "ae",
+				//onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+				//preferredCountries: ['ca', 'gb', 'us']
+			});
+     $("#fl_country_selector").countrySelect({
+        defaultCountry: "ae",
+				//onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+				//preferredCountries: ['ca', 'gb', 'us']
+			});
 });
 </script>

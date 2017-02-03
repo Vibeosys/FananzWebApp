@@ -13,13 +13,14 @@ echo $this->element('header', array('isSubscriberLoggedIn' => $isSubscriberLogge
 echo $this->Html->css('/css/design/bootstrap-fileupload.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
 echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
-echo $this->Html->css('/css/design/flag.css', ['block' => true]);
+echo $this->Html->css('/css/design/countrySelect.css', ['block' => true]);
 
 echo $this->Html->script('/js/jquery.custom-file-input.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/bootstrap-fileupload.js', ['block' => 'scriptTop']);
-
+echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
+echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
-echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
+echo $this->Html->script('/js/countrySelect.js', ['block' => true]);
 ?>
 <section class="header-portfolio" id="main">
     <div class="container">
@@ -101,7 +102,7 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                                 <h2>Profile Details</h2>
                             </div>
                         </div> 
-                        <?=$this->Form->create(false, ['url' => ['action' => 'saveBasicInfo']])?>
+                        <?=$this->Form->create(false, ['url' => ['action' => 'saveBasicInfo'], 'id' => 'frmSaveBasicInfo']) ?>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="com_name">Business Name
@@ -173,14 +174,14 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="cor_country">Country of Residence
-                                     <div class="flagstrap" id="select_country" data-input-name="NewBuyer_country" data-selected-country="<?= $subscriberDetails->country ?>"></div>
+                                    <input id="country_selector" type="text" value="<?= $subscriberDetails->country ?>">
                                 </label>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <div class="button-set">
-                                    <button  type="submit" title="Update"  class="button black_sm">Update</button>     
+                                    <button  type="submit" title="Update"  class="button black_sm" id="btnSaveBasicInfo">Update</button>     
                                 </div>
                             </div>
                         </div>
@@ -227,7 +228,14 @@ echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
 </section>
         <script>
 $(document).ready(function () {
-    //$('#select_country').attr('data-selected-country','CN');
-    $('#select_country').flagStrap(); 
+     $("#country_selector").countrySelect({
+        defaultCountry: "ae",
+				//onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+				//preferredCountries: ['ca', 'gb', 'us']
+			});
+
+    $('#btnSaveBasicInfo').on('click', function(){
+       $('#frmSaveBasicInfo').submit(); 
+    });
 });
 </script>

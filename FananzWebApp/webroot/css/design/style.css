@@ -43,6 +43,7 @@ label.error , .error-check{
     display: initial;
     color: red;
     font-style: italic;
+    position: absolute;
 }
 #file-error{
 position: absolute;
@@ -2049,6 +2050,10 @@ select.form-control{
     float: right;
     position: relative;
     top: 10px;
+    font-size: 15px;
+    color: #000;
+    padding-bottom: 1px;
+    border-bottom: 1px solid;
 }
 .header-modal{
     font-size: 20px;

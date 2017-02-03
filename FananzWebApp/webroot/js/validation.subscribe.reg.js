@@ -30,12 +30,11 @@ $(document).ready(function () {
                 required: true,
                 minlength: 5
             },
-            cor_country: {
-                required: true,
-                minlength: 3
+            cor_country_selector: {
+                required: true
             },
             trade_certificate: {
-                required: true,
+                required: true
             }
         },
         messages: {
@@ -63,7 +62,7 @@ $(document).ready(function () {
                 minlength: "Your mobile must consist of at least 10 digits"
             },
             cor_website_name: "Please enter a website name",
-            cor_country: "Please enter a country",
+            cor_country_selector: "Please select a country",
             trade_certificate: "Please Select Trade Certificate"
         }
     });
@@ -97,9 +96,8 @@ $(document).ready(function () {
                 required: true,
                 minlength: 5
             },
-            fl_country: {
-                required: true,
-                minlength: 3
+            fl_country_selector: {
+                required: true
             },
             freelance_check: {
                 required: true
@@ -129,7 +127,7 @@ $(document).ready(function () {
                 minlength: "Your mobile must consist of at least 10 digits"
             },
             fl_website_name: "Please enter a website name",
-            fl_country: "Please enter a country",
+            fl_country_selector: "Please select a country",
             freelance_check: "Please agree our Terms & Conditions"
         }
     });
@@ -262,11 +260,9 @@ $(document).ready(function () {
                 },
                 select_cat: {
 					min: 1
-                    // valueNotEquals: "Please select Categories"
 				},
                 coverImage :{
-                    required: true,
-                   // accept: "image/*"
+                    required: true
                 }
 			},
 			messages: {
@@ -288,10 +284,6 @@ $(document).ready(function () {
                    // accept: "Please select only image"
                 }
             }
-//             submitHandler: function(form) {
-//                 
-//                return;  // blocks regular submit since you have ajax
-//             }
 		  });
     $("#frmUpdatePortfolio").validate({
 			rules: {
@@ -308,12 +300,7 @@ $(document).ready(function () {
                 },
                 select_cat: {
 					min: 1
-                    // valueNotEquals: "Please select Categories"
 				}
-//                coverImage :{
-//                    required: true,
-//                   // accept: "image/*"
-//                }
 			},
 			messages: {
 				min_price: {
@@ -327,17 +314,66 @@ $(document).ready(function () {
 				},
                 select_cat:{
                     min: "Please select Categories"
-                    //valueNotEquals: "Select Category"
                 }
-//                coverImage :{
-//                    required: "Please select cover image",
-//                   // accept: "Please select only image"
-//                }
             }
-//             submitHandler: function(form) {
-//                 
-//                return;  // blocks regular submit since you have ajax
-//             }
+		  });
+        
+          $("#frmSaveBasicInfo").validate({
+              rules:{
+                com_name: {
+                    required: true,
+                    minlength: 5
+                },
+                represent_name: {
+                    required: true,
+                    minlength: 3
+                },
+                cor_email: {
+                    required: true,
+                    email: true
+                },
+                cor_password: {
+                    required: true,
+                    minlength: 5
+                },
+                cor_mob_no: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 10
+                },
+                cor_website_name: {
+                    required: true,
+                    minlength: 5
+                },
+                country_selector: {
+                    required: true
+                }
+              },
+              messages: {
+                com_name: {
+                    required: "Please enter a business name",
+                    minlength: "Your username must consist of at least 5 characters"
+                },
+                represent_name: {
+                    required: "Please enter a representative name",
+                    minlength: "Your username must consist of at least 3 characters"
+                },
+                cor_email: {
+                    required: "Please enter a email",
+                    email: "Please enter a valid email address"
+                },
+                cor_password: {
+                    required: "Please enter a password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                cor_mob_no: {
+                    required: "Please enter a mobile no",
+                    minlength: "Your mobile must consist of at least 10 digits"
+                },
+                cor_website_name: "Please enter a website name",
+                country_selector: "Please select a country"
+                  
+            }
 		  });
 
     $('.cor_submit').attr('disabled', 'disabled');
