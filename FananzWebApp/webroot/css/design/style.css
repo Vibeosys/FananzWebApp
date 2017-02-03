@@ -3097,6 +3097,15 @@ input[type=search] {
     position: relative;
     top: 2px;
 }
+#select_country {
+    position: relative;
+    top: 4px;
+    height: 38px;
+}
+#select_country button{
+    height: 38px;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,.075);
+}
 .detail-corporate{
     padding: 20px;
     border: 1px solid #bcbcbc;

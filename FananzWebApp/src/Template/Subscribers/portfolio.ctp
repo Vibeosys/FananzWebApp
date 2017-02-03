@@ -13,11 +13,13 @@ echo $this->element('header', array('isSubscriberLoggedIn' => $isSubscriberLogge
 echo $this->Html->css('/css/design/bootstrap-fileupload.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
 echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
+echo $this->Html->css('/css/design/flag.css', ['block' => true]);
 
 echo $this->Html->script('/js/jquery.custom-file-input.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/bootstrap-fileupload.js', ['block' => 'scriptTop']);
 
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
+echo $this->Html->script('/js/jquery.flagstrap.min.js', ['block' => true]);
 ?>
 <section class="header-portfolio" id="main">
     <div class="container">
@@ -171,8 +173,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="cor_country">Country of Residence
-                                    <input type="text" id="cor_country" class="form-control" name="cor_country" value="<?= $subscriberDetails->country ?>">
-                                    <span class="input-icon"><i class="fa fa-globe"></i></span>
+                                     <div class="flagstrap" id="select_country" data-input-name="NewBuyer_country" data-selected-country="<?= $subscriberDetails->country ?>"></div>
                                 </label>
                             </div>
                         </div>
@@ -224,3 +225,9 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
         </div>
     </div>
 </section>
+        <script>
+$(document).ready(function () {
+    //$('#select_country').attr('data-selected-country','CN');
+    $('#select_country').flagStrap(); 
+});
+</script>
