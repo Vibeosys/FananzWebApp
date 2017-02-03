@@ -58,7 +58,7 @@ echo $this->Html->script('/js/pages/portfolio-add.js', ['block' => true]);
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>
-                                    Cover Photo <span class="required_field"> *</span><span class="img-size">size 500 x 400</span>
+                                    Cover Photo <span class="required_field"> *</span><span class="post-text">size 500 x 400</span>
                                     <div class="cover-photo-wrapper">
                                         <div class="file-upload"> 
                                             <input type="file" class="file"  title="file 1" accept="image/*" id="file" name="coverImage">
@@ -71,7 +71,7 @@ echo $this->Html->script('/js/pages/portfolio-add.js', ['block' => true]);
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label >
-                                    Photos<span class="required_field"> *</span><span class="img-size">size 300 x 200</span>
+                                    Photos<span class="post-text">size 300 x 200</span>
                                     <div class="add_portfolio_carousel style_1 per_row_2" id="add_portfolio_carousel">
                                         <?php
                                         for ($imageCounter = 0; $imageCounter < $allowedImageCount; $imageCounter++) {
@@ -114,7 +114,7 @@ echo $this->Html->script('/js/pages/portfolio-add.js', ['block' => true]);
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="mini_price">Minimum Price(AED)<span class="required_field"> *</span>
+                                <label for="mini_price">Minimum Price<span class="required_field"> *</span><span class="post-text">(AED)</span>
                                     <input type="text" id="mini_price" class="form-control" name="min_price" placeholder="AED 2000" required>
                                     <span class="input-icon"><i class="fa fa-money"></i></span>
                                 </label>
@@ -122,7 +122,7 @@ echo $this->Html->script('/js/pages/portfolio-add.js', ['block' => true]);
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="max_price">Maximum Price(AED)<span class="required_field"> *</span>
+                                <label for="max_price">Maximum Price<span class="required_field"> *</span><span class="post-text">(AED)</span>
                                     <input type="text" id="max_price" class="form-control" name="max_price" placeholder="AED 5000" required>
                                     <span class="input-icon"><i class="fa fa-money"></i></span>
                                 </label>

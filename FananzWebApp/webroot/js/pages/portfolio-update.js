@@ -83,4 +83,8 @@ $(document).ready(function () {
             } // success
         }); // ajax
     });
+    
+    $("#btnUpdatePortfolio").click(function () {
+        $('#frmUpdatePortfolio').submit();
+    });
 });

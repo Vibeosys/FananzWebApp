@@ -293,6 +293,52 @@ $(document).ready(function () {
 //                return;  // blocks regular submit since you have ajax
 //             }
 		  });
+    $("#frmUpdatePortfolio").validate({
+			rules: {
+				min_price: {
+					required: true,
+					number: true
+				},
+                max_price: {
+					required: true,
+					number: true
+				},
+                corpo_self:{
+                    required: true,
+                },
+                select_cat: {
+					min: 1
+                    // valueNotEquals: "Please select Categories"
+				}
+//                coverImage :{
+//                    required: true,
+//                   // accept: "image/*"
+//                }
+			},
+			messages: {
+				min_price: {
+					required: "Please enter a minimum price"
+				},
+				max_price: {
+                    required: "Please enter a maximum price"
+                },
+				corpo_self: {
+					required: "Please enter a message",
+				},
+                select_cat:{
+                    min: "Please select Categories"
+                    //valueNotEquals: "Select Category"
+                }
+//                coverImage :{
+//                    required: "Please select cover image",
+//                   // accept: "Please select only image"
+//                }
+            }
+//             submitHandler: function(form) {
+//                 
+//                return;  // blocks regular submit since you have ajax
+//             }
+		  });
 
     $('.cor_submit').attr('disabled', 'disabled');
     $('.cor_submit').css('cursor', 'not-allowed');
