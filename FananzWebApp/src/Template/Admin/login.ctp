@@ -59,7 +59,7 @@ echo $this->Html->script('/js/pages/admin-login.js', ['block' => true]);
                         </div>
 
 
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group ">
                                 <div class="login-button-set admin-set">
                                     <!--                               <button type="submit" title="Submit" class="button black_sm">Sign In</button>-->
