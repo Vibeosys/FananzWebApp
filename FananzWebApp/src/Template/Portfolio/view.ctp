@@ -184,7 +184,7 @@ if (count($portfolioDetails) > 0) {
             <?php
             if (count($portfolioDetails) > 0) {
                 ?>
-                <div class="col-lg-12" id="paginator_last">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="paginator_last">
                     <div class="pg-bottom">
                         <div class="total-page">
                             <p id="legend1"></p>
