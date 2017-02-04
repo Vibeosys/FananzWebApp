@@ -586,16 +586,16 @@
 	// n = name
 	// i = iso2 (2-char country code)
 	var allCountries = $.each([ {
-		n: "Afghanistan (‫افغانستان‬‎)",
+		n: "Afghanistan",
 		i: "af"
 	}, {
-		n: "Åland Islands (Åland)",
+		n: "Åland Islands",
 		i: "ax"
 	}, {
-		n: "Albania (Shqipëri)",
+		n: "Albania",
 		i: "al"
 	}, {
-		n: "Algeria (‫الجزائر‬‎)",
+		n: "Algeria",
 		i: "dz"
 	}, {
 		n: "American Samoa",
@@ -616,7 +616,7 @@
 		n: "Argentina",
 		i: "ar"
 	}, {
-		n: "Armenia (Հայաստան)",
+		n: "Armenia",
 		i: "am"
 	}, {
 		n: "Aruba",
@@ -625,52 +625,52 @@
 		n: "Australia",
 		i: "au"
 	}, {
-		n: "Austria (Österreich)",
+		n: "Austria",
 		i: "at"
 	}, {
-		n: "Azerbaijan (Azərbaycan)",
+		n: "Azerbaijan",
 		i: "az"
 	}, {
 		n: "Bahamas",
 		i: "bs"
 	}, {
-		n: "Bahrain (‫البحرين‬‎)",
+		n: "Bahrain",
 		i: "bh"
 	}, {
-		n: "Bangladesh (বাংলাদেশ)",
+		n: "Bangladesh",
 		i: "bd"
 	}, {
 		n: "Barbados",
 		i: "bb"
 	}, {
-		n: "Belarus (Беларусь)",
+		n: "Belarus",
 		i: "by"
 	}, {
-		n: "Belgium (België)",
+		n: "Belgium",
 		i: "be"
 	}, {
 		n: "Belize",
 		i: "bz"
 	}, {
-		n: "Benin (Bénin)",
+		n: "Benin",
 		i: "bj"
 	}, {
 		n: "Bermuda",
 		i: "bm"
 	}, {
-		n: "Bhutan (འབྲུག)",
+		n: "Bhutan",
 		i: "bt"
 	}, {
 		n: "Bolivia",
 		i: "bo"
 	}, {
-		n: "Bosnia and Herzegovina (Босна и Херцеговина)",
+		n: "Bosnia and Herzegovina",
 		i: "ba"
 	}, {
 		n: "Botswana",
 		i: "bw"
 	}, {
-		n: "Brazil (Brasil)",
+		n: "Brazil ",
 		i: "br"
 	}, {
 		n: "British Indian Ocean Territory",
@@ -682,25 +682,25 @@
 		n: "Brunei",
 		i: "bn"
 	}, {
-		n: "Bulgaria (България)",
+		n: "Bulgaria",
 		i: "bg"
 	}, {
 		n: "Burkina Faso",
 		i: "bf"
 	}, {
-		n: "Burundi (Uburundi)",
+		n: "Burundi",
 		i: "bi"
 	}, {
-		n: "Cambodia (កម្ពុជា)",
+		n: "Cambodia",
 		i: "kh"
 	}, {
-		n: "Cameroon (Cameroun)",
+		n: "Cameroon",
 		i: "cm"
 	}, {
 		n: "Canada",
 		i: "ca"
 	}, {
-		n: "Cape Verde (Kabu Verdi)",
+		n: "Cape Verde",
 		i: "cv"
 	}, {
 		n: "Caribbean Netherlands",
@@ -709,16 +709,16 @@
 		n: "Cayman Islands",
 		i: "ky"
 	}, {
-		n: "Central African Republic (République Centrafricaine)",
+		n: "Central African Republic",
 		i: "cf"
 	}, {
-		n: "Chad (Tchad)",
+		n: "Chad",
 		i: "td"
 	}, {
 		n: "Chile",
 		i: "cl"
 	}, {
-		n: "China (中国)",
+		n: "China",
 		i: "cn"
 	}, {
 		n: "Christmas Island",
@@ -730,7 +730,7 @@
 		n: "Colombia",
 		i: "co"
 	}, {
-		n: "Comoros (‫جزر القمر‬‎)",
+		n: "Comoros",
 		i: "km"
 	}, {
 		n: "Congo (DRC) (Jamhuri ya Kidemokrasia ya Kongo)",
@@ -757,10 +757,10 @@
 		n: "Curaçao",
 		i: "cw"
 	}, {
-		n: "Cyprus (Κύπρος)",
+		n: "Cyprus",
 		i: "cy"
 	}, {
-		n: "Czech Republic (Česká republika)",
+		n: "Czech Republic",
 		i: "cz"
 	}, {
 		n: "Denmark (Danmark)",
@@ -778,7 +778,7 @@
 		n: "Ecuador",
 		i: "ec"
 	}, {
-		n: "Egypt (‫مصر‬‎)",
+		n: "Egypt",
 		i: "eg"
 	}, {
 		n: "El Salvador",
@@ -823,19 +823,19 @@
 		n: "Gambia",
 		i: "gm"
 	}, {
-		n: "Georgia (საქართველო)",
+		n: "Georgia",
 		i: "ge"
 	}, {
-		n: "Germany (Deutschland)",
+		n: "Germany",
 		i: "de"
 	}, {
-		n: "Ghana (Gaana)",
+		n: "Ghana",
 		i: "gh"
 	}, {
 		n: "Gibraltar",
 		i: "gi"
 	}, {
-		n: "Greece (Ελλάδα)",
+		n: "Greece",
 		i: "gr"
 	}, {
 		n: "Greenland (Kalaallit Nunaat)",
@@ -856,10 +856,10 @@
 		n: "Guernsey",
 		i: "gg"
 	}, {
-		n: "Guinea (Guinée)",
+		n: "Guinea",
 		i: "gn"
 	}, {
-		n: "Guinea-Bissau (Guiné Bissau)",
+		n: "Guinea-Bissau",
 		i: "gw"
 	}, {
 		n: "Guyana",
@@ -871,25 +871,25 @@
 		n: "Honduras",
 		i: "hn"
 	}, {
-		n: "Hong Kong (香港)",
+		n: "Hong Kong",
 		i: "hk"
 	}, {
-		n: "Hungary (Magyarország)",
+		n: "Hungary",
 		i: "hu"
 	}, {
-		n: "Iceland (Ísland)",
+		n: "Iceland",
 		i: "is"
 	}, {
-		n: "India (भारत)",
+		n: "India",
 		i: "in"
 	}, {
 		n: "Indonesia",
 		i: "id"
 	}, {
-		n: "Iran (‫ایران‬‎)",
+		n: "Iran",
 		i: "ir"
 	}, {
-		n: "Iraq (‫العراق‬‎)",
+		n: "Iraq",
 		i: "iq"
 	}, {
 		n: "Ireland",
@@ -898,7 +898,7 @@
 		n: "Isle of Man",
 		i: "im"
 	}, {
-		n: "Israel (‫ישראל‬‎)",
+		n: "Israel",
 		i: "il"
 	}, {
 		n: "Italy (Italia)",
@@ -907,16 +907,16 @@
 		n: "Jamaica",
 		i: "jm"
 	}, {
-		n: "Japan (日本)",
+		n: "Japan",
 		i: "jp"
 	}, {
 		n: "Jersey",
 		i: "je"
 	}, {
-		n: "Jordan (‫الأردن‬‎)",
+		n: "Jordan",
 		i: "jo"
 	}, {
-		n: "Kazakhstan (Казахстан)",
+		n: "Kazakhstan",
 		i: "kz"
 	}, {
 		n: "Kenya",
@@ -925,22 +925,22 @@
 		n: "Kiribati",
 		i: "ki"
 	}, {
-		n: "Kosovo (Kosovë)",
+		n: "Kosovo",
 		i: "xk"
 	}, {
-		n: "Kuwait (‫الكويت‬‎)",
+		n: "Kuwait",
 		i: "kw"
 	}, {
-		n: "Kyrgyzstan (Кыргызстан)",
+		n: "Kyrgyzstan",
 		i: "kg"
 	}, {
-		n: "Laos (ລາວ)",
+		n: "Laos",
 		i: "la"
 	}, {
 		n: "Latvia (Latvija)",
 		i: "lv"
 	}, {
-		n: "Lebanon (‫لبنان‬‎)",
+		n: "Lebanon",
 		i: "lb"
 	}, {
 		n: "Lesotho",
@@ -949,7 +949,7 @@
 		n: "Liberia",
 		i: "lr"
 	}, {
-		n: "Libya (‫ليبيا‬‎)",
+		n: "Libya",
 		i: "ly"
 	}, {
 		n: "Liechtenstein",
@@ -961,10 +961,10 @@
 		n: "Luxembourg",
 		i: "lu"
 	}, {
-		n: "Macau (澳門)",
+		n: "Macau",
 		i: "mo"
 	}, {
-		n: "Macedonia (FYROM) (Македонија)",
+		n: "Macedonia",
 		i: "mk"
 	}, {
 		n: "Madagascar (Madagasikara)",
@@ -991,7 +991,7 @@
 		n: "Martinique",
 		i: "mq"
 	}, {
-		n: "Mauritania (‫موريتانيا‬‎)",
+		n: "Mauritania",
 		i: "mr"
 	}, {
 		n: "Mauritius (Moris)",
@@ -1021,13 +1021,13 @@
 		n: "Montserrat",
 		i: "ms"
 	}, {
-		n: "Morocco (‫المغرب‬‎)",
+		n: "Morocco",
 		i: "ma"
 	}, {
 		n: "Mozambique (Moçambique)",
 		i: "mz"
 	}, {
-		n: "Myanmar (Burma) (မြန်မာ)",
+		n: "Myanmar (Burma)",
 		i: "mm"
 	}, {
 		n: "Namibia (Namibië)",
@@ -1036,7 +1036,7 @@
 		n: "Nauru",
 		i: "nr"
 	}, {
-		n: "Nepal (नेपाल)",
+		n: "Nepal",
 		i: "np"
 	}, {
 		n: "Netherlands (Nederland)",
@@ -1063,7 +1063,7 @@
 		n: "Norfolk Island",
 		i: "nf"
 	}, {
-		n: "North Korea (조선 민주주의 인민 공화국)",
+		n: "North Korea",
 		i: "kp"
 	}, {
 		n: "Northern Mariana Islands",
@@ -1072,19 +1072,19 @@
 		n: "Norway (Norge)",
 		i: "no"
 	}, {
-		n: "Oman (‫عُمان‬‎)",
+		n: "Oman",
 		i: "om"
 	}, {
-		n: "Pakistan (‫پاکستان‬‎)",
+		n: "Pakistan",
 		i: "pk"
 	}, {
 		n: "Palau",
 		i: "pw"
 	}, {
-		n: "Palestine (‫فلسطين‬‎)",
+		n: "Palestine",
 		i: "ps"
 	}, {
-		n: "Panama (Panamá)",
+		n: "Panama",
 		i: "pa"
 	}, {
 		n: "Papua New Guinea",
@@ -1093,7 +1093,7 @@
 		n: "Paraguay",
 		i: "py"
 	}, {
-		n: "Peru (Perú)",
+		n: "Peru",
 		i: "pe"
 	}, {
 		n: "Philippines",
@@ -1111,7 +1111,7 @@
 		n: "Puerto Rico",
 		i: "pr"
 	}, {
-		n: "Qatar (‫قطر‬‎)",
+		n: "Qatar",
 		i: "qa"
 	}, {
 		n: "Réunion (La Réunion)",
@@ -1156,7 +1156,7 @@
 		n: "São Tomé and Príncipe (São Tomé e Príncipe)",
 		i: "st"
 	}, {
-		n: "Saudi Arabia (‫المملكة العربية السعودية‬‎)",
+		n: "Saudi Arabia",
 		i: "sa"
 	}, {
 		n: "Senegal (Sénégal)",
@@ -1195,19 +1195,19 @@
 		n: "South Georgia & South Sandwich Islands",
 		i: "gs"
 	}, {
-		n: "South Korea (대한민국)",
+		n: "South Korea",
 		i: "kr"
 	}, {
-		n: "South Sudan (‫جنوب السودان‬‎)",
+		n: "South Sudan",
 		i: "ss"
 	}, {
-		n: "Spain (España)",
+		n: "Spain",
 		i: "es"
 	}, {
-		n: "Sri Lanka (ශ්‍රී ලංකාව)",
+		n: "Sri Lanka",
 		i: "lk"
 	}, {
-		n: "Sudan (‫السودان‬‎)",
+		n: "Sudan",
 		i: "sd"
 	}, {
 		n: "Suriname",
@@ -1225,10 +1225,10 @@
 		n: "Switzerland (Schweiz)",
 		i: "ch"
 	}, {
-		n: "Syria (‫سوريا‬‎)",
+		n: "Syria",
 		i: "sy"
 	}, {
-		n: "Taiwan (台灣)",
+		n: "Taiwan",
 		i: "tw"
 	}, {
 		n: "Tajikistan",
@@ -1237,7 +1237,7 @@
 		n: "Tanzania",
 		i: "tz"
 	}, {
-		n: "Thailand (ไทย)",
+		n: "Thailand",
 		i: "th"
 	}, {
 		n: "Timor-Leste",
@@ -1255,7 +1255,7 @@
 		n: "Trinidad and Tobago",
 		i: "tt"
 	}, {
-		n: "Tunisia (‫تونس‬‎)",
+		n: "Tunisia",
 		i: "tn"
 	}, {
 		n: "Turkey (Türkiye)",
@@ -1273,10 +1273,10 @@
 		n: "Uganda",
 		i: "ug"
 	}, {
-		n: "Ukraine (Україна)",
+		n: "Ukraine",
 		i: "ua"
 	}, {
-		n: "United Arab Emirates (‫الإمارات العربية المتحدة‬‎)",
+		n: "United Arab Emirates",
 		i: "ae"
 	}, {
 		n: "United Kingdom",
@@ -1294,13 +1294,13 @@
 		n: "Uruguay",
 		i: "uy"
 	}, {
-		n: "Uzbekistan (Oʻzbekiston)",
+		n: "Uzbekistan",
 		i: "uz"
 	}, {
 		n: "Vanuatu",
 		i: "vu"
 	}, {
-		n: "Vatican City (Città del Vaticano)",
+		n: "Vatican City",
 		i: "va"
 	}, {
 		n: "Venezuela",
@@ -1312,10 +1312,10 @@
 		n: "Wallis and Futuna",
 		i: "wf"
 	}, {
-		n: "Western Sahara (‫الصحراء الغربية‬‎)",
+		n: "Western Sahara",
 		i: "eh"
 	}, {
-		n: "Yemen (‫اليمن‬‎)",
+		n: "Yemen",
 		i: "ye"
 	}, {
 		n: "Zambia",
