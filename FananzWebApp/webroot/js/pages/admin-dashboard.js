@@ -27,6 +27,7 @@ $(document).ready(function () {
         var subscriberTable = $('#manage_user').DataTable({
             "jQueryUI": true,
             "paging": true,
+            "responsive" : true,
             "sPaginationType": "full_numbers",
             "processing": true,
             "serverSide": true,

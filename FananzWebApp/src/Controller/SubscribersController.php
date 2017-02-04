@@ -92,7 +92,7 @@ class SubscribersController extends AppController {
         $subscriberDetails = new \App\Dto\SubscriberRegistrationDto();
         $subscriberDetails->emailId = $requestData['fl_email'];
         $subscriberDetails->password = $requestData['fl_password'];
-        $subscriberDetails->country = $requestData['NewBuyer_country'];
+        $subscriberDetails->country = $requestData['fl_country_selector'];
         $subscriberDetails->mobileNo = $requestData['fl_mob_no'];
         $subscriberDetails->telNo = $requestData['fl_tel_no'];
         $subscriberDetails->nickName = $requestData['nick_name'];
@@ -149,7 +149,7 @@ class SubscribersController extends AppController {
         $subscriberDetails = new \App\Dto\SubscriberRegistrationDto();
         $subscriberDetails->emailId = $requestData['cor_email'];
         $subscriberDetails->password = $requestData['cor_password'];
-        $subscriberDetails->country = $requestData['NewBuyer_country'];
+        $subscriberDetails->country = $requestData['cor_country_selector'];
         $subscriberDetails->mobileNo = $requestData['cor_mob_no'];
         $subscriberDetails->telNo = $requestData['cor_tel_no'];
         //$subscriberDetails->nickName = $requestData['nick_name'];

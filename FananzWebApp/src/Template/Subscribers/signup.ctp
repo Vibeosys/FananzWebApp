@@ -8,7 +8,7 @@ use Cake\Network\Exception\NotFoundException;
 use App\Controller;
 
 echo $this->element('header');
-$this->layout = ('home_layout');
+//$this->layout = ('home_layout');
 echo $this->Html->css('/css/design/bootstrap-fileupload.min.css', ['block' => true]);
 echo $this->Html->css('/css/design/responsive.bootstrap.min.css', ['block' => true]);
 echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
@@ -21,6 +21,7 @@ echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
 echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 echo $this->Html->script('/js/countrySelect.js', ['block' => true]);
+echo $this->Html->script('/js/pages/subscriber-signup', ['block' => true]);
 ?>
 <section class="corporate-register">
     <div class="container">
@@ -137,8 +138,8 @@ echo $this->Html->script('/js/countrySelect.js', ['block' => true]);
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label >Trade Certificate<span class="required_field">*</span>
-                                                <input type="file" name="trade_certificate" id="trade_certificate" class="inputfile inputfile-2"  accept="image/*" required/>
+                                            <label >Trade Certificate
+                                                <input type="file" name="trade_certificate" id="trade_certificate" class="inputfile inputfile-2" />
                                                 <label for="trade_certificate" >
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
                                                     <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/>
@@ -281,18 +282,22 @@ echo $this->Html->script('/js/countrySelect.js', ['block' => true]);
                 </div>
             </div>
             </section>
-        
-        <script>
-$(document).ready(function () {
-    $("#cor_country_selector").countrySelect({
-        defaultCountry: "ae",
-				//onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-				//preferredCountries: ['ca', 'gb', 'us']
-			});
-     $("#fl_country_selector").countrySelect({
-        defaultCountry: "ae",
-				//onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-				//preferredCountries: ['ca', 'gb', 'us']
-			});
-});
-</script>
+
+            <div class="register-modal modal fade" id="termCondModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="header-modal"> Terms & Conditions</div>
+
+                        <div class="modal-body">
+                            <ul>
+                                <li>No Refunds at any case.</li>
+                                <li>You Verify that you own all the images, info and website of the registered corporate. </li>
+                                <li>By agreeing to this term and conditions you accept that golden circle can talk with clients on your behalf. </li>
+                                <li>Golden circle has the right to charge 10% of the total invoice as service charge.</li>
+                                <li>In case client has comments on the work done Golden Circle has the right to hold the paid amount till the job is done properly.</li>
+                            </ul>
+                            <button type="button" class="btn btn-primary center-block" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>

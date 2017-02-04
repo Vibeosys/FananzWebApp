@@ -21,6 +21,7 @@ echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
 echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 echo $this->Html->script('/js/countrySelect.js', ['block' => true]);
+echo $this->Html->script('/js/pages/subscriber-portfolio.js', ['block' => true]);
 ?>
 <section class="header-portfolio" id="main">
     <div class="container">
@@ -174,7 +175,7 @@ echo $this->Html->script('/js/countrySelect.js', ['block' => true]);
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="cor_country">Country of Residence
-                                    <input id="country_selector" type="text" value="<?= $subscriberDetails->country ?>">
+                                    <input id="country_selector" type="text" value="<?= $subscriberDetails->country ?>" name="cor_country">
                                 </label>
                             </div>
                         </div>
@@ -226,16 +227,3 @@ echo $this->Html->script('/js/countrySelect.js', ['block' => true]);
         </div>
     </div>
 </section>
-        <script>
-$(document).ready(function () {
-     $("#country_selector").countrySelect({
-        defaultCountry: "ae",
-				//onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-				//preferredCountries: ['ca', 'gb', 'us']
-			});
-
-    $('#btnSaveBasicInfo').on('click', function(){
-       $('#frmSaveBasicInfo').submit(); 
-    });
-});
-</script>

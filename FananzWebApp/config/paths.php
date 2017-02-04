@@ -87,3 +87,7 @@ define('CAKE', CORE_PATH . 'src' . DS);
  * Use /VirtualDir to use virtual directory for local use else use blank
  */
 define('VIRTUAL_DIR_PATH', '/FananzWebApp');
+/**
+ * Path to the Paypal ini directory.
+ */
+define('PP_CONFIG_PATH', ROOT . DS . 'config' . DS);

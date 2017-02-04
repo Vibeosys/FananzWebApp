@@ -3065,7 +3065,7 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
 }
 
 .no-pf-container{
-    background-image: url(../img/no-portfolio-img.jpg);
+    background-image: url(../../img/no-portfolio-img.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;    
@@ -3424,7 +3424,7 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
     .bb-left-text {
         width: 100%;
         margin-bottom: 30px;
-        background: url(../../images/bb1.jpg) no-repeat 0px 0px;
+        background: url(../../img/bb1.jpg) no-repeat 0px 0px;
         background-size: cover;
         min-height: 300px;
     }

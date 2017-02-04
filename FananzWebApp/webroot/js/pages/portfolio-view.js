@@ -130,7 +130,7 @@ $(document).ready(function () {
                         {
                             imageUrl = WEBSITE_VIRTUAL_DIR_NAME + '/img/default_img.jpg';
                         }
-                        portfolioHtml += '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#detail_artists" data-toggle="modal">Details</a>  </div> <div class="request-artists"><a href="#request_artists" data-toggle="modal">Request Now</a> </div>          </div></div></div></div> </li>';
+                        portfolioHtml += '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#" data-toggle="modal" onclick="showDetails(' + obj.portfolioId + ')">Details</a>  </div> <div class="request-artists"><a href="#" data-toggle="modal" onclick="requestService(' + obj.portfolioId + ',\'' + obj.subscriberName + '\')">Request Now</a> </div>          </div></div></div></div> </li>';
                     });
 
                     var startPaginator = '<div class="container"><div class="row"><div class="col-lg-12"><div class="pagination-inner"><label>Show:</label><select id="Itemsperpage"><option  selected="selected">9</option><option>15</option><option>21</option></select></div></div></div></div>';
@@ -138,7 +138,7 @@ $(document).ready(function () {
                     $('#portfolioUl').html(portfolioHtml);
 
                     var paginator = '<div class="pg-bottom"> <div class="total-page"><p id="legend1"></p></div><div class="page-holder"><div class="holder"></div></div></div>';
-                    $('$paginator_last').html(paginator);
+                    $('#paginator_last').html(paginator);
                 }
             }
         });
@@ -196,7 +196,7 @@ $(document).ready(function () {
                         {
                             imageUrl = WEBSITE_VIRTUAL_DIR_NAME + '/img/default_img.jpg';
                         }
-                        portfolioHtml += '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#detail_artists" data-toggle="modal">Details</a>  </div> <div class="request-artists"><a href="#request_artists" data-toggle="modal">Request Now</a> </div>          </div></div></div></div> </li>';
+                        portfolioHtml += '<li id="portfolioLi"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"><div class="layout-figure"> <div class="figure-img"><img class="img-responsive" src="' + imageUrl + '"> </div><div class="figure-caption"><div class="artist-name"><h3>' + obj.subscriberName + '</h3></div><div class="artist-cat"><h4>' + concatinatedString + '</h4></div><div class="artist-price"><div class="price-text"><span>Price</span></div><div class="price">AED<span>' + obj.minPrice + ' -' + obj.maxPrice + '</span></div></div><div class="cate-link"> <div class="detail-artists"><a href="#" data-toggle="modal" onclick="showDetails(' + obj.portfolioId + ')">Details</a>  </div> <div class="request-artists"><a href="#" data-toggle="modal" onclick="requestService(' + obj.portfolioId + ',\'' + obj.subscriberName + '\')">Request Now</a> </div>          </div></div></div></div> </li>';
                     });
 
                     var startPaginator = '<div class="container"><div class="row"><div class="col-lg-12"><div class="pagination-inner"><label>Show:</label><select id="Itemsperpage"><option  selected="selected">9</option><option>15</option><option>21</option></select></div></div></div></div>';
@@ -205,7 +205,7 @@ $(document).ready(function () {
                     $('#portfolioUl').html(portfolioHtml);
 
                     var paginator = '<div class="pg-bottom"> <div class="total-page"><p id="legend1"></p></div><div class="page-holder"><div class="holder"></div></div></div>';
-                    $('$paginator_last').html(paginator);
+                    $('#paginator_last').html(paginator);
                 }
             }
         });

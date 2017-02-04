@@ -18,22 +18,19 @@ $(document).ready(function () {
                 minlength: 5
             },
             cor_tel_no: {
-                minlength: 10,
-                maxlength: 10
+                minlength: 4,
+                maxlength: 20
             },
             cor_mob_no: {
                 required: true,
-                minlength: 10,
-                maxlength: 10
+                minlength: 4,
+                maxlength: 20
             },
             cor_website_name: {
                 required: true,
                 minlength: 5
             },
             cor_country_selector: {
-                required: true
-            },
-            trade_certificate: {
                 required: true
             }
         },
@@ -55,15 +52,14 @@ $(document).ready(function () {
                 minlength: "Your password must be at least 5 characters long"
             },
             cor_tel_no: {
-                minlength: "Your telephone must consist of at least 10 digits"
+                minlength: "Your telephone must consist of 4 to 20 digits"
             },
             cor_mob_no: {
                 required: "Please enter a mobile no",
-                minlength: "Your mobile must consist of at least 10 digits"
+                minlength: "Your mobile must consist of 4 to 20 digits"
             },
             cor_website_name: "Please enter a website name",
-            cor_country_selector: "Please select a country",
-            trade_certificate: "Please Select Trade Certificate"
+            cor_country_selector: "Please select a country"
         }
     });
     $("#frmFreelanceRegistration").validate({
@@ -84,13 +80,13 @@ $(document).ready(function () {
                 minlength: 5
             },
             fl_tel_no: {
-                minlength: 10,
-                maxlength: 10
+                minlength: 4,
+                maxlength: 20
             },
             fl_mob_no: {
                 required: true,
-                minlength: 10,
-                maxlength: 10
+                minlength: 4,
+                maxlength: 20
             },
             fl_website_name: {
                 required: true,
@@ -120,11 +116,11 @@ $(document).ready(function () {
                 minlength: "Your password must be at least 5 characters long"
             },
             fl_tel_no: {
-                minlength: "Your telephone must consist of at least 10 digits"
+                minlength: "Your telephone must consist of 4 to 20 digits"
             },
             fl_mob_no: {
                 required: "Please enter a mobile no",
-                minlength: "Your mobile must consist of at least 10 digits"
+                minlength: "Your mobile must consist of 4 to 20 digits"
             },
             fl_website_name: "Please enter a website name",
             fl_country_selector: "Please select a country",
@@ -151,8 +147,8 @@ $(document).ready(function () {
             },
             mobileNo: {
                 required: true,
-                minlength: 10,
-                maxlength: 10
+                minlength: 4,
+                maxlength: 20
             }
         },
         messages: {
@@ -174,7 +170,7 @@ $(document).ready(function () {
             },
             mobileNo: {
                 required: "Please enter a mobile no",
-                minlength: "Your mobile must consist of at least 10 digits"
+                minlength: "Your mobile must consist of 4 to 20 digits"
             }
         }
     });
@@ -190,8 +186,8 @@ $(document).ready(function () {
             },
             spec_mobile: {
                 required: true,
-                minlength: 10,
-                maxlength: 10
+                minlength: 4,
+                maxlength: 20
             },
             spec_msg: {
                 required: true,
@@ -209,7 +205,7 @@ $(document).ready(function () {
             },
             spec_mobile: {
                 required: "Please enter a mobile no",
-                minlength: "Your mobile must consist of at least 10 digits"
+                minlength: "Your mobile must consist of 4 to 20 digits"
             },
             spec_msg: {
                 required: "Please enter a message",
@@ -221,7 +217,7 @@ $(document).ready(function () {
             var email = $('#email').val();
             var mobNo = $('#mobNo').val();
             var yourRequest = $('#spec_msg').val();
-            
+
             $.ajax({
                 url: WEBSITE_VIRTUAL_DIR_NAME + '/HomePage/specialRequest',
                 type: 'POST',
@@ -238,7 +234,7 @@ $(document).ready(function () {
                         swal('Special request', 'Email has been sent, we will contact you soon', 'success');
                         //alert('done');
                     }
-                    
+
                 }
 
             });
@@ -246,135 +242,135 @@ $(document).ready(function () {
         }
     });
     $("#frmAddPortfolio").validate({
-			rules: {
-				min_price: {
-					required: true,
-					number: true
-				},
-                max_price: {
-					required: true,
-					number: true
-				},
-                corpo_self:{
-                    required: true,
-                },
-                select_cat: {
-					min: 1
-				},
-                coverImage :{
-                    required: true
-                }
-			},
-			messages: {
-				min_price: {
-					required: "Please enter a minimum price"
-				},
-				max_price: {
-                    required: "Please enter a maximum price"
-                },
-				corpo_self: {
-					required: "Please enter a message",
-				},
-                select_cat:{
-                    min: "Please select Categories"
-                    //valueNotEquals: "Select Category"
-                },
-                coverImage :{
-                    required: "Please select cover image",
-                   // accept: "Please select only image"
-                }
+        rules: {
+            min_price: {
+                required: true,
+                number: true
+            },
+            max_price: {
+                required: true,
+                number: true
+            },
+            corpo_self: {
+                required: true,
+            },
+            select_cat: {
+                min: 1
+            },
+            coverImage: {
+                required: true
             }
-		  });
+        },
+        messages: {
+            min_price: {
+                required: "Please enter a minimum price"
+            },
+            max_price: {
+                required: "Please enter a maximum price"
+            },
+            corpo_self: {
+                required: "Please enter a message",
+            },
+            select_cat: {
+                min: "Please select category"
+                        //valueNotEquals: "Select Category"
+            },
+            coverImage: {
+                required: "Please select cover image",
+                // accept: "Please select only image"
+            }
+        }
+    });
     $("#frmUpdatePortfolio").validate({
-			rules: {
-				min_price: {
-					required: true,
-					number: true
-				},
-                max_price: {
-					required: true,
-					number: true
-				},
-                corpo_self:{
-                    required: true,
-                },
-                select_cat: {
-					min: 1
-				}
-			},
-			messages: {
-				min_price: {
-					required: "Please enter a minimum price"
-				},
-				max_price: {
-                    required: "Please enter a maximum price"
-                },
-				corpo_self: {
-					required: "Please enter a message",
-				},
-                select_cat:{
-                    min: "Please select Categories"
-                }
+        rules: {
+            min_price: {
+                required: true,
+                number: true
+            },
+            max_price: {
+                required: true,
+                number: true
+            },
+            corpo_self: {
+                required: true,
+            },
+            select_cat: {
+                min: 1
             }
-		  });
-        
-          $("#frmSaveBasicInfo").validate({
-              rules:{
-                com_name: {
-                    required: true,
-                    minlength: 5
-                },
-                represent_name: {
-                    required: true,
-                    minlength: 3
-                },
-                cor_email: {
-                    required: true,
-                    email: true
-                },
-                cor_password: {
-                    required: true,
-                    minlength: 5
-                },
-                cor_mob_no: {
-                    required: true,
-                    minlength: 10,
-                    maxlength: 10
-                },
-                cor_website_name: {
-                    required: true,
-                    minlength: 5
-                },
-                country_selector: {
-                    required: true
-                }
-              },
-              messages: {
-                com_name: {
-                    required: "Please enter a business name",
-                    minlength: "Your username must consist of at least 5 characters"
-                },
-                represent_name: {
-                    required: "Please enter a representative name",
-                    minlength: "Your username must consist of at least 3 characters"
-                },
-                cor_email: {
-                    required: "Please enter a email",
-                    email: "Please enter a valid email address"
-                },
-                cor_password: {
-                    required: "Please enter a password",
-                    minlength: "Your password must be at least 5 characters long"
-                },
-                cor_mob_no: {
-                    required: "Please enter a mobile no",
-                    minlength: "Your mobile must consist of at least 10 digits"
-                },
-                cor_website_name: "Please enter a website name",
-                country_selector: "Please select a country"
-                  
+        },
+        messages: {
+            min_price: {
+                required: "Please enter a minimum price"
+            },
+            max_price: {
+                required: "Please enter a maximum price"
+            },
+            corpo_self: {
+                required: "Please enter a message",
+            },
+            select_cat: {
+                min: "Please select category"
             }
-		  });
+        }
+    });
+
+    $("#frmSaveBasicInfo").validate({
+        rules: {
+            com_name: {
+                required: true,
+                minlength: 5
+            },
+            represent_name: {
+                required: true,
+                minlength: 3
+            },
+            cor_email: {
+                required: true,
+                email: true
+            },
+            cor_password: {
+                required: true,
+                minlength: 5
+            },
+            cor_mob_no: {
+                required: true,
+                minlength: 4,
+                maxlength: 20
+            },
+            cor_website_name: {
+                required: true,
+                minlength: 5
+            },
+            country_selector: {
+                required: true
+            }
+        },
+        messages: {
+            com_name: {
+                required: "Please enter a business name",
+                minlength: "Your username must consist of at least 5 characters"
+            },
+            represent_name: {
+                required: "Please enter a representative name",
+                minlength: "Your username must consist of at least 3 characters"
+            },
+            cor_email: {
+                required: "Please enter a email",
+                email: "Please enter a valid email address"
+            },
+            cor_password: {
+                required: "Please enter a password",
+                minlength: "Your password must be at least 5 characters long"
+            },
+            cor_mob_no: {
+                required: "Please enter a mobile no",
+                minlength: "Your mobile must consist of 4 to 20 digits"
+            },
+            cor_website_name: "Please enter a website name",
+            country_selector: "Please select a country"
+
+        }
+    });
 
     $('.cor_submit').attr('disabled', 'disabled');
     $('.cor_submit').css('cursor', 'not-allowed');
