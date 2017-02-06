@@ -27,7 +27,7 @@ $(document).ready(function () {
         var subscriberTable = $('#manage_user').DataTable({
             "jQueryUI": true,
             "paging": true,
-            "responsive" : true,
+            "responsive": true,
             "sPaginationType": "full_numbers",
             "processing": true,
             "serverSide": true,
@@ -43,6 +43,7 @@ $(document).ready(function () {
                 {"data": "subscriptionType"},
                 {"data": "subscriptionStatus"},
                 {"data": "subscriptionDate"},
+                {"data": "deleteSubscriber"},
                 {"data": "isSubscribed"},
                 {"data": "currentStatusId"},
                 {"data": "currentActionId"},
@@ -57,7 +58,6 @@ $(document).ready(function () {
                 }
                 //Action change
                 if (data['currentActionId'] == 1) {
-
                     $('td:eq(-1)', row).replaceWith("<td><button type='button' class='btn btn-on-hold-user' onclick='clicked( 1, " + data['subscriberId'] + ")'>On hold</button></td>");
                 }
                 else if (data['currentActionId'] == 2) {
@@ -66,6 +66,19 @@ $(document).ready(function () {
                 else if (data['currentActionId'] == 3) {
                     $('td:eq(-1)', row).replaceWith("<td><button type='button' class='btn btn-bypss-user' onclick='clicked(3, " + data['subscriberId'] + ")'>Bypass Subscription</button></td>");
                 }
+
+                $('td:eq(-3)', row).replaceWith("<td><button type='button' class='btn btn-on-hold-user' onclick='deleteSubscriber(" + data['subscriberId'] + ")' >Delete</button></td>");
+
+                //Corporate 1
+                if (data['subscriptionType'] == "1") {
+                    $('td:eq(-6)', row).replaceWith("<td>Corporate</td>");
+                }
+                else if (data['subscriptionType'] == "2") {
+                    $('td:eq(-6)', row).replaceWith("<td>Freelance</td>");
+                }
+
+                $('td:eq(-7)', row).replaceWith("<td><a href='" + WEBSITE_VIRTUAL_DIR_NAME + "/subscribers/portfolio/" + data['subscriberId'] + "/" + data['subscriptionType'] + "'>" + data['subscriberName'] + "</a></td>")
+
             },
             "columnDefs": [
                 {
@@ -454,6 +467,34 @@ function clicked(statusId, subscriberId) {
         }
     });
 
+}
+
+function deleteSubscriber(subscriberId) {
+    swal({
+        title: "Are you sure?",
+        text: "Are you sure, you want to delete the subscriber?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    },
+    function () {
+        $.ajax({
+            url: WEBSITE_VIRTUAL_DIR_NAME + '/subscribers/deleteSubscriber/' + subscriberId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR) {
+                if (data) {
+                    swal("Deleted!", "Subscriber is deleted.", "success");
+                }
+                else {
+                    swal("Deleted!", "Subscriber is not deleted.", "error");
+                }
+            }
+        });
+
+    });
 }
 
 /**

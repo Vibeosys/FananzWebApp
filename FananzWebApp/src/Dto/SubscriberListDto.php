@@ -20,6 +20,7 @@ class SubscriberListDto {
     public $subscriptionType;
     public $subscriptionStatus;
     public $subscriptionDate; 
+    public $deleteSubscriber;
     public $isSubscribed;
     public $currentStatusId;
     public $currentActionId;

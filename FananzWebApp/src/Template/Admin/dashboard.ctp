@@ -251,6 +251,7 @@ echo $this->Html->script('/js/pages/admin-dashboard.js', ['block' => true]);
                                                 <th>Subscribed As</th>
                                                 <th>Subscription Status</th>
                                                 <th>Subscription Date</th>
+                                                <th>Delete Subscriber?</th>
                                                 <th class="hidden-subscribe-col">Is Subscribed</th>
                                                 <th class="current-status-col">Current Status</th>
                                                 <th>Action</th>

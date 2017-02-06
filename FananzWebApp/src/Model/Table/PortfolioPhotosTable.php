@@ -144,8 +144,7 @@ class PortfolioPhotosTable extends Table {
                     $result = $this->addImage($portfolioId, $serverImage->photoUrl, 1);
                     if ($result > 0) {
                         $imagesAddedOrUpdated = $imagesAddedOrUpdated & true;
-                    }
-                    else{
+                    } else {
                         $imagesAddedOrUpdated = $imagesAddedOrUpdated & false;
                     }
                 }
@@ -167,8 +166,7 @@ class PortfolioPhotosTable extends Table {
                     $result = $this->addImage($portfolioId, $serverImage->photoUrl, 0);
                     if ($result > 0) {
                         $imagesAddedOrUpdated = $imagesAddedOrUpdated & true;
-                    }
-                    else{
+                    } else {
                         $imagesAddedOrUpdated = $imagesAddedOrUpdated & false;
                     }
                 }
@@ -232,6 +230,33 @@ class PortfolioPhotosTable extends Table {
         if ($this->getTable()->saveMany($portfolioPhotoEntities)) {
             return true;
         }
+    }
+
+    /**
+     * Deletes all the photos for subscriber id
+     * @param int $subscriberId
+     * @return boolean
+     */
+    public function deleteAllPhotosForSubscriberId($subscriberId) {
+        $deletionSuccess = true;
+        $this->getTable()->belongsTo('portfolio', [
+            'foreignKey' => 'portfolioId',
+            'joinType' => 'INNER'
+        ]);
+
+        $dbDeletionRecords = $this->getTable()->find()
+                ->contain(['portfolio'])
+                ->where(['portfolio.SubscriberId' => $subscriberId])
+                ->select();
+        $dbResultArray = $dbDeletionRecords->toArray();
+                //->all();
+        foreach ($dbResultArray as $dbRecord) {
+            if($this->getTable()->delete($dbRecord))
+            {
+                $deletionSuccess = true;
+            }
+        }
+        return deletionSuccess;
     }
 
 }

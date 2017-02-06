@@ -73,7 +73,7 @@ echo $this->Html->script('/js/pages/subscriber-portfolio.js', ['block' => true])
                                     <div class="edit-artists">
                                         <a href="<?= sprintf('%s%d', VIRTUAL_DIR_PATH . '/portfolio/update/', $portfolio->portfolioId) ?>" >Update</a>    
                                     </div>
-                                </div>
+                                </div>                                
                             </div>
                         </div>
                     </div>
@@ -176,6 +176,13 @@ echo $this->Html->script('/js/pages/subscriber-portfolio.js', ['block' => true])
                             <div class="form-group">
                                 <label for="cor_country">Country of Residence
                                     <input id="country_selector" type="text" value="<?= $subscriberDetails->country ?>" name="cor_country">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label for="trade_cert_url">
+                                    <a href="<?=$subscriberDetails->tradeCertificateUrl?>" target="_blank">Trade Certificate</a>
                                 </label>
                             </div>
                         </div>

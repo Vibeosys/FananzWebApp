@@ -165,5 +165,4 @@ class PortfolioPhotosController extends AppController {
     private function getWebrootDir() {
         return "http://" . $this->request->host() . $this->request->webroot;
     }
-
 }

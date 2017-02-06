@@ -15,7 +15,7 @@ class SubscribersController extends AppController {
     public function login($errorCode = null) {
         $this->layout = 'home_layout';
 
-        if($this->sessionManager->isSubscriberLoggedIn()){
+        if ($this->sessionManager->isSubscriberLoggedIn()) {
             $this->redirect('/subscribers/portfolio');
             return;
         }
@@ -33,7 +33,7 @@ class SubscribersController extends AppController {
 
     //Web method
     public function checkLogin() {
-        $this->layout= 'home_layout';
+        $this->layout = 'home_layout';
         $subscriberUserDto = new \App\Dto\SubscriberUserDto();
         $subscriberUserDto->emailId = $this->request->data['name'];
         $subscriberUserDto->password = $this->request->data['password'];
@@ -98,7 +98,7 @@ class SubscribersController extends AppController {
         $subscriberDetails->nickName = $requestData['nick_name'];
         $subscriberDetails->websiteUrl = $requestData['fl_website_name'];
         $subscriberDetails->name = $requestData['fl_name'];
-        
+
         $subscriberDetails->subScrType = FREELANCE_SUB_TYPE;
         return $subscriberDetails;
     }
@@ -161,21 +161,34 @@ class SubscribersController extends AppController {
     }
 
     //Web method
-    public function portfolio() {
+    public function portfolio($subscriberId = null, $subscriberType = null) {
         $this->layout = 'home_layout';
         $isSubscribed = $this->sessionManager->isSubscriberSubscribed();
-        if (!$isSubscribed) {
-            $this->redirect('/subscribers/login');
-            return;
+        //if no values are null then only validate for subscriber
+        if ($subscriberId == null && $subscriberType == null) {
+            if (!$isSubscribed) {
+                $this->redirect('/subscribers/login');
+                return;
+            }
+            if ($this->sessionManager->isSubscriberLoggedIn()) {
+                $this->set('isSubscriberLoggedIn', true);
+                $this->set('subscriberName', $this->sessionManager->getSubscriberName());
+            }
+            $subscriberId = $this->sessionManager->getSubscriberId();
+            $subscriberType = $this->sessionManager->getSubscriberType();
+        } else {
+            //Else check if admin is logged in
+            if (!$this->sessionManager->isAdminLoggedIn()) {
+                $this->redirect('/admin/login');
+                return;
+            }
+
+            $this->sessionManager->saveAdminSubscriberInfo($subscriberId, $subscriberType);
         }
-        if ($this->sessionManager->isSubscriberLoggedIn()) {
-            $this->set('isSubscriberLoggedIn', true);
-            $this->set('subscriberName', $this->sessionManager->getSubscriberName());
-        }
-        $subscriberId = $this->sessionManager->getSubscriberId();
+
         $portfolioTable = new \App\Model\Table\PortfolioTable();
         $portfolioList = $portfolioTable->getPortfolioListbySubscriber($subscriberId);
-        $subscriberType = $this->sessionManager->getSubscriberType();
+
         $addPortfolioAllowed = $this->_isNewPortfolioAllowed($subscriberType, $portfolioList);
         $subscriberDetails = $this->Subscribers->getSubscriberDetailsById($subscriberId);
         $this->set(['portfolioList' => $portfolioList,
@@ -232,8 +245,8 @@ class SubscribersController extends AppController {
 
     //Web method
     public function signup($errorCode = null, $subType = null) {
-        $this->layout= 'home_layout';
-        if($this->sessionManager->isSubscriberLoggedIn()){
+        $this->layout = 'home_layout';
+        if ($this->sessionManager->isSubscriberLoggedIn()) {
             $this->redirect('/subscribers/portfolio');
             return;
         }
@@ -262,10 +275,10 @@ class SubscribersController extends AppController {
     }
 
     public function paysubscription($errorCode = null) {
-        $this->layout= 'home_layout';
+        $this->layout = 'home_layout';
         $subscriberType = $this->sessionManager->getSubscriberType();
         $amount = 0;
-        
+
         $currency = PAYMENT_CURRENCY;
         if ($subscriberType == FREELANCE_SUB_TYPE) {
             $amount = FREELANCE_PAYMENT;
@@ -431,6 +444,25 @@ class SubscribersController extends AppController {
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(124));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(226));
+        }
+    }
+
+    public function deleteSubscriber($subscriberId) {
+        $this->apiInitialize();
+        if (!$this->sessionManager->isAdminLoggedIn()) {
+            $this->redirect('/admin/login');
+        }
+        $portfolioPhotosTable = new \App\Model\Table\PortfolioPhotosTable();
+        $portfolioPhotosTable->deleteAllPhotosForSubscriberId($subscriberId);
+
+        $portfolioTable = new \App\Model\Table\PortfolioTable();
+        $portfolioTable->deleteAllPortfolios($subscriberId);
+
+        $deleteSuccess = $this->Subscribers->deleteSubscriber($subscriberId);
+        if ($deleteSuccess) {
+            $this->response->body(json_encode(true));
+        } else {
+            $this->response->body(json_encode(false));
         }
     }
 

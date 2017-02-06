@@ -124,7 +124,7 @@ class SubscribersTable extends Table {
         $newSubscriber->WebsiteUrl = $subscriber->websiteUrl;
         $newSubscriber->Nickname = $subscriber->nickName;
         $newSubscriber->CountryOfResidence = $subscriber->country;
-        if($subscriber->tradeCertificateUrl != ''){
+        if ($subscriber->tradeCertificateUrl != '') {
             $newSubscriber->TradeCertificateUrl = $subscriber->tradeCertificateUrl;
         }
         $newSubscriber->IsActive = 1;
@@ -193,7 +193,8 @@ class SubscribersTable extends Table {
                     'MobileNo',
                     'WebsiteUrl',
                     'BusinessContactPerson',
-                    'CountryOfResidence'])
+                    'CountryOfResidence',
+                    'TradeCertificateUrl'])
                 ->first();
 
         if ($result) {
@@ -211,10 +212,13 @@ class SubscribersTable extends Table {
             $subscriberDetails->emailId = $result->EmailId;
             $subscriberDetails->password = $result->Password;
             $subscriberDetails->contactPerson = $result->BusinessContactPerson;
+            if ($result->Stype == CORPORATE_SUB_TYPE) {
+                $subscriberDetails->tradeCertificateUrl = $result->TradeCertificateUrl;
+            }
         }
         return $subscriberDetails;
     }
-    
+
     /**
      * Updates subscriber profile
      * @param \App\Dto\SubscriberProfileUpdateRequestDto $subscriberProfileUpdateRequest
@@ -372,13 +376,13 @@ class SubscribersTable extends Table {
                     'IsActive'])
                 ->page($pageNo, $limit)
                 ->all();
-        
+
         $recordCounter = 0;
         foreach ($result as $subscriberRecord) {
             $subscriberListRecord = new \App\Dto\SubscriberListDto();
             $subscriberListRecord->subscriberId = $subscriberRecord->SubscriberId;
             $subscriberListRecord->subscriberName = $subscriberRecord->SubscriberName;
-            $subscriberListRecord->subscriptionType = $subscriberRecord->Stype == CORPORATE_SUB_TYPE ? 'Corporate' : 'Freelance';
+            $subscriberListRecord->subscriptionType = $subscriberRecord->Stype;
             if ($subscriberRecord->SubscriptionDate == null) {
                 $subscriberListRecord->subscriptionDate = 'N/A';
             } else {
@@ -393,30 +397,49 @@ class SubscribersTable extends Table {
         return $subscriberList;
     }
 
-    public function getTotalRecordCount(){
+    public function getTotalRecordCount() {
         $totalRecords = $this->getTable()->find()->count();
         return $totalRecords;
     }
-    
+
     /**
      * Status change from active to inactive or vice versa
      * @param int $subscriberId
      * @param int $status
      * @return boolean
      */
-    public function changeStatus($subscriberId, $status){
+    public function changeStatus($subscriberId, $status) {
         $statusChanged = false;
         $dbSubscriber = $this->find()
                 ->where(['SubscriberId' => $subscriberId])
                 ->select(['SubscriberId', 'IsActive'])
                 ->first();
-        
-        if($dbSubscriber){
+
+        if ($dbSubscriber) {
             $dbSubscriber->IsActive = $status;
-            if($this->save($dbSubscriber)){
+            if ($this->save($dbSubscriber)) {
                 $statusChanged = true;
             }
         }
         return $statusChanged;
+    }
+
+    /**
+     * Delete all the subscriber related information
+     * @param int $subscriberId
+     * @return boolean
+     */
+    public function deleteSubscriber($subscriberId){
+        $deletedSuccess = false;
+        $dbSubscriber = $this->find()
+                ->where(['SubscriberId' => $subscriberId])
+                ->first();
+        
+        if($dbSubscriber){
+            if($this->delete($dbSubscriber)){
+                $deletedSuccess = true;
+            }
+        }
+        return $deletedSuccess;
     }
 }

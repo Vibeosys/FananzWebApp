@@ -18,4 +18,5 @@ class SubscriberDetailedInfo extends SubscriberPostSigninDetailsDto{
     public $emailId;
     public $password;
     public $contactPerson;
+    public $tradeCertificateUrl;
 }

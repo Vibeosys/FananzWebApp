@@ -125,4 +125,16 @@ class SessionManagerUtil {
         return $this->_session->read('Subscriber.Email');
     }
 
+    public function getAdminSubscriberType(){
+        return $this->_session->read('Admin.Subscriber.SubscriberType');
+    }
+    
+    public function getAdminSubscriberId(){
+        return $this->_session->read('Admin.Subscriber.Id');
+    }
+    
+    public function saveAdminSubscriberInfo($subscriberId, $subscriberType){
+        $this->_session->write('Admin.Subscriber.Id', $subscriberId);
+        $this->_session->write('Admin.Subscriber.SubscriberType', $subscriberType);
+    }
 }

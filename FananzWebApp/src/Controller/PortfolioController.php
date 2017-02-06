@@ -85,22 +85,30 @@ class PortfolioController extends AppController {
         $errorDivClass = '';
         $errorMsg = '';
 
-        if (!$this->sessionManager->isSubscriberSubscribed()) {
-            $this->redirect('/subscribers/login');
-            return;
-        }
+        //Subscriber type is null when subscribers enter
+        if (!$this->sessionManager->isAdminLoggedIn()) {
+            if (!$this->sessionManager->isSubscriberSubscribed()) {
+                $this->redirect('/subscribers/login');
+                return;
+            }
 
-        if ($this->sessionManager->isSubscriberLoggedIn()) {
-            $this->set('isSubscriberLoggedIn', true);
-            $this->set('subscriberName', $this->sessionManager->getSubscriberName());
-        }
+            if ($this->sessionManager->isSubscriberLoggedIn()) {
+                $this->set('isSubscriberLoggedIn', true);
+                $this->set('subscriberName', $this->sessionManager->getSubscriberName());
+            }
 
-        if ($errorCode != null) {
+            $subscriberType = $this->sessionManager->getSubscriberType();
+        } else {
+            $subscriberType = $this->sessionManager->getAdminSubscriberType();
+        }
+        //error code is 0 when admin logs in
+        if ($errorCode != null && $errorCode != 0) {
             $errorMsg = \App\Dto\BaseResponseDto::getErrorText($errorCode);
             $errorDivClass = 'error-wrapper error-msg-display-block';
         } else {
             $errorDivClass = 'error-wrapper error-msg-display-none';
         }
+
 
         //$portfolioTable = new \App\Model\Table\PortfolioTable();
         $portfolioDetails = $this->Portfolio->getPortfolioData($portfolioId);
@@ -111,7 +119,7 @@ class PortfolioController extends AppController {
         $subCategoriesTable = new \App\Model\Table\SubcategoriesTable();
         $subCategoryList = $subCategoriesTable->getSubCategoryList($portfolioDetails->categoryId);
 
-        $subscriberType = $this->sessionManager->getSubscriberType();
+
         $allowedImageCount = $this->_getAllowedImageCount($subscriberType);
 
         $this->set([
@@ -125,12 +133,16 @@ class PortfolioController extends AppController {
     }
 
     public function saveupdate() {
-        if (!$this->sessionManager->isSubscriberLoggedIn()) {
-            $this->redirect('/subscribers/login');
-            return;
+        $subscriberId = 0;
+        if (!$this->sessionManager->isAdminLoggedIn()) {
+            if (!$this->sessionManager->isSubscriberLoggedIn()) {
+                $this->redirect('/subscribers/login');
+                return;
+            }
+            $subscriberId = $this->sessionManager->getSubscriberId();
+        } else {
+            $subscriberId = $this->sessionManager->getAdminSubscriberId();
         }
-
-        $subscriberId = $this->sessionManager->getSubscriberId();
 
         $portfolio = $this->_buildPortfolioForUpdate($this->request->data);
         $portfolioPhotos = $this->_buildPortfolioPhotosForUpdate($this->request->data);
@@ -143,7 +155,12 @@ class PortfolioController extends AppController {
         $updatedPhotos = $portfolioPhotosTable->addOrdUpdatePhotos($portfolioPhotos, $portfolio->portfolioId);
 
         if ($updated && $updatedPhotos) {
-            $this->redirect('/subscribers/portfolio');
+            if (!$this->sessionManager->isAdminLoggedIn()) {
+                $this->redirect('/subscribers/portfolio');
+            }
+            else{
+                $this->redirect('/admin/dashboard');
+            }
         } else {
             $errorCode = 216;
             $this->redirect('/portfolio/update/' + $portfolio->portfolioId + '/' + $errorCode);

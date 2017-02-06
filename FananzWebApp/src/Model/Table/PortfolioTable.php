@@ -85,6 +85,21 @@ class PortfolioTable extends Table {
     }
 
     /**
+     * Deletes all the portfolio
+     * @param int $subscriberId
+     */
+    public function deleteAllPortfolios($subscriberId) {
+        $portfolioList = $this->getTable()->find()
+                ->where(['SubscriberId' => $subscriberId])
+                ->select();
+        $dbResultArray = $portfolioList->toArray();
+
+        foreach ($dbResultArray as $portfolio) {
+            $this->getTable()->delete($portfolio);
+        }
+    }
+
+    /**
      * Update portfolio with given parameters
      * @param \App\Dto\PortfolioUpdateRequestDto $portfolioUpdateRequest
      * @return boolean
@@ -313,14 +328,14 @@ class PortfolioTable extends Table {
                 if ($photoRecord->IsCoverImage == 1) {
                     $portfolioDetailsResponse->coverImageUrl = $photoRecord->PhotoUrl;
                 } else {
-                    $portfolioDetailsResponse->photos[$photoRecord->PhotoId] = $photoRecord->PhotoUrl;                    
+                    $portfolioDetailsResponse->photos[$photoRecord->PhotoId] = $photoRecord->PhotoUrl;
                 }
             } // End of for photos
         }
 
         return $portfolioDetailsResponse;
     }
-    
+
     /**
      * Adds new portfolio for subscriber
      * @param \App\Dto\PortfolioAdditionDto $portfolioAddition
@@ -790,4 +805,5 @@ class PortfolioTable extends Table {
             'className' => 'PortfolioPhotos'
         ]);
     }
+
 }
