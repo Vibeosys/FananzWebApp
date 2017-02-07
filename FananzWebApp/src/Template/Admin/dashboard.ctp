@@ -69,7 +69,7 @@ echo $this->Html->script('/js/pages/admin-dashboard.js', ['block' => true]);
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="update-catg">
-                                        <p>Update Category</p>
+                                        <p>Update / Delete Category</p>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="activity">Category
@@ -92,8 +92,7 @@ echo $this->Html->script('/js/pages/admin-dashboard.js', ['block' => true]);
                                             <div class="form-group">
                                                 <div class="button-set">
                                                     <button type="button" id="btn-cat-update" class="button black_sm">Update</button>
-                                                    <!--                                                    <button type="submit" title="Submit" class="white_back_btn">Delete</button>-->
-                                                    <!--                                   <a href="index.html" class="white_back_btn">Back</a>     -->
+                                                    <button type="button" id="btn-cat-delete-id" class="white_back_btn">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -139,7 +138,7 @@ echo $this->Html->script('/js/pages/admin-dashboard.js', ['block' => true]);
 
                                 <div class="col-lg-12">
                                     <div class="update-sub-catg">
-                                        <p>Update Sub Category</p>
+                                        <p>Update / Delete Sub Category</p>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="activity">Choose Category
@@ -171,7 +170,7 @@ echo $this->Html->script('/js/pages/admin-dashboard.js', ['block' => true]);
                                             <div class="form-group">
                                                 <div class="button-set">
                                                     <button type="button" id="btn-subcat-update" class="button black_sm">Update</button>
-                                                    <!--<button type="submit" title="Submit" class="white_back_btn">Delete</button>-->
+                                                    <button type="button" id="btn-subcat-delete-id" class="white_back_btn">Delete</button>
                                                 </div>
                                             </div>
                                         </div>

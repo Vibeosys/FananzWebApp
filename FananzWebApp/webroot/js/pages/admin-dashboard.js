@@ -422,6 +422,94 @@ $(document).ready(function () {
         }); // ajax
     });
 
+    /**
+     * Category deletion for admin dashboard
+     */
+    $("#btn-cat-delete-id").click(function () {
+        swal({
+            title: "Are you sure?",
+            text: "Are you sure, you want to delete the category?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        },
+        function () {
+            var categoryId = $("#select-cat-id option:selected").val();
+            alert(categoryId);
+            //If the category is not selected then return
+            if (categoryId == 0) {
+                return;
+            }
+            $.ajax({
+                url: WEBSITE_VIRTUAL_DIR_NAME + '/eventcategories/deleteCategory/' + categoryId,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function () {
+                    $('.loading-img').show();
+                },
+                complete: function () {
+                    $('.loading-img').hide();
+                },
+                success: function (data, textStatus, jqXHR) {
+                    if (data) {
+                        swal("Deleted!", "Selected category is deleted.", "success");
+                    }
+                    else {
+                        swal("Deleted!", "Sorry! It seems that there are some portfolios for the selected category.", "error");
+                    }
+                }
+            }); //Ajax
+
+        });//Swal function
+    });
+
+    /**
+     * Sub category deletion for admin dashboard
+     */
+    $("#btn-subcat-delete-id").click(function () {
+        swal({
+            title: "Are you sure?",
+            text: "Are you sure, you want to delete the subcategory ?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        },
+        function () {
+            var subCategoryId = $("#select-subcat-update-id option:selected").val();
+            alert(subCategoryId);
+            //If the category is not selected then return
+            if (subCategoryId == 0) {
+                return;
+            }
+            $.ajax({
+                url: WEBSITE_VIRTUAL_DIR_NAME + '/subcategories/deleteSubcategory/' + subCategoryId,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function () {
+                    $('.loading-img').show();
+                },
+                complete: function () {
+                    $('.loading-img').hide();
+                },
+                success: function (data, textStatus, jqXHR) {
+                    if (data) {
+                        swal("Deleted!", "Selected sub category is deleted.", "success");
+
+                    }
+                    else {
+                        swal("Deleted!", "Sorry! It seems that there are some portfolios for the selected sub category.", "error");
+                    }
+                }
+            }); //Ajax
+
+        });//Swal function
+    });
+
+
 });// document ready
 
 /**
@@ -457,7 +545,7 @@ function clicked(statusId, subscriberId) {
                 },
                         function (isConfirm) {
                             if (isConfirm) {
-                                $('#manage_user').DataTable().ajax.reload();
+                                $('#manage_user').DataTable().ajax.reload();                                
                             }
                         });
             }
@@ -477,16 +565,24 @@ function deleteSubscriber(subscriberId) {
         showCancelButton: true,
         confirmButtonClass: "btn-danger",
         confirmButtonText: "Yes, delete it!",
-        closeOnConfirm: false
+        closeOnConfirm: true
     },
     function () {
         $.ajax({
             url: WEBSITE_VIRTUAL_DIR_NAME + '/subscribers/deleteSubscriber/' + subscriberId,
             type: 'GET',
             dataType: 'json',
+            beforeSend: function () {
+                $('.loading-img').show();
+            },
+            complete: function () {
+                $('.loading-img').hide();
+            },
             success: function (data, textStatus, jqXHR) {
                 if (data) {
                     swal("Deleted!", "Subscriber is deleted.", "success");
+                    $('#manage_user').DataTable().ajax.reload();
+                    
                 }
                 else {
                     swal("Deleted!", "Subscriber is not deleted.", "error");

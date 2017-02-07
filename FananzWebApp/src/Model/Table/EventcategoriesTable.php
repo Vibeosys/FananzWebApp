@@ -211,27 +211,49 @@ class EventcategoriesTable extends Table {
         }
         return $categoryAdded;
     }
-    
+
     /**
      * Update existing category name
      * @param string $category
      * @param int $categoryId
      * @return boolean
      */
-    public function updateCategoryName($category, $categoryId){
+    public function updateCategoryName($category, $categoryId) {
         $updateSuccess = false;
         $dbCategory = $this->find()
                 ->where(['CatId' => $categoryId])
                 ->select(['CatId', 'CatName'])
                 ->first();
-        
-        if($dbCategory){
+
+        if ($dbCategory) {
             $dbCategory->CatName = $category;
-            if($this->save($dbCategory)){
+            if ($this->save($dbCategory)) {
                 $updateSuccess = true;
             }
         }
         return $updateSuccess;
+    }
+
+    /**
+     * Deletes selected category
+     * @param int $categoryId
+     * @return boolean
+     */
+    public function deleteCategory($categoryId) {
+        $categoryDeleted = false;
+        $categoryRecord = $this->find()
+                    ->where(['CatId' => $categoryId])
+                    ->first();
+        try {
+            if($categoryRecord)
+            {
+                $this->delete($categoryRecord);
+                $categoryDeleted = true;
+            }
+        } catch (\Exception $exc) {
+            \Cake\Log\Log::error($exc->getTraceAsString());
+        }
+        return $categoryDeleted;
     }
 
 }

@@ -20,16 +20,16 @@ body a:focus, a:hover {
     background: #f5f5f5;
 }
 .loading-img{
-    position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 50px;
-	height: 100px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 200px;
+    height: 200px;
     margin-top: -50px;
     margin-left: -50px;
-	z-index: 9999;
+    z-index: 9999;
     background: url('../../img/loading.gif') 50% 50% no-repeat rgba(255,255,255,0);
-    background-size: 50px;
+    background-size: 200px;
     display: none;
     margin: 0 auto;
 }
@@ -46,7 +46,7 @@ label.error , .error-check{
     position: absolute;
 }
 #file-error{
-position: absolute;
+    position: absolute;
     bottom: -27px;
     left: -70px;
 }
@@ -180,7 +180,7 @@ img {
     left: -39px;
     background: #171717;
     border-radius: 14px;
-        z-index: 1024;
+    z-index: 1024;
 }
 .footer{
     background: #171717;
@@ -807,11 +807,11 @@ p.copy-right a:hover{
     }
 }
 @media screen and (max-width:767px){
-      .header-bottom-w3ls {
+    .header-bottom-w3ls {
         background: transparent;
         border-top: none;
     }
-     body{
+    body{
         padding-top: 69px;
     }
 }
@@ -837,11 +837,11 @@ p.copy-right a:hover{
     .panel-heading {
         padding: 20px 15px;
     }
-/*
-    .button-set button.button, .login-button-set button.button, .forgot_set button.button, .modal-body button.button.black_sm, button.button, .button {
-        margin-bottom: 10px!important;
-    }
-*/
+    /*
+        .button-set button.button, .login-button-set button.button, .forgot_set button.button, .modal-body button.button.black_sm, button.button, .button {
+            margin-bottom: 10px!important;
+        }
+    */
     .white_back_btn {
         margin-left: 0px!important;
     }
@@ -2497,7 +2497,7 @@ input[type=search] {
     margin-top: -5px;
 
 }
- .paying-by-later-icon:after{
+.paying-by-later-icon:after{
     content: '\f105';
     font-family: FontAwesome;
     position: relative;
@@ -2506,7 +2506,7 @@ input[type=search] {
     padding-right: 15px;
     font-size: 25px;
     float: right;
-     height: 20px;
+    height: 20px;
 
 }
 .paying-by-cash .paying-by-cash-wrapper h3{
@@ -2584,7 +2584,7 @@ input[type=search] {
     margin-bottom: 20px;
 }
 .portfolio .button-set .button{
-     margin-bottom: 0px;
+    margin-bottom: 0px;
     width: 230px;
 }
 .portfolio .button-set  .white_back_btn {
@@ -2704,7 +2704,7 @@ input[type=search] {
     font-size: 28px;
 }
 .header-portfolio .portfolio-header{
-     padding: 50px 0px 20px 0px;
+    padding: 50px 0px 20px 0px;
     text-align: right;
     font-size: 28px;
     color: gray;
@@ -2749,7 +2749,7 @@ input[type=search] {
     max-width: 128px;
     line-height: 30px;
     text-align: center;
-/*    z-index: 1038;*/
+    /*    z-index: 1038;*/
     cursor: pointer;
     border-radius: 4px;
     display: inline-block;
@@ -2757,7 +2757,7 @@ input[type=search] {
 input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .portfolio-file:focus {
     border: none;
     outline: none;
-    
+
 }
 .file{
     opacity: 0.0; 
@@ -2810,7 +2810,7 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
     text-decoration: underline;
 }
 .img-size{
-   font-size: 12px;
+    font-size: 12px;
     color: #afafaf;
     font-style: italic;
 }
@@ -2883,15 +2883,15 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
 }
 @media screen and (max-width:767px){
     .header-portfolio .portfolio-res-nm{
-    padding: 40px 0px 20px 0px;
-    text-align: center;
-    font-size: 18px;
-}
-.header-portfolio .portfolio-header{
-     padding: 00px 0px 20px 0px;
-    text-align: center;
-    font-size: 18px;
-}
+        padding: 40px 0px 20px 0px;
+        text-align: center;
+        font-size: 18px;
+    }
+    .header-portfolio .portfolio-header{
+        padding: 00px 0px 20px 0px;
+        text-align: center;
+        font-size: 18px;
+    }
 }
 
 /**************** Pop up Style *****************/
@@ -3044,7 +3044,7 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
     left: -5px;
 }
 .privacy-wrapper .content .privacy-list>.privacy-sub-list>.privacy-inner-sub-list>li{
-    
+
 }
 .privacy-wrapper .content .privacy-list>.privacy-sub-list>li{
     list-style-type: none;
@@ -3104,7 +3104,7 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
 
 /*--- Responsive Code ---*/
 @media screen and (max-width:1200px){
-     #trade_certificate-error.error {
+    #trade_certificate-error.error {
         bottom: -15px!important;
     }
 }

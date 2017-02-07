@@ -25,32 +25,42 @@ class SubcategoriesController extends AppController {
         }
         $subCategoryShortName = \App\Utils\StringUtils::hyphenize($subCategoryName);
         $addSuccess = $this->Subcategories->addNewSubcategory($categoryId, $subCategoryName, $subCategoryShortName);
-        if($addSuccess){
+        if ($addSuccess) {
             $this->response->body(\App\Dto\BaseResponseDto::prepareJsonSuccessMessage(127));
-        }
-        else{
+        } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(231));
         }
     }
-    
-    public function getSubCategoryList($categoryId){
+
+    public function deleteSubcategory($subCategoryId) {
+        $this->apiInitialize();
+        if (!$this->sessionManager->isAdminLoggedIn()) {
+            $this->redirect('/admin/login');
+            return;
+        }
+
+        $subCategoryDeleted = $this->Subcategories->deleteSubcategory($subCategoryId);
+        $this->response->body(json_encode($subCategoryDeleted));
+    }
+
+    public function getSubCategoryList($categoryId) {
         $this->apiInitialize();
         $subCategoryList = $this->Subcategories->getSubCategoryList($categoryId);
         $encodedString = json_encode($subCategoryList);
         $this->response->body($encodedString);
     }
 
-    public function updateSubcategory(){
+    public function updateSubcategory() {
         $this->apiInitialize();
         $subCategoryName = $this->request->data['subCategoryName'];
         $subCategoryId = $this->request->data['subCategoryId'];
-        
+
         $categoryUpdated = $this->Subcategories->updateSubcategory($subCategoryId, $subCategoryName);
-        if($categoryUpdated){
+        if ($categoryUpdated) {
             $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(128));
-        }
-        else{
+        } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareError(232));
         }
     }
+
 }
