@@ -2930,6 +2930,30 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
     color: #555555;
     text-align: justify;
 }
+#msg_show{
+    margin-top: 25px;
+}
+.success-msg-container .success-msg-wrapper p, .error-msg-container .error-msg-wrapper p{
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+#msg_show p i{
+    padding-right: 15px;
+}
+.success-msg-container .success-msg-wrapper{
+    padding: 20px 20px;
+/*    margin-bottom: 35px;*/
+    background-color: #6edec3;
+    color: #fff;
+    font-size: 15px;    
+}
+.error-msg-container .error-msg-wrapper{
+    padding: 20px 20px;
+/*    margin-bottom: 35px;*/
+    background-color: #de6e6e;
+    color: #fff;
+    font-size: 15px;    
+}
 .error-msg-container .error-wrapper{
     padding: 20px 20px;
     margin-bottom: 35px;
@@ -2945,6 +2969,62 @@ input[type="file"]:active, input[type="file"]:focus, .portfolio-file:active, .po
 }
 .error-msg-container .error-wrapper p i{
     padding-right: 15px;
+}
+
+.success-layout .message-container, .error-layout .message-container, .warning-layout .message-container, .info-layout .message-container{
+        margin: 20px 0px;
+}
+
+.success-layout .message-container .message-wrapper{
+    padding: 15px;
+    background: rgb(80, 193, 147);
+}
+.error-layout .message-container .message-wrapper{
+     padding: 15px;
+    background: #bf3b3b;
+/*    rgb(195, 104, 104)*/
+}
+.warning-layout .message-container .message-wrapper{
+      padding: 15px;
+    background: #FBC02D;
+}
+.info-layout .message-container .message-wrapper{
+      padding: 15px;
+    background: #8da6d6;
+}
+.success-layout .message-container .message-wrapper .close-btn, .error-layout .message-container .message-wrapper .close-btn, .warning-layout .message-container .message-wrapper .close-btn, .info-layout .message-container .message-wrapper .close-btn{
+    background: none;
+    border: none;
+    float: right;
+    font-size: 35px;
+    color: #fff;
+    position: relative;
+    right: 3px;
+    top: -10px;
+}
+.success-layout .message-container .message-wrapper i{
+    font-size: 34px;
+    color: #E8F5E9;
+}
+.error-layout .message-container .message-wrapper i{
+    font-size: 34px;
+    color: #f9d3d2;
+}
+.warning-layout .message-container .message-wrapper i{
+    font-size: 34px;
+    color: #FFF9C4;
+}
+.info-layout .message-container .message-wrapper i{
+     font-size: 34px;
+    color: #E8EAF6;
+}
+.success-layout .message-container .message-wrapper p, .error-layout .message-container .message-wrapper p, .warning-layout .message-container .message-wrapper p, .info-layout .message-container .message-wrapper p{
+    display: inline-block;
+    color: #fff;
+    position: relative;
+    top: -6px;
+    left: 16px;
+    font-size: 16px;
 }
 /*Share button classes*/
 .share-link-social{

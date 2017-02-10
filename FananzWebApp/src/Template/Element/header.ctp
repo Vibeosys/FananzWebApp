@@ -15,9 +15,11 @@ echo $this->Html->css('/css/sweetalert.css', ['block' => true]);
 echo $this->Html->script('jquery.min.js', ['block' => 'scriptTop']);
 echo $this->Html->script('bootstrap.min.js', ['block' => 'scriptTop']);
 echo $this->Html->script('custom.js', ['block' => 'scriptTop']);
-echo $this->Html->script('formvalidation.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/sweetalert.min.js', ['block' => true]);
 echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
+echo $this->Html->script('/js/jquery.validate.js', ['block' => true]);
+echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
+
 ?>
 <header>
     <div class="header-top-w3layouts navbar-fixed-top">
@@ -210,3 +212,66 @@ echo $this->Html->script('/js/pages/web-header.js', ['block' => true]);
         </div>
     </div>
 </header>
+
+<section class="success-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="message-container">
+                    <div class="message-wrapper">
+                        <button class="close-btn">&times;</button>
+                        <i class="fa fa-check-circle"></i><p>Success Message content HERE</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="error-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="message-container">
+                    <div class="message-wrapper">
+                        <button class="close-btn">&times;</button>
+                        <i class="fa fa-minus-circle"></i><p>Error Message content HERE</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="warning-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="message-container">
+                    <div class="message-wrapper">
+                        <button class="close-btn">&times;</button>
+                        <i class="fa fa-exclamation-circle"></i><p>Warning Message content HERE</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="info-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="message-container">
+                    <div class="message-wrapper">
+                        <button class="close-btn">&times;</button>
+                        <i class="fa fa-info-circle"></i><p>Info Message content HERE</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

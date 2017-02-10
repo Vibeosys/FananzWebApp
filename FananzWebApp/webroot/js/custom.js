@@ -78,8 +78,10 @@
                          $("#show_icon2").addClass('fa-eye');
                     }
                 });
-        });
-    
-    })(jQuery);
+         $('.close-btn').click(function(){
+             $(this).parent().closest('section').hide(); 
+         });
+     });
+})(jQuery);
     
     

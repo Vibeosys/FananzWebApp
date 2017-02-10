@@ -79,7 +79,7 @@
                 }
             }
             else{
-             $('<img>').attr('src','../img/demoUpload.jpg').addClass(settings['prefix']+'thumb').appendTo($('#'+settings['prefix']+id));
+             $('<img>').attr('src','../../img/demoUpload.jpg').addClass(settings['prefix']+'thumb').appendTo($('#'+settings['prefix']+id));
             }
      	}else{
      		if(window.confirm('Internet Explorer do not support required HTML5 features. \nPleas, download better browser - Firefox, Google Chrome, Opera... \nDo you want to download and install Google Chrome now?')){ window.location("//google.com/chrome"); }
