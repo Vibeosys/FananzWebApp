@@ -205,7 +205,7 @@ $(document).ready(function () {
         }
         //POST to ajax
         $.ajax({
-            url: '/FananzWebApp/subcategories/addSubcategory',
+            url: WEBSITE_VIRTUAL_DIR_NAME + '/subcategories/addSubcategory',
             type: 'POST',
             dataType: 'json',
             data: {

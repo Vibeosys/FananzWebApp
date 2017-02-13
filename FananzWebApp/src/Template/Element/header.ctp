@@ -80,35 +80,12 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                         // echo($values->category);
                                         $isSubcategoryArray = is_array($category->subCategories) && count($category->subCategories) > 0;
                                         ?>
-
-
-                                        <?php
-                                        if ($isSubcategoryArray) {
-                                            ?>
-
-                                            <li  class="dropdown">
-                                                <?php
-                                            } else {
-                                                ?>
-                                            <li>
-                                                <?php
-                                            }
-                                            ?>
-
+                                        <li  class="dropdown">
                                             <a href="<?= VIRTUAL_DIR_PATH . '/portfolio/' . $category->categoryShortName ?>" class="dropdown-toggle  hyper page-scroll"  ><span><?= $category->category ?>
-                                                    <?php
-                                                    if ($isSubcategoryArray) {
-                                                        ?>
-                                                        <b class="caret"> </b>
-                                                    <?php }
-                                                    ?>
+                                                    <b class="caret"> </b>
                                                 </span></a>
-
-
-
                                             <ul class="dropdown-menu multi">
                                                 <div class="row">
-
                                                     <?php
                                                     if ($category->subCategories != null) {
                                                         $totalSubcategoryCount = count($category->subCategories);
@@ -143,9 +120,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                                     ?>
 
                                                     <div class="col-sm-4 w3l">
-
-
-        <?= $this->Html->image('menu1.jpg', array('alt' => '', 'class' => 'img-responsive')); ?>
+                                                        <?= $this->Html->image('menu1.jpg', array('alt' => '', 'class' => 'img-responsive')); ?>
                                                     </div>
 
                                                     <div class="clearfix"></div>
@@ -153,10 +128,10 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
 
                                             </ul>
                                         </li>
-        <?php
-    }
-}
-?>
+                                        <?php
+                                    }
+                                }
+                                ?>
                                 <?php if (!$isSubscriberLoggedIn && !$isAdminLoggedIn) : ?>
                                     <li class="float-right dropdown no-request">
                                         <a href="" class="dropdown-toggle hyper" data-toggle="dropdown"><span>Special Requests<b class="caret"></b></span></a>
@@ -202,7 +177,7 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
                                             </div>
                                         </ul>
                                     </li>
-<?php endif; ?>
+                                <?php endif; ?>
 
                             </ul>
                         </div>
@@ -212,66 +187,3 @@ echo $this->Html->script('/js/validation.subscribe.reg.js', ['block' => true]);
         </div>
     </div>
 </header>
-
-<section class="success-layout">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="message-container">
-                    <div class="message-wrapper">
-                        <button class="close-btn">&times;</button>
-                        <i class="fa fa-check-circle"></i><p>Success Message content HERE</p>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="error-layout">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="message-container">
-                    <div class="message-wrapper">
-                        <button class="close-btn">&times;</button>
-                        <i class="fa fa-minus-circle"></i><p>Error Message content HERE</p>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="warning-layout">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="message-container">
-                    <div class="message-wrapper">
-                        <button class="close-btn">&times;</button>
-                        <i class="fa fa-exclamation-circle"></i><p>Warning Message content HERE</p>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="info-layout">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="message-container">
-                    <div class="message-wrapper">
-                        <button class="close-btn">&times;</button>
-                        <i class="fa fa-info-circle"></i><p>Info Message content HERE</p>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>

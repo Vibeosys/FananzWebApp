@@ -95,7 +95,7 @@ class EmailSenderUtility {
                 ->viewVars(['name' => $subscriberDetails->name])
                 ->from(static::$_emailFrom, static::$_emailFromName)
                 ->addTo($subscriberDetails->emailId, $subscriberDetails->name)
-                ->addBcc('anand@vibeosys.com')
+                //->addBcc('anand@vibeosys.com')
                 ->subject('Welcome to Fananz');
 
         $emailSendSuccess = $email->send();
