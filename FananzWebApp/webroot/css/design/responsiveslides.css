@@ -24,12 +24,12 @@
     float: left;
   }
 
-.rslides img {
+.rslides img {    
     display: block;
     height: auto;
     float: left;
-    width: 100%;
+    width: 362px;
     border: 0;
-    max-height: 310px;
-    min-height: 310px;
+    max-height: 420px;
+    min-height: 420px;
   }
