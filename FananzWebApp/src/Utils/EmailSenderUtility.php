@@ -102,4 +102,23 @@ class EmailSenderUtility {
         return $emailSendSuccess;
     }
 
+    /**
+     * Sends notification to admin about new customer registration
+     * @param \App\Dto\UserRegistrationNotificationDto $userRegistrationNotification
+     * @return object
+     */
+    public static function sendCustomerRegistrationNotificationEmail($userRegistrationNotification){
+        $email = new \Cake\Mailer\Email(static::$_emailProfile);
+        $email->emailFormat(static::$_emailFormat)->template('UserRegistrationNotificationEmail')
+                ->viewVars(['name' => $userRegistrationNotification->name,
+                    'phone' => $userRegistrationNotification->phone,
+                    'emailId' => $userRegistrationNotification->emailId,
+                    'registrationChannel' => $userRegistrationNotification->registrationChannel])
+                ->from(static::$_emailFrom, static::$_emailFromName)
+                ->addTo(static::$_toEmailAddresses)
+                ->subject('Fananz new customer registration');
+
+        $emailSendSuccess = $email->send();
+        return $emailSendSuccess;
+    }
 }

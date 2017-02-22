@@ -24,6 +24,7 @@ class UsersController extends AppController {
         //If user id does not exists then register
         if ($resultUserId == 0) {
             $resultUserId = $this->Users->registerUser($userSignUpRequest);
+            $this->sendRegistrationNotificationEmail($userSignUpRequest, true);
         }
         if ($resultUserId != 0) {
             $userSignupResponse = new \App\Dto\UserSignupResponseDto();
@@ -131,6 +132,7 @@ class UsersController extends AppController {
             } else {
                 $resultUserId = $this->Users->registerUser($userSignupRequest);
                 if ($resultUserId) {
+                    $this->sendRegistrationNotificationEmail($userSignupRequest, false);
                     //TODO: redirect and check
                     $this->redirect('/users/customerlogin');
                 } else {
@@ -190,6 +192,7 @@ class UsersController extends AppController {
 
         //If result user id then save it to session
         if ($resultUserId) {
+            $this->sendRegistrationNotificationEmail($userSignUpRequest, false);
             $this->sessionManager->saveUserLoginInfo
                     ($resultUserId, $firstName . ' ' . $lastName);
         }
@@ -270,6 +273,29 @@ class UsersController extends AppController {
             $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(122));
         } else {
             $this->response->body(\App\Dto\BaseResponseDto::prepareSuccessMessage(224));
+        }
+    }
+
+    /**
+     * Sends the registration email
+     * @param \App\Dto\UserSignupRequestDto $userRegistrationRequest
+     */
+    public function sendRegistrationNotificationEmail($userRegistrationRequest, $isMobileLogin) {
+        $emailSendSuccess = false;
+        try {
+            $userRegistrationNotification = new \App\Dto\UserRegistrationNotificationDto();
+            $userRegistrationNotification->name = $userRegistrationRequest->firstName;
+            $userRegistrationNotification->emailId = $userRegistrationRequest->emailId;
+            $userRegistrationNotification->phone = $userRegistrationRequest->phoneNo;
+            $channel = '';
+            $channel = $userRegistrationRequest->isFacebookLogin == 1 ? 'Facebook - ' : 'Email - ';
+            $channel = $isMobileLogin ? $channel . 'Mobile' : $channel . 'Website';
+            $userRegistrationNotification->registrationChannel = $channel;
+            //$userRegistrationNotification->registrationChannel = 
+            \App\Utils\EmailSenderUtility::sendCustomerRegistrationNotificationEmail($userRegistrationNotification);
+            $emailSendSuccess = true;
+        } catch (\Exception $ex) {
+            \Cake\Log\Log::error('Error while sending notification email - ' . $ex->getTraceAsString());
         }
     }
 
