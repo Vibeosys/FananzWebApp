@@ -167,7 +167,7 @@ class SubscribersController extends AppController {
         //if no values are null then only validate for subscriber
         if ($subscriberId == null && $subscriberType == null) {
             if (!$isSubscribed) {
-                $this->redirect('/subscribers/login');
+                $this->redirect('/subscribers/paysubscription');
                 return;
             }
             if ($this->sessionManager->isSubscriberLoggedIn()) {
