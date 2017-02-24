@@ -15,9 +15,9 @@
             </a>
             <ul> 
                 <li class="add-no">Address:</li>
-                <li>Garhoud-Um Rumool-RAK Bank,</li>
-                <li>Building-Office#309,</li>
-                <li>UAE-Dubai-Al</li>
+                <li>Al Garhoud-Um Rumool-RAK,</li>
+                <li>Bank Building Office # 309,</li>
+                <li>UAE, Dubai</li>
                 <li class="cnt-no">Contact No:</li>
                 <li class="no-line-height"><i class="fa fa-phone"></i><a href="tel:+9714-2949380">+9714-2949380</a></li>
                 <li><i class="fa fa-mobile"></i><a href="tel:971558277781">971558277781</a></li>
