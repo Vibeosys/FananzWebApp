@@ -1195,7 +1195,6 @@ mark {
     transition: height .6s ease-in-out;
 }
 .figure-caption {
-    border: 1px solid whitesmoke;
     box-shadow: 1px 1px 10px #e4e4e4;
     position: relative;
     height: 142px;
@@ -1907,10 +1906,9 @@ select.form-control{
     font-weight: 400;
 }
 .category_artist .figure-caption{
-    border: 1px solid whitesmoke;
     box-shadow: 1px 1px 10px #e4e4e4;
     position: relative;
-    height: 166px;
+    height: 178px;
     background: #fff;
 }
 .category_artist .figure-caption .artist-name h3 {
@@ -1940,7 +1938,7 @@ select.form-control{
     padding: 12px;
     width: 100%;
     position: absolute;
-    margin-top: 8px;
+    margin-top: 9px;
     font-size: 18px;
     color: #fff;
     text-align: center;
@@ -1964,7 +1962,7 @@ select.form-control{
     position: absolute;
     font-size: 18px;
     color: #fff;
-    margin-top: 8px;
+    margin-top: 9px;
     text-align: center;
     border: 1px solid #e62222;
     background-color: #e62222;
