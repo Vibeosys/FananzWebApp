@@ -24,7 +24,7 @@ echo $this->Html->script('/js/slider/revolution.extension.navigation.min.js', ['
 echo $this->Html->script('/js/slider/revolution.extension.slideanims.min.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/slider/slider.config.js', ['block' => 'scriptTop']);
 echo $this->Html->script('/js/jquery.flexisel.js', ['block' => 'scriptTop']);
-echo $this->Html->script('responsiveslides.js');
+echo $this->Html->script('/js/responsiveslides.js');
 
 echo $this->Html->script('/js/pages/home-index.js', ['block' => true]);
 echo $this->Html->script('/js/pages/request-service.js', ['block' => true]);
@@ -403,8 +403,9 @@ echo $this->Html->script('/js/pages/request-service.js', ['block' => true]);
                                 <?php
                             } else {
                                 ?>
-
-                                <?= $this->Html->image($portfolio->coverImageUrl, ['class' => 'img-responsive', 'alt' => $textToDisplayOnOverlay]) ?>
+                               <div class="cover-img" style="background-image:url(<?= $portfolio->coverImageUrl ?>);">
+                                    
+                                </div>
                                 <?php
                             }
                             ?>
