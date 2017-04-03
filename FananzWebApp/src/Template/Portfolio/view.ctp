@@ -136,8 +136,8 @@ if (count($portfolioDetails) > 0) {
                                         <?php
                                     } else {
                                         ?>
-
-                                        <?= $this->Html->image($portfolio->coverImageUrl, ['class' => 'img-responsive', 'alt' => $portfolio->subcategory]) ?>
+                                        <div class="cover-img" style="background-image:url(<?= $portfolio->coverImageUrl ?>);">
+                                    </div>
                                     <?php }
                                     ?>
                                 </div>

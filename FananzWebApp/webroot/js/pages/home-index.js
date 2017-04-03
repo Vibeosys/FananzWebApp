@@ -82,7 +82,7 @@ function showDetails(portfolioId) {
                 var liList = '';
                 $.each(portfolioData.photos, function (id, obj) {
                     //alert(obj);
-                    liList += "<li><img src='" + obj + "'></li>";
+                    liList += "<li><div class='img-slider-list' style='background-image:url("+obj+");'></div></li>";
                 });
                 //alert(liList);
                 $("#slider1").html(liList);
@@ -90,6 +90,7 @@ function showDetails(portfolioId) {
             else {
                 $("#slider1").html("<li><img src='/img/default_img.jpg'></li>");
             }
+            $('#detail_artists').modal('show');
             $("#slider1").responsiveSlides({
                 auto: true,
                 pager: true,
@@ -98,7 +99,7 @@ function showDetails(portfolioId) {
                 maxwidth: 800,
                 namespace: "centered-btns"
             });
-            $('#detail_artists').modal('show');
+           
         },
     });
 }

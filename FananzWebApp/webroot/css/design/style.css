@@ -2592,7 +2592,19 @@ input[type=search] {
 .portfolio .button-set  .white_back_btn {
     margin-bottom: 20px;
 }
-
+.img-slider-list{
+    max-height: 320px;
+    min-height: 320px;
+}
+.cover-img{
+    max-height: 225px;
+    min-height: 225px;
+}
+.img-slider-list,.cover-img{
+ background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
 .data-not-found{
     margin: 30px 0px;
 }
